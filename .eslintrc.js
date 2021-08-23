@@ -17,7 +17,7 @@ module.exports = {
     'space-before-function-paren': 'off',
     semi: 'off',
     'space-before-blocks': 'off',
-    indent: 'off',
+    indent: ['error', 2],
     'key-spacing': 'off',
     'no-trailing-spaces': 'off'
   }
