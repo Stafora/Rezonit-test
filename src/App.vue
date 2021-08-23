@@ -7,18 +7,18 @@
 </template>
 
 <script>
-    import DefaulLayout from '@/layouts/DefaultLayout.vue'
-    import HomeLayout from '@/layouts/HomeLayout.vue'
+import DefaulLayout from '@/layouts/DefaultLayout.vue'
+import HomeLayout from '@/layouts/HomeLayout.vue'
 
-    export default {
-        name: 'App',
-        computed:{
-            layout() {
-                return this.$route.meta.layout || 'DefaulLayout'
-            }
-        },
-        components: {
-            DefaulLayout, HomeLayout
-        }
+export default {
+  name: 'App',
+  computed: {
+    layout () {
+      return this.$route.meta.layout || 'DefaulLayout'
     }
+  },
+  components: {
+    DefaulLayout, HomeLayout
+  }
+}
 </script>

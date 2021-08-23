@@ -8,25 +8,25 @@ const routes = [
     path: '/',
     name: 'Home',
     meta: {
-        layout: 'HomeLayout'
+      layout: 'HomeLayout'
     },
     component: function () {
-        return import('../views/Home.vue')
+      return import('../views/Home.vue')
     }
   },
   {
     path: '/auth',
     name: 'Auth',
     component: function () {
-        return import('../views/Auth.vue')
+      return import('../views/Auth.vue')
     }
   }
 ]
 
 const router = new VueRouter({
-    mode: 'history',
-    base: process.env.BASE_URL,
-    routes
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
 })
 
 export default router
