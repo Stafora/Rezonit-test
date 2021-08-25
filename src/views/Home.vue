@@ -6,10 +6,21 @@
 </template>
 
 <script>
+	// import { mapActions, mapGetters } from 'vuex'
+	import { mapActions } from 'vuex'
+
 	export default {
 		name: 'Home',
 		components: {
 
+		},
+		methods: {
+			...mapActions([
+                'USER'
+            ])
+		},
+		created: function () {
+			this.USER()
 		}
 	}
 </script>

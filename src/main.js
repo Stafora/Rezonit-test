@@ -2,12 +2,21 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import Axios from 'axios'
 
 // style
 import './assets/scss/fonts.scss'
 import './assets/scss/common.scss'
 import './assets/scss/form-element.scss'
 import './assets/scss/buttons.scss'
+
+Vue.prototype.$axios = Axios;
+Vue.prototype.$store = store;
+
+const token = localStorage.getItem('token')
+if (token) {
+	Vue.prototype.$axios.defaults.headers.common.Authorization = `Bearer ${token}`
+}
 
 Vue.config.productionTip = false
 

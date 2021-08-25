@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -8,7 +9,7 @@ const routes = [
 		path: '/',
 		name: 'Home',
 		meta: {
-			layout: 'HomeLayout'
+			requiresAuth: true
 		},
 		component: function () {
 			return import('../views/Home.vue')
@@ -23,6 +24,24 @@ const routes = [
 		component: function () {
 			return import('../views/Auth.vue')
 		}
+	},
+	{
+		path: '/add',
+		name: 'Add',
+		component: function () {
+			return import('../views/Add.vue')
+		}
+	},
+	{ 
+		path: '/404', 
+		name: '404', 
+		component: function () {
+			return import('../views/NotFound.vue')
+		}
+	}, 
+	{ 
+		path: '*', 
+		redirect: '/404' 
 	}
 ]
 
@@ -31,5 +50,21 @@ const router = new VueRouter({
 	base: process.env.BASE_URL,
 	routes
 })
+
+router.beforeEach((to, from, next) => {
+	if(to.matched.some(record => record.meta.requiresAuth)) {
+		if (store.getters.IS_LOGGED_IN) {
+			next()
+			return
+		}
+		next('/auth') 
+	} 
+
+	if(to.name === 'Auth' && store.getters.IS_LOGGED_IN){
+		next('/')
+	}
+
+	next() 
+  })
 
 export default router
