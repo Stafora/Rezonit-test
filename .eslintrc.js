@@ -20,6 +20,7 @@ module.exports = {
     indent: 'off',
     'key-spacing': 'off',
     'no-trailing-spaces': 'off',
-	'no-tabs': 'off'
+	'no-tabs': 'off',
+	'keyword-spacing': 'off'
   }
 }

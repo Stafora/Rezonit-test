@@ -9,7 +9,7 @@
 
 <script>
 	export default {
-		name: 'Language Auth'
+		name: 'LanguageAuth'
 	}
 </script>
 

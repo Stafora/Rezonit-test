@@ -1,12 +1,12 @@
 <template>
 	<div class="auth-container" v-bind:class="{change: changePanel}">
 		<div class="auth-container-login">
-			<Login v-on:changeLoginOrRegistration="changeLoginOrRegistration" />
+			<Login v-on:changeLoginOrRegistration="changeLoginOrRegistration" v-bind:registrationMessage="registrationMessage" />
 			<Possibilities />
 		</div>
 		<div class="auth-container-register">
 			<Possibilities />
-			<Registration v-on:changeLoginOrRegistration="changeLoginOrRegistration" />
+			<Registration v-on:changeLoginOrRegistration="changeLoginOrRegistration" v-on:successRegistrationMessage="successRegistrationMessage" />
 		</div>
 	</div>
 </template>
@@ -19,7 +19,8 @@
 	export default {
 		name: 'Auth',
 		data: () => ({ 
-			changePanel: false
+			changePanel: false,
+			registrationMessage: ''
 		}),
 		components: {
 			Login,
@@ -28,7 +29,11 @@
 		},
 		methods: {
 			changeLoginOrRegistration() {
-				this.changePanel = !this.changePanel;
+				this.changePanel = !this.changePanel
+			},
+			successRegistrationMessage(message) {
+				this.changePanel = !this.changePanel
+				this.registrationMessage = message
 			}
 		}
 	}
