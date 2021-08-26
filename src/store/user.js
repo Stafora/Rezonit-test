@@ -24,7 +24,7 @@ export default {
 				method: 'GET'               
             })
             .then((resp) => {
-				console.log(resp)
+				commit('SET_USER', resp.data)
             })
             .catch((error) => {
 				console.log(error)

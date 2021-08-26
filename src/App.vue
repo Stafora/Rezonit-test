@@ -14,9 +14,16 @@
 
 	export default {
 		name: 'App',
+		metaInfo: {
+			title: 'Кабинет',
+			titleTemplate: '%s | Резонит'
+		},
 		computed: {
 			layout () {
 				return this.$route.meta.layout || 'DefaulLayout'
+			},
+			headerTitle () {
+				return this.$route.meta.title || 'Стандартный заголовок'
 			}
 		},
 		components: {
