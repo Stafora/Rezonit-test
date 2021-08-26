@@ -8,6 +8,7 @@ body{
 	margin: 0px;
 	font-family: 'Roboto';
 	background: linear-gradient(0deg, rgba(42, 163, 150, 0.03), rgba(42, 163, 150, 0.03)), #FFFFFF;
+	color: #525B53;
 }
 a{
     text-decoration: none;
@@ -21,4 +22,16 @@ ul{
 	list-style: none;
 	margin: 0px;
 	padding: 0px;
+}
+.scroll{
+	&::-webkit-scrollbar {
+		width: 4px;
+		height: 4px;
+	}
+	&::-webkit-scrollbar-track {
+		background: #fff;
+	}
+	&::-webkit-scrollbar-thumb {
+		background: #2AA396;
+	}
 }

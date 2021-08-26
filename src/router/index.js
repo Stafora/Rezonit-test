@@ -9,7 +9,8 @@ const routes = [
 		path: '/',
 		name: 'Home',
 		meta: {
-			requiresAuth: true
+			requiresAuth: true,
+			headerTitle: 'Список плат'
 		},
 		component: function () {
 			return import('../views/Home.vue')
@@ -35,6 +36,9 @@ const routes = [
 	{ 
 		path: '/404', 
 		name: '404', 
+		meta: {
+			headerTitle: 'Страница не найдена'
+		},
 		component: function () {
 			return import('../views/NotFound.vue')
 		}

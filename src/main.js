@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Axios from 'axios'
+import VueMeta from 'vue-meta'
 
 // style
 import './assets/scss/fonts.scss'
@@ -19,6 +20,8 @@ if (token) {
 }
 
 Vue.config.productionTip = false
+
+Vue.use(VueMeta)
 
 new Vue({
 	router,
