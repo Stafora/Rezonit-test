@@ -66,7 +66,7 @@
 				}
 
 				&-col{
-
+					font-size: 12px;
 				}
 
 				&__title{

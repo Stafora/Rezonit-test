@@ -32,39 +32,17 @@
 			</div>
 			<div class="boards-list-body scroll">
 				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
-				<BoardItem />
 			</div>
 		</div>
+
+		<AddingBoard/>
 
     </div>
 </template>
 
 <script>
 	import BoardItem from '@/components/boards/BoardItem'
+	import AddingBoard from '@/components/boards/AddingBoard'
 
 	export default {
 		name: 'Home',
@@ -72,7 +50,8 @@
 			title: 'Список плат'
 		},
 		components: {
-			BoardItem
+			BoardItem,
+			AddingBoard
 		}
 	}
 </script>
