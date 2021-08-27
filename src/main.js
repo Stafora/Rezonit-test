@@ -7,9 +7,22 @@ import VueMeta from 'vue-meta'
 
 // style
 import './assets/scss/fonts.scss'
-import './assets/scss/common.scss'
-import './assets/scss/form-element.scss'
-import './assets/scss/buttons.scss'
+
+router.beforeEach((to, from, next) => {
+	if(to.matched.some(record => record.meta.requiresAuth)) {
+		if (store.getters.IS_LOGGED_IN) {
+			next()
+			return
+		}
+		next('/auth') 
+	} 
+
+	if(to.name === 'Auth' && store.getters.IS_LOGGED_IN){
+		next('/')
+	}
+
+	next() 
+})
 
 Vue.prototype.$axios = Axios;
 Vue.prototype.$store = store;

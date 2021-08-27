@@ -48,5 +48,19 @@
 	.app{
 		width: 100%;
 		min-height: 100vh;
+		opacity: 0;
+		animation-name: visibleApp;
+		animation-duration: 0.5s;
+		animation-play-state: initial;
+		animation-delay: 0.3s;
+		animation-fill-mode: forwards;
+	}
+	@keyframes visibleApp {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 </style>

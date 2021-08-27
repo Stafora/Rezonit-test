@@ -43,8 +43,8 @@
 	.auth-container{
 		width: 832px;
 		max-width: 100%;
-		height: 468px;
 		display: flex;
+		align-items: center;
 		position: relative;
 
 		$parent: &;
@@ -53,8 +53,7 @@
 			display: flex;
 			position:absolute;
 			width: 100%;
-			height: 100%;
-			transform: rotate3d(1, 0, 0, 0deg);
+			transform: rotate3d(0, 1, 0, 0deg);
 			transition: 0.8s;
 			opacity: 1;
 			visibility: visible;
@@ -63,8 +62,7 @@
 			display: flex;
 			position:absolute;
 			width: 100%;
-			height: 100%;
-			transform: rotate3d(1, 0, 0, 180deg);
+			transform: rotate3d(0, 1, 0, 180deg);
 			transition: 0.8s;
 			opacity: 0;
 			visibility: hidden;
@@ -73,13 +71,13 @@
 		&.change{
 			#{$parent}{
 				&-login{
-					transform: rotate3d(1, 0, 0, 180deg);
+					transform: rotate3d(0, 1, 0, 180deg);
 					transition: 0.8s;
 					opacity: 0;
 					visibility: hidden;
 				}
 				&-register{
-					transform: rotate3d(1, 0, 0, 0deg);
+					transform: rotate3d(0, 1, 0, 0deg);
 					transition: 0.8s;
 					opacity: 1;
 					visibility: visible;
