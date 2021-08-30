@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import Axios from 'axios'
 import VueMeta from 'vue-meta'
+import Vuelidate from 'vuelidate'
 
 // style
 import './assets/scss/fonts.scss'
@@ -35,6 +36,7 @@ if (token) {
 Vue.config.productionTip = false
 
 Vue.use(VueMeta)
+Vue.use(Vuelidate)
 
 new Vue({
 	router,

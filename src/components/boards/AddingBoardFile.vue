@@ -1,7 +1,7 @@
 <template>
 	<div class="adding-board-file">
-		<!-- <label class="adding-board-file-preload">
-			<input type="file" name="board-file">
+		<label v-if="!$v.form.fileBoard.invalid" class="adding-board-file-preload">
+			<input type="file" v-on:change="fileBoardChange">
 
 			<div class="adding-board-file-preload__text">
 				Перетащите файл .svg в эту область<br> 
@@ -12,8 +12,8 @@
 					<path d="M38.7 12.08C38.0282 8.67544 36.1952 5.60972 33.5141 3.40649C30.8331 1.20327 27.4702 -0.000784485 24 3.83473e-07C18.22 3.83473e-07 13.2 3.28 10.7 8.08C7.76047 8.39766 5.04201 9.79042 3.06698 11.9906C1.09194 14.1909 -0.000343404 17.0434 8.09855e-08 20C8.09855e-08 26.62 5.38 32 12 32H38C43.52 32 48 27.52 48 22C48 16.72 43.9 12.44 38.7 12.08ZM28 18V26H20V18H14L24 8L34 18H28Z" fill="#2AA396"/>
 				</svg>
 			</div>
-		</label> -->
-		<div class="adding-board-file-progress">
+		</label>
+		<!-- <div class="adding-board-file-progress">
 			<div class="adding-board-file-progress__ico">
 				<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<rect width="32" height="32" rx="4" fill="#2AA396"/>
@@ -33,9 +33,9 @@
 					<path d="M10 0.25C4.624 0.25 0.25 4.624 0.25 10C0.25 15.376 4.624 19.75 10 19.75C15.376 19.75 19.75 15.376 19.75 10C19.75 4.624 15.376 0.25 10 0.25ZM10 1.75C14.5653 1.75 18.25 5.43475 18.25 10C18.25 14.5653 14.5653 18.25 10 18.25C5.43475 18.25 1.75 14.5653 1.75 10C1.75 5.43475 5.43475 1.75 10 1.75ZM7.165 6.085L6.085 7.165L8.923 10L6.0865 12.835L7.1665 13.915L10 11.0778L12.835 13.9127L13.915 12.835L11.0778 10L13.9127 7.165L12.835 6.085L10 8.923L7.165 6.0865V6.085Z" />
 				</svg>
 			</div>
-		</div>
-
-		<div class="adding-board-file-progress">
+		</div>  -->
+		{{$v.form.fileBoard.invalid}}
+		<div v-if="$v.form.fileBoard.invalid" class="adding-board-file-progress">
 			<div class="adding-board-file-progress__ico">
 				<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<rect width="32" height="32" rx="4" fill="#ED1C24"/>
@@ -45,7 +45,7 @@
 				</svg>
 			</div>
 			<div class="adding-board-file-progress-info">
-				<div class="adding-board-file-progress__file-name">Имя_файла.svg</div>
+				<div class="adding-board-file-progress__file-name">{{ $v.form.fileBoard.$model }}</div>
 				<div class="adding-board-file-progress__succes-text">Успешно загружен</div>
 				<div class="adding-board-file-progress__error-text">Описание ошибки</div>
 			</div>
@@ -60,8 +60,40 @@
 </template>
 
 <script>
+	// import { required } from 'vuelidate/lib/validators';
 	export default {
-		name: 'AddingBoardFile'
+		name: 'AddingBoardFile',
+		data: () => ({
+			form: {
+				fileBoard: {}
+			},
+			MAX_SIZE_FILE: 5
+		}),
+		methods: {
+			fileBoardChange(e) {
+				const files = e.target.files || e.dataTransfer.files;
+				if (!files.length){
+					return;
+				}
+				this.form.fileBoard = files[0]
+				console.log(this.$v.form.fileBoard);
+			}
+		},
+		validations: {
+			form: {
+				fileBoard: {
+					chekFile: function () {
+						return this.form.fileBoard.length !== 0
+					},
+					checkSize: function () {
+						return ((this.form.fileBoard.size / 1024) / 1024) < this.MAX_SIZE_FILE
+					},
+					checkSVG: function () {
+						return this.form.fileBoard.type === 'image/svg+xml'
+					}
+				}
+			}
+		}
 	}
 </script>
 
