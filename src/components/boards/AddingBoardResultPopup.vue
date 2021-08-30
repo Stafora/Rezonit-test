@@ -1,5 +1,5 @@
 <template>
-  <div class="adding-board-result-popup">
+  <div class="adding-board-result-popup" v-bind:class="{active: isActive}">
 		<div class="adding-board-result-popup-content">
 			<div class="adding-board-result-popup-content__close">
 				<svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +27,10 @@
 
 <script>
 	export default {
-		name: 'AddingBoardResultPopup'	
+		name: 'AddingBoardResultPopup',
+		data: () => ({
+			isActive: false
+		})
 	}
 </script>
 
@@ -41,6 +44,11 @@
 		top: 0px;
 		@include flex-center;
 		z-index: 3;
+		display: none;
+
+		&.active{
+			display: flex;
+		}
 
 		&-content{
 			background: #FFFFFF;

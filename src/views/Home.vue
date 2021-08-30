@@ -8,7 +8,7 @@
 
 			<div class="boards-header-buttons">
 				<div class="btn btn-border boards-header-buttons__btn disabled"><span>Черновик</span></div>
-				<div class="btn btn-default boards-header-buttons__btn"><span>Добавить</span></div>
+				<div class="btn btn-default boards-header-buttons__btn" v-on:click="openAddPopup"><span>Добавить</span></div>
 			</div>
 		</div>
 
@@ -35,7 +35,7 @@
 			</div>
 		</div>
 
-		<AddingBoard/>
+		<AddingBoard v-on:openAddPopup="openAddPopup" v-bind:isOpenPopup="isOpenPopup"/>
 
     </div>
 </template>
@@ -49,9 +49,17 @@
 		metaInfo: {
 			title: 'Список плат'
 		},
+		data: () => ({
+			isOpenPopup: true
+		}),
 		components: {
 			BoardItem,
 			AddingBoard
+		},
+		methods: {
+			openAddPopup() {
+				this.isOpenPopup = !this.isOpenPopup
+			}
 		}
 	}
 </script>
