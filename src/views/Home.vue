@@ -50,7 +50,7 @@
 			title: 'Список плат'
 		},
 		data: () => ({
-			isOpenPopup: true
+			isOpenPopup: false
 		}),
 		components: {
 			BoardItem,
