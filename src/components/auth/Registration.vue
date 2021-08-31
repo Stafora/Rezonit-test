@@ -20,8 +20,10 @@
 						autocomplete="off"
 					>
 				</div>
-				<div class="form-element__error" v-for="error in this.REGISTRATION_ERRORS.name" v-bind:key="error">
-					{{ error }}
+				<div class="form-element__error">
+					<template v-for="error in this.REGISTRATION_ERRORS.name">
+						{{ error }}
+					</template>
 				</div>
 			</div>
 
@@ -34,8 +36,10 @@
 						autocomplete="off"
 					>
 				</div>
-				<div class="form-element__error" v-for="error in this.REGISTRATION_ERRORS.email" v-bind:key="error">
-					{{ error }}
+				<div class="form-element__error">
+					<template v-for="error in this.REGISTRATION_ERRORS.email">
+						{{ error }}
+					</template>
 				</div>
 			</div>
 
@@ -60,8 +64,10 @@
 						</svg>
 					</div>
 				</div>
-				<div class="form-element__error" v-for="error in this.REGISTRATION_ERRORS.password" v-bind:key="error">
-					{{ error }}
+				<div class="form-element__error">
+					<template v-for="error in this.REGISTRATION_ERRORS.password">
+						{{ error }}
+					</template>
 				</div>
 			</div>
 			<div class="form-element" :class="{error: this.REGISTRATION_ERRORS.password_confirmation}">
@@ -85,8 +91,10 @@
 						</svg>
 					</div>
 				</div>
-				<div class="form-element__error" v-for="error in this.REGISTRATION_ERRORS.password_confirmation" v-bind:key="error">
-					{{ error }}
+				<div class="form-element__error">
+					<template v-for="error in this.REGISTRATION_ERRORS.password_confirmation">
+						{{ error }}
+					</template>
 				</div>
 			</div>
 
@@ -134,7 +142,8 @@
         },
 		methods: {
 			...mapActions([
-                'REGISTRATION'
+                'REGISTRATION',
+				'LOGIN'
             ]),
 			changeVisiblePassword(){
 				this.passwordVisible = !this.passwordVisible
@@ -152,12 +161,10 @@
 				
 				resultRegister.then((resp) => {
 					if(this.CHEK_SUCCES_REGISTRATION) {
-						this.registrationEmail = ''
-						this.registrationName = ''
-						this.registrationPassword = ''
-						this.registrationPasswordRepeat = ''
-
-						this.$emit('successRegistrationMessage', this.registrationMessage)
+						this.LOGIN({
+							email: this.registrationEmail,
+							password: this.registrationPassword
+						});
 					}
 				})
 			}

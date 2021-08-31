@@ -236,6 +236,16 @@
 			margin-bottom: 30px;
 			display: block;
 
+			&-wrapper{
+				position: relative
+			}
+
+			&__error{
+				font-size: 12px;
+				color: red;
+				margin-top: 3px;
+			}
+
 			$parent: &;
 
 			&.disabled{
@@ -262,8 +272,13 @@
 					border-color: #15B776;
 				}
 			}
+			&.error{
+				input{
+					border-color: red;
+				}
+			}
 
-			&:hover, &:focus-within{
+			&:hover, &:focus-within, {
 				#{$parent}{
 					&__title{
 						font-size: 10px;
@@ -293,6 +308,7 @@
 				transition: 0.3s;
 				width: fit-content;
 				color: #A6B0AF;
+				order: -1;
 			}
 			input{
 				width: 100%;
@@ -302,6 +318,16 @@
 				padding-right: 24px;
 				border: 1px solid #A6B0AF;
 				border-radius: 4px;
+
+				&.is-data ~ #{$parent}__title{
+					font-size: 10px;
+					padding-left: 8px;
+					padding-right: 8px;
+					height: 14px;
+					top: -8px;
+					left: 10px;
+					background: #fff;
+				}
 			}
 			&__tooltip{
 				width: 16px;
