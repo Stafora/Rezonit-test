@@ -22,8 +22,10 @@
 						autocomplete="off"
 					>
 				</div>
-				<div class="form-element__error" v-for="error in this.LOGIN_ERRORS.email" v-bind:key="error">
-					{{ error }}
+				<div class="form-element__error">
+					<template v-for="error in this.LOGIN_ERRORS.email">
+						{{ error }}
+					</template>
 				</div>
 			</div>
 			<div class="form-element" :class="{error: this.LOGIN_ERRORS.email}">
@@ -47,8 +49,10 @@
 						</svg>
 					</div>
 				</div>
-				<div class="form-element__error" v-for="error in this.LOGIN_ERRORS.email" v-bind:key="error">
-					{{ error }}
+				<div class="form-element__error">
+					<template v-for="error in this.LOGIN_ERRORS.email">
+						{{ error }}
+					</template>
 				</div>
 			</div>
 
