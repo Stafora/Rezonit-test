@@ -15,7 +15,11 @@
 			</div>
 
 			<div class="adding-board-step" v-bind:class="{active: currentStep == STEP_IMAGE}">
-				<AddingBoardFile v-on:succesNextStep="succesNextStep" v-on:disabledNextStep="disabledNextStep" />
+				<AddingBoardFile 
+					v-on:succesNextStep="succesNextStep" 
+					v-on:disabledNextStep="disabledNextStep"
+					v-on:setStep="setStep"
+				/>
 			</div>
 			<div class="adding-board-step" v-bind:class="{active: currentStep == STEP_PARAMS}">
 				<AddingBoardParams />
@@ -40,6 +44,7 @@
 	import AddingBoardParams from './AddingBoardParams'
 	import AddingBoardBuilding from './AddingBoardBuilding'
 	import AddingBoardResultPopup from './AddingBoardResultPopup'
+	import { AddingBoardStorageServices } from '../../services/AddingBoardStorageServices';
 
 	export default {
 		name: 'AddingBoard',
@@ -90,22 +95,30 @@
 				switch(this.currentStep) {
 					case this.STEP_IMAGE:
 						this.isDisabledPrevBtn = true
+						if(AddingBoardStorageServices.getItem('file')){
+							this.isDisabledNextBtn = false
+						} 
 						break;
 					case this.STEP_PARAMS:
 						this.isDisabledPrevBtn = false
+						this.isDisabledNextBtn = true
 						break;
 					case this.STEP_BUILDING:
 						this.isDisabledPrevBtn = false
-						break;
-					default: 
 						this.isDisabledNextBtn = true
+						break;
 				}
 			},
+			// inner function
 			succesNextStep() {
 				this.isDisabledNextBtn = false
 			},
 			disabledNextStep() {
 				this.isDisabledNextBtn = true
+			},
+			setStep(step) {
+				this.currentStep = step
+				this.changeStep()
 			}
 		}
 	}

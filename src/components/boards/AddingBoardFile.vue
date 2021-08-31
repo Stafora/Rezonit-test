@@ -2,7 +2,7 @@
 	<form class="adding-board-file">
 
 		<!-- Добавление файла -->
-		<label v-if="!form.fileBoard" class="adding-board-file-preload">
+		<label v-if="!form.fileBoard && !endLoadingFile" class="adding-board-file-preload">
 			<input type="file" v-on:change="fileBoardChange">
 
 			<div class="adding-board-file-preload__text">
@@ -60,6 +60,29 @@
 			</div>
 		</div>
 
+		<!-- Ошибки -->
+		<div v-if="endLoadingFile && fileBoardStore" class="adding-board-file-progress">
+			<div class="adding-board-file-progress__ico">
+				<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<rect width="32" height="32" rx="4" fill="#2AA396"/>
+					<path d="M26.5 21.25H22C21.6022 21.25 21.2206 21.092 20.9393 20.8107C20.658 20.5294 20.5 20.1478 20.5 19.75V12.25C20.5 11.8522 20.658 11.4706 20.9393 11.1893C21.2206 10.908 21.6022 10.75 22 10.75H26.5V12.25H22V19.75H25V16.75H23.5V15.25H26.5V21.25Z" fill="white"/>
+					<path d="M17.5 10.75L16 20.5L14.5 10.75H13L14.89 21.25H17.11L19 10.75H17.5Z" fill="white"/>
+					<path d="M10 21.25H5.5V19.75H10V16.75H7C6.60218 16.75 6.22064 16.592 5.93934 16.3107C5.65804 16.0294 5.5 15.6478 5.5 15.25V12.25C5.5 11.8522 5.65804 11.4706 5.93934 11.1893C6.22064 10.908 6.60218 10.75 7 10.75H11.5V12.25H7V15.25H10C10.3978 15.25 10.7794 15.408 11.0607 15.6893C11.342 15.9706 11.5 16.3522 11.5 16.75V19.75C11.5 20.1478 11.342 20.5294 11.0607 20.8107C10.7794 21.092 10.3978 21.25 10 21.25Z" fill="white"/>
+				</svg>
+			</div>
+			<div class="adding-board-file-progress-info">
+				<div class="adding-board-file-progress__file-name">{{ fileBoardStore.file_name }}</div>
+				<div class="adding-board-file-progress__succes-text">
+					Файл загружен, можете переходить к следующему шагу
+				</div>
+			</div>
+			<div class="adding-board-file-progress-cancel" v-on:click="deleteFileBoard">
+				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M10 0.25C4.624 0.25 0.25 4.624 0.25 10C0.25 15.376 4.624 19.75 10 19.75C15.376 19.75 19.75 15.376 19.75 10C19.75 4.624 15.376 0.25 10 0.25ZM10 1.75C14.5653 1.75 18.25 5.43475 18.25 10C18.25 14.5653 14.5653 18.25 10 18.25C5.43475 18.25 1.75 14.5653 1.75 10C1.75 5.43475 5.43475 1.75 10 1.75ZM7.165 6.085L6.085 7.165L8.923 10L6.0865 12.835L7.1665 13.915L10 11.0778L12.835 13.9127L13.915 12.835L11.0778 10L13.9127 7.165L12.835 6.085L10 8.923L7.165 6.0865V6.085Z" />
+				</svg>
+			</div>
+		</div>
+
 	</form>
 </template>
 
@@ -76,19 +99,30 @@
 			},
 			disabledNextStep: {
 				type: Function
+			},
+			setStep: {
+				type: Function
 			}
 		},
 		data: () => ({
 			form: {
 				fileBoard: null
 			},
+			CURRENT_STEP: 1,
 			MAX_SIZE_FILE: 5,
 			isLoadProcessImage: false,
 			percentLoadFile: null,
 			LOAD_IMAGE_PERCENT_STEP_ONE: 30,
 			LOAD_IMAGE_PERCENT_STEP_TWO: 100,
-			endLoadingFile: false
+			endLoadingFile: false,
+			fileBoardStore: AddingBoardStorageServices.getItem('file') || null
 		}),
+		created: function (){
+			if(this.fileBoardStore){
+				this.endLoadingFile = true
+				this.$emit('setStep', this.CURRENT_STEP + 1)
+			}
+		},
 		watch: {
 			'$v.form.fileBoard.$invalid': function _watch$vFileBoard$invalid (value) {
 				this.loadFileToServer();
@@ -114,9 +148,12 @@
 			deleteFileBoard() {
 				this.form.fileBoard = null
 				this.isLoadProcessImage = false
+				this.fileBoardStore = null
+				this.endLoadingFile = false
 
-				AddingBoardStorageServices.deleteItem('file');
-				this.DELETE_BOARD_FILE(this.GET_BOARD_FILE.id);
+				const file = AddingBoardStorageServices.getItem('file');
+				this.DELETE_BOARD_FILE(file.id);
+				AddingBoardStorageServices.deleteItem('file')
 				this.$emit('disabledNextStep')
 			},
 			loadFileToServer() {
