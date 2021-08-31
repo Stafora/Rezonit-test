@@ -1,8 +1,8 @@
 <template>
-	<form class="adding-board-file">
+	<form class="adding-board-file" ref="fileform">
 
 		<!-- Добавление файла -->
-		<label v-if="!form.fileBoard && !endLoadingFile" class="adding-board-file-preload">
+		<label v-if="!form.fileBoard && !isEndLoadingFile" class="adding-board-file-preload">
 			<input type="file" v-on:change="fileBoardChange">
 
 			<div class="adding-board-file-preload__text">
@@ -37,10 +37,10 @@
 				<div class="adding-board-file-progress-bar" v-show="isLoadProcessImage && percentLoadFile >= 0 && !$v.form.fileBoard.$invalid">
 					<div class="adding-board-file-progress-bar-percent" :style="{width: percentLoadFile+'%'}"></div>
 				</div>
-				<div class="adding-board-file-progress__succes-text" v-if="endLoadingFile">
+				<div class="adding-board-file-progress__succes-text" v-if="isEndLoadingFile">
 					Файл загружен, можете переходить к следующему шагу
 				</div>
-				<div class="adding-board-file-progress__succes-text" v-if="!$v.form.fileBoard.$invalid && !endLoadingFile">
+				<div class="adding-board-file-progress__succes-text" v-if="!$v.form.fileBoard.$invalid && !isEndLoadingFile">
 					Файл прошёл валидацию, идёт загрузка ...
 				</div>
 				<div class="adding-board-file-progress__error-text" v-if="!$v.form.fileBoard.chekFile">
@@ -61,7 +61,7 @@
 		</div>
 
 		<!-- Ошибки -->
-		<div v-if="endLoadingFile && fileBoardStore" class="adding-board-file-progress">
+		<div v-if="isEndLoadingFile && fileBoardStore" class="adding-board-file-progress">
 			<div class="adding-board-file-progress__ico">
 				<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<rect width="32" height="32" rx="4" fill="#2AA396"/>
@@ -114,13 +114,30 @@
 			percentLoadFile: null,
 			LOAD_IMAGE_PERCENT_STEP_ONE: 30,
 			LOAD_IMAGE_PERCENT_STEP_TWO: 100,
-			endLoadingFile: false,
-			fileBoardStore: AddingBoardStorageServices.getItem('file') || null
+			isEndLoadingFile: false,
+			fileBoardStore: AddingBoardStorageServices.getItem('file') || null,
+			dragAndDropCapable: false
 		}),
 		created: function (){
 			if(this.fileBoardStore){
-				this.endLoadingFile = true
+				this.isEndLoadingFile = true
 				this.$emit('setStep', this.CURRENT_STEP + 1)
+			}
+		},
+		mounted(){
+			// check browser for drag/drop and load image
+			this.dragAndDropCapable = this.determineDragAndDropCapable();
+			if(this.dragAndDropCapable){
+				['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(function(evt) {
+					this.$refs.fileform.addEventListener(evt, function(e){
+						e.preventDefault()
+						e.stopPropagation()
+					}, false)
+				}.bind(this))
+
+				this.$refs.fileform.addEventListener('drop', function(e){
+					this.form.fileBoard = e.dataTransfer.files[0]
+				}.bind(this))
 			}
 		},
 		watch: {
@@ -149,11 +166,13 @@
 				this.form.fileBoard = null
 				this.isLoadProcessImage = false
 				this.fileBoardStore = null
-				this.endLoadingFile = false
+				this.isEndLoadingFile = false
 
 				const file = AddingBoardStorageServices.getItem('file');
-				this.DELETE_BOARD_FILE(file.id);
-				AddingBoardStorageServices.deleteItem('file')
+				if(file){
+					this.DELETE_BOARD_FILE(file.id);
+					AddingBoardStorageServices.deleteItem('file')
+				}
 				this.$emit('disabledNextStep')
 			},
 			loadFileToServer() {
@@ -169,7 +188,7 @@
 					result.then((resp) => {
 						this.setProcesLoadingImage(this.LOAD_IMAGE_PERCENT_STEP_TWO)
 						this.setProcesLoadingImage(null);
-						this.endLoadingFile = true
+						this.isEndLoadingFile = true
 						this.$emit('succesNextStep')
 					})
 				}
@@ -192,6 +211,12 @@
 				setTimeout(function() {
 					self.percentLoadFile = percent;
 				}, 200)
+			},
+
+			// dragan drop file
+			determineDragAndDropCapable(){
+				var div = document.createElement('div');
+				return (('draggable' in div) || ('ondragstart' in div && 'ondrop' in div)) && 'FormData' in window && 'FileReader' in window;
 			}
 		},
 		validations: {
