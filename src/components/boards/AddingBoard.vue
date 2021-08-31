@@ -15,7 +15,7 @@
 			</div>
 
 			<div class="adding-board-step" v-bind:class="{active: currentStep == STEP_IMAGE}">
-				<AddingBoardFile />
+				<AddingBoardFile v-on:succesNextStep="succesNextStep" v-on:disabledNextStep="disabledNextStep" />
 			</div>
 			<div class="adding-board-step" v-bind:class="{active: currentStep == STEP_PARAMS}">
 				<AddingBoardParams />
@@ -100,6 +100,12 @@
 					default: 
 						this.isDisabledNextBtn = true
 				}
+			},
+			succesNextStep() {
+				this.isDisabledNextBtn = false
+			},
+			disabledNextStep() {
+				this.isDisabledNextBtn = true
 			}
 		}
 	}
