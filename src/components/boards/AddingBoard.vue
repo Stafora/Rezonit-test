@@ -471,6 +471,42 @@
 				z-index: 1;
 			}
 		}
+	}
 
+	@media(max-width: 980px) {
+		.adding-board{
+			&-content{
+				padding: 20px 15px;
+				height: 100vh;
+				overflow: scroll;
+			}
+			&-col{
+				width: 100%;
+			}
+			&-input{
+				margin-bottom: 15px;
+
+				&-info{
+					&-error{
+						&__message{
+							right: 25px;
+							top: -20px;
+							left: auto;
+
+							&::before{
+								top: 22px;
+								left: auto;
+								right: -10px;
+								margin-left: -3px;
+								transform: rotate(90deg);
+							}
+						}
+					}
+				}
+			}
+			&-checkbox{
+				padding: 5px 15px;
+			}
+		}
 	}
 </style>

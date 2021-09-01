@@ -347,6 +347,16 @@
 				}
 			}
 		}
+	}
 
+	@media(max-width: 980px){
+		.adding-board-file{
+			padding: 15px;
+			&-preload{
+				&__text{
+					text-align: center;
+				}
+			}
+		}
 	}
 </style>

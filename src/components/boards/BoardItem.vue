@@ -54,70 +54,95 @@
 </script>
 
 <style lang="scss">
-	.boards{
-		&-list{
-			&-item{
+	.boards-list-item{
+		display: flex;
+		align-items: center;
+		border-top: 1px solid #E4E4E7;
+
+		&:last-child{
+			border-bottom: 1px solid #E4E4E7;
+		}
+
+		&-col{
+			font-size: 12px;
+		}
+
+		&__title{
+			justify-content: flex-start !important;
+
+			svg{
+				margin-right: 15px;
+			}
+		}
+		&-setting{
+			position: relative;
+
+			&__open{
+				cursor: pointer;
+				width: 27px;
+				height: 27px;
+			}
+			&-menu{
+				background: #FFFFFF;
+				box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+				border-radius: 4px;
+				padding: 8px 4px;
+				width: 85px;
 				display: flex;
-				align-items: center;
-				border-top: 1px solid #E4E4E7;
+				flex-direction: column;
+				position: absolute;
+				right: -10px;
+				top: 80px;
+				opacity: 0;
+				visibility: hidden;
+				transition: 0.3s;
+				z-index: 2;
 
-				&:last-child{
-					border-bottom: 1px solid #E4E4E7;
+				&.active{
+					top: 30px;
+					opacity: 1;
+					visibility: visible;
 				}
 
-				&-col{
-					font-size: 12px;
-				}
+				&__item{
+					color: #A6B0AF;
+					font-size: 10px;
+					line-height: 1.3;
+					border-bottom: 1px solid rgba(166, 176, 175, 0.25);
+					padding: 8px 2px;
+					text-align: center;
+					width: 100%;
 
-				&__title{
-					justify-content: flex-start !important;
-
-					svg{
-						margin-right: 15px;
+					&:last-child{
+						border-bottom: none;
 					}
 				}
-				&-setting{
-					position: relative;
+			}
+		}
+	}
 
-					&__open{
-						cursor: pointer;
-					}
-					&-menu{
-						background: #FFFFFF;
-						box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-						border-radius: 4px;
-						padding: 8px 4px;
-						width: 85px;
-						display: flex;
-						flex-direction: column;
-						position: absolute;
-						right: -10px;
-						top: 80px;
-						opacity: 0;
-						visibility: hidden;
-						transition: 0.3s;
-						z-index: 2;
+	@media(max-width: 980px){
+		.boards-list-item{
+			flex-direction: column;
 
-						&.active{
-							top: 30px;
-							opacity: 1;
-							visibility: visible;
-						}
-
-						&__item{
-							color: #A6B0AF;
-							font-size: 10px;
-							line-height: 1.3;
-							border-bottom: 1px solid rgba(166, 176, 175, 0.25);
-							padding: 8px 2px;
-							text-align: center;
-							width: 100%;
-
-							&:last-child{
-								border-bottom: none;
-							}
-						}
-					}
+			&__title{
+				flex-direction: column;
+				font-size: 14px;
+				font-weight: 500;
+				svg{
+					margin-left: auto;
+					margin-right: auto;
+					margin-bottom: 5px;
+				}
+			}
+			&-setting{
+				&__open{
+					
+				}
+				&-menu{
+					width: 90px;
+					left: 50%;
+					margin-left: -45px;
 				}
 			}
 		}

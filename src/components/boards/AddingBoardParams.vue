@@ -110,7 +110,7 @@
 						<label class="adding-board-input" :class="{disabled: !form.isPanel, 'error' : $v.form.panelX.$error, 'success' : !$v.form.panelX.$invalid}">
 							<div class="adding-board-input-wrapper">
 								<input 
-									type="number"
+									type="text"
 									:disabled="!form.isPanel"
 									v-model.lazy="form.panelX"
 									@blur="$v.form.panelX.$touch()"
@@ -138,7 +138,7 @@
 						<label class="adding-board-input" :class="{disabled: !form.isPanel, 'error' : $v.form.panelY.$error, 'success' : !$v.form.panelY.$invalid}">
 							<div class="adding-board-input-wrapper">
 								<input 
-									type="number"
+									type="text"
 									:disabled="!form.isPanel"
 									v-model.lazy="form.panelY"
 									@blur="$v.form.panelY.$touch()"
@@ -168,7 +168,7 @@
 					<div class="adding-board-col adding-board-col-6">
 						<label class="adding-board-input" :class="{disabled: !form.isPanel, 'error' : $v.form.panelGapX.$error, 'success' : !$v.form.panelGapX.$invalid}">
 							<input 
-								type="number"
+								type="text"
 								:disabled="!form.isPanel"
 								v-model.lazy="form.panelGapX"
 								@blur="$v.form.panelGapX.$touch()"
@@ -196,7 +196,7 @@
 					<div class="adding-board-col adding-board-col-6">
 						<label class="adding-board-input" :class="{disabled: !form.isPanel, 'error' : $v.form.panelGapY.$error, 'success' : !$v.form.panelGapY.$invalid}">
 							<input 
-								type="number" 
+								type="text" 
 								:disabled="!form.isPanel"
 								v-model.lazy="form.panelGapY"
 								@blur="$v.form.panelGapY.$touch()"
@@ -549,19 +549,19 @@
 					required,
 					between: between(0, 10),
 					panelGapXMillingAndScribing() {
+						if(this.form.milling && this.form.scribing){
+							if(parseFloat(this.form.panelGapX).toFixed(2) === 0){
+								return true
+							}
+							if(parseFloat(this.form.panelGapX).toFixed(2) >= 2){
+								return true
+							}
+						}
 						if(this.form.milling){
-							return this.form.panelGapX >= parseFloat(2).toFixed(2)
+							return parseFloat(this.form.panelGapX).toFixed(2) >= 2
 						}
 						if(this.form.scribing){
-							return this.form.panelGapX === parseFloat(0).toFixed(2)
-						}
-						if(this.form.milling && this.form.scribing){
-							if(this.form.panelGapX === parseFloat(0).toFixed(2)){
-								return true
-							}
-							if(this.form.panelGapX >= parseFloat(2).toFixed(2)){
-								return true
-							}
+							return parseFloat(this.form.panelGapX).toFixed(2) === 0
 						}
 						return false
 					}
@@ -570,19 +570,19 @@
 					required,
 					between: between(0, 10),
 					panelGapYMillingAndScribing() {
-						if(this.form.milling){
-							return this.form.panelGapX >= parseFloat(2).toFixed(2)
+						if(this.form.milling && this.form.scribing){
+							if(parseFloat(this.form.panelGapY).toFixed(2) === 0){
+								return true
+							}
+							if(parseFloat(this.form.panelGapY).toFixed(2) >= 2){
+								return true
+							}
 						}
 						if(this.form.scribing){
-							return this.form.panelGapX === parseFloat(0).toFixed(2)
+							return parseFloat(this.form.panelGapY).toFixed(2) === 0
 						}
-						if(this.form.milling && this.form.scribing){
-							if(this.form.panelGapX === parseFloat(0).toFixed(2)){
-								return true
-							}
-							if(this.form.panelGapX >= parseFloat(2).toFixed(2)){
-								return true
-							}
+						if(this.form.milling){
+							return parseFloat(this.form.panelGapY).toFixed(2) >= 2
 						}
 						return false
 					}
@@ -696,6 +696,22 @@
 				z-index: 2;
 				position: relative;
 				padding-left: 2px;
+			}
+		}
+	}
+
+	@media(max-width: 980px){
+		.adding-board-params{
+			&__title{
+				margin-top: 20px;
+				margin-bottom: 20px;
+			}
+			&-square{
+				margin-bottom: 40px;
+			}
+			&-visually{
+				padding: 0px;
+				width: 255px;
 			}
 		}
 	}
