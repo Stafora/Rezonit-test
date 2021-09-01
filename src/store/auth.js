@@ -53,7 +53,6 @@ export default {
 				data: user                
             })
             .then((resp) => {
-				console.log('asd');
 				const token = resp.data.token;
 				if(token){
 					localStorage.setItem('token', token)
@@ -90,7 +89,6 @@ export default {
 				commit('LOGOUT')
 				localStorage.removeItem('token')
 				delete axios.defaults.headers.common.Authorization
-				router.push('/auth')
 			})
 		}
     }

@@ -7,8 +7,8 @@
 			</div>
 
 			<div class="boards-header-buttons">
-				<div class="btn btn-border boards-header-buttons__btn disabled"><span>Черновик</span></div>
-				<div class="btn btn-default boards-header-buttons__btn" v-on:click="openAddPopup"><span>Добавить</span></div>
+				<div class="btn btn-border boards-header-buttons__btn" :class="{disabled: isDisaledBtnDraft}"><span>Черновик</span></div>
+				<div class="btn btn-default boards-header-buttons__btn" v-on:click="openPopup"><span>Добавить</span></div>
 			</div>
 		</div>
 
@@ -35,7 +35,8 @@
 			</div>
 		</div>
 
-		<AddingBoard v-on:openAddPopup="openAddPopup" v-bind:isOpenPopup="isOpenPopup"/>
+		<AddingBoard v-if="isOpenPopup" v-on:openAddPopup="openAddPopup" v-bind:isOpenPopup="isOpenPopup"/>
+		<ConfirmDialogue ref="confirmDialogue"></ConfirmDialogue>
 
     </div>
 </template>
@@ -43,6 +44,8 @@
 <script>
 	import BoardItem from '@/components/boards/BoardItem'
 	import AddingBoard from '@/components/boards/AddingBoard'
+	import { AddingBoardStorageServices } from '@/services/AddingBoardStorageServices'
+	import ConfirmDialogue from '@/components/popup/ConfirmDialogue.vue'
 
 	export default {
 		name: 'Home',
@@ -50,15 +53,48 @@
 			title: 'Список плат'
 		},
 		data: () => ({
-			isOpenPopup: false
+			isOpenPopup: false,
+			isDisaledBtnDraft: true,
+			issetDraft: false
 		}),
+		created: function (){
+			this.issetDraft = AddingBoardStorageServices.getItem('file') !== null
+			if(this.issetDraft) {
+				this.changeDisabledBtnDraft(true);
+			}
+		},
 		components: {
 			BoardItem,
-			AddingBoard
+			AddingBoard,
+			ConfirmDialogue
 		},
 		methods: {
 			openAddPopup() {
 				this.isOpenPopup = !this.isOpenPopup
+			},
+			async openPopup() {
+				if(this.issetDraft){
+					const ok = await this.$refs.confirmDialogue.show({
+						title: '',
+						message: 'Хотите продолжить редактировать сохраненную плату?',
+						okButton: 'Да'
+					})
+					if (ok) {
+						this.isOpenPopup = !this.isOpenPopup
+					} else {
+						AddingBoardStorageServices.clearAll();
+						this.openAddPopup();
+					}
+				} else {
+					this.openAddPopup();
+				}
+			},
+			changeDisabledBtnDraft(boolean) {
+				if(boolean) {
+					this.isDisaledBtnDraft = boolean;
+					return
+				}
+				this.isDisaledBtnDraft = !this.isDisaledBtnDraft
 			}
 		}
 	}
@@ -100,6 +136,7 @@
 		}
 
 		&-list{
+			overflow: hidden;
 			&-header{
 				display: flex;
 				border-top: 1px solid #E4E4E7;
@@ -132,6 +169,37 @@
 				&:last-child{
 					width: 5%;
 					min-width: 50px;
+				}
+			}
+		}
+	}
+
+	@media(max-width: 980px){
+		.boards{
+			&-header{
+				flex-direction: column;
+				padding: 8px 8px;
+
+				&-count{
+					margin-bottom: 15px;
+				}
+				&-buttons{
+					&__btn{
+						width: 120px;
+						margin-left: 10px;
+						margin-right: 10px;
+					}
+				}
+			}
+			&-list{
+				&-header-col, &-item-col{
+					padding: 6px 10px;
+				}
+				&-header{
+					display: none;
+				}
+				&-body{
+					height: calc(100vh - 175px);
 				}
 			}
 		}

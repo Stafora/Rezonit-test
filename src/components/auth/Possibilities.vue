@@ -78,4 +78,11 @@
 			}
 		}
 	}
+
+	@media(max-width: 980px){
+		.auth-possibilities{
+			width: 100%;
+			order: 2;
+		}
+	}
 </style>

@@ -75,12 +75,14 @@
 					transition: 0.8s;
 					opacity: 0;
 					visibility: hidden;
+					position: absolute;
 				}
 				&-register{
 					transform: rotate3d(0, 1, 0, 0deg);
 					transition: 0.8s;
 					opacity: 1;
 					visibility: visible;
+					position: relative;
 				}
 			}
 		}
@@ -88,11 +90,14 @@
 
 	@media(max-width: 980px){
 		.auth-container{
-			&-login{
+			align-items: flex-start;
 
+			&-login{
+				position: relative;
+				flex-wrap: wrap;
 			}
 			&-register{
-				
+				flex-wrap: wrap;
 			}
 		}
 	}

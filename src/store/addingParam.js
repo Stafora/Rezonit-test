@@ -26,11 +26,11 @@ export default {
 					}                
 				})
 				.then((resp) => {
-					commit('ERROR_BOARD_CHECK_FILE_NAME', resp.data.result)
+					commit('ERROR_BOARD_PARAM_NAME', resp.data.result)
 				})
 				.catch((error) => {
 					console.log(error)
-					commit('ERROR_BOARD_CHECK_FILE_NAME', false)
+					commit('ERROR_BOARD_PARAM_NAME', false)
 				})
 			}
         }

@@ -4,7 +4,7 @@ export const STORAGE_KEY = 'addingBoard'
 
 export const AddingBoardStorageServices = {
 	getItem(name) {
-		const data = LocalStorageService.getItem(STORAGE_KEY, []);
+		const data = LocalStorageService.getItem(STORAGE_KEY, {});
 		if(data[name]) {
 			return data[name];
 		} else {
@@ -12,7 +12,7 @@ export const AddingBoardStorageServices = {
 		}
 	},
 	getAll() {
-		return LocalStorageService.getItem(STORAGE_KEY, [])
+		return LocalStorageService.getItem(STORAGE_KEY, {})
 	},
 	setItem(name, value) {
 		const data = LocalStorageService.getItem(STORAGE_KEY);

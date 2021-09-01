@@ -22,6 +22,8 @@
 	@media(max-width: 980px){
 		.document-auth{
 			height: auto;
+			padding: 20px;
+			align-items: flex-start;
 		}
 	}
 </style>

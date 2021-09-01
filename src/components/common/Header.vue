@@ -25,6 +25,7 @@
 
 <script>
 	import { mapActions, mapGetters } from 'vuex'
+	import router from '../../router'
 
 	export default {
 		name: 'Header',
@@ -51,6 +52,7 @@
 			logout: function () {
 				this.LOGOUT()
 				this.toggleUserInfo()
+				router.push('/auth');
 			}
 		},
 		created: function () {
@@ -71,15 +73,17 @@
 		z-index: 3;
 
 		&__logo{
+			display: flex;
 			margin-right: 90px;
-			img{
 
+			img{
+				max-width: 100%;
 			}
 		}
 		&__page-name{
 			font-weight: 500;
 			font-size: 20px;
-			line-height: 23px;
+			line-height: 1.3;
 			color: #525B53;
 			
 		}
@@ -163,6 +167,26 @@
 					cursor: pointer;
 				}
 			}
+		}
+	}
+
+	@media(max-width: 980px){
+		.header{
+			padding: 0px 15px;
+
+			&__logo{
+				width: 90px;
+				margin-right: 20px;
+			}
+			&__page-name{
+				font-size: 14px;
+			}
+			&-profile{
+				&-panel{
+					width: 140px;
+				}
+			}
+			
 		}
 	}
 </style>
