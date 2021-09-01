@@ -208,6 +208,10 @@
 			justify-content: space-between;
 			margin-top: 10px;
 		}
-
+	}
+	@media(max-width: 980px){
+		.registration{
+			width: 100%;
+		}
 	}
 </style>

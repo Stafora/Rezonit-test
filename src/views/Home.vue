@@ -32,6 +32,30 @@
 			</div>
 			<div class="boards-list-body scroll">
 				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
+				<BoardItem />
 			</div>
 		</div>
 
@@ -100,6 +124,7 @@
 		}
 
 		&-list{
+			overflow: hidden;
 			&-header{
 				display: flex;
 				border-top: 1px solid #E4E4E7;
@@ -132,6 +157,19 @@
 				&:last-child{
 					width: 5%;
 					min-width: 50px;
+				}
+			}
+		}
+	}
+
+	@media(max-width: 980px){
+		.boards{
+			&-header{
+				flex-direction: column;
+			}
+			&-list{
+				&-body{
+
 				}
 			}
 		}

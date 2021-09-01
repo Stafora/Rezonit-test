@@ -15,25 +15,22 @@
 			</div>
 
 			<div class="adding-board-step" v-bind:class="{active: currentStep == STEP_IMAGE}">
-				<AddingBoardFile 
-					v-on:succesNextStep="succesNextStep" 
-					v-on:disabledNextStep="disabledNextStep"
+				<AddingBoardFile
 					v-on:setStep="setStep"
 				/>
 			</div>
 			<div class="adding-board-step" v-bind:class="{active: currentStep == STEP_PARAMS}">
-				<AddingBoardParams />
+				<AddingBoardParams 
+					v-on:setStep="setStep"
+				/>
 			</div>
 			<div class="adding-board-step" v-bind:class="{active: currentStep == STEP_BUILDING}">
-				<AddingBoardBuilding />
+				<AddingBoardBuilding 
+					v-on:setStep="setStep"
+				/>
 			</div>
 
 			<AddingBoardResultPopup />
-
-			<div class="adding-board-buttons">
-				<div class="adding-board-buttons__btn btn btn-border" v-bind:class="{disabled: isDisabledPrevBtn}" v-on:click="prevStep"><span>Назад</span></div>
-				<div class="adding-board-buttons__btn btn btn-default" v-bind:class="{disabled: isDisabledNextBtn}" v-on:click="nextStep"><span>Далее</span></div>
-			</div>
 
 		</div>
 	</div>
@@ -44,13 +41,10 @@
 	import AddingBoardParams from './AddingBoardParams'
 	import AddingBoardBuilding from './AddingBoardBuilding'
 	import AddingBoardResultPopup from './AddingBoardResultPopup'
-	import { AddingBoardStorageServices } from '../../services/AddingBoardStorageServices';
 
 	export default {
 		name: 'AddingBoard',
 		data: () => ({
-			isDisabledNextBtn: true,
-			isDisabledPrevBtn: true,
 			currentStep: 1,
 			STEP_IMAGE: 1,
 			STEP_PARAMS: 2,
@@ -75,47 +69,17 @@
 			closePopup() {
 				this.$emit('openAddPopup')
 			},
-			nextStep() {
-				if(!this.isDisabledNextBtn){
-					if(this.currentStep !== this.STEP_BUILDING){
-						this.currentStep++
-						this.changeStep()
-					}
-				}
-			},
-			prevStep() {
-				if(!this.isDisabledPrevBtn && this.currentStep !== this.STEP_IMAGE){
-					if(this.currentStep !== this.STEP_IMAGE){
-						this.currentStep--
-						this.changeStep()
-					}
-				}
-			},
 			changeStep() {
 				switch(this.currentStep) {
 					case this.STEP_IMAGE:
-						this.isDisabledPrevBtn = true
-						if(AddingBoardStorageServices.getItem('file')){
-							this.isDisabledNextBtn = false
-						} 
 						break;
 					case this.STEP_PARAMS:
-						this.isDisabledPrevBtn = false
-						this.isDisabledNextBtn = true
 						break;
 					case this.STEP_BUILDING:
-						this.isDisabledPrevBtn = false
-						this.isDisabledNextBtn = true
 						break;
 				}
 			},
 			// inner function
-			succesNextStep() {
-				this.isDisabledNextBtn = false
-			},
-			disabledNextStep() {
-				this.isDisabledNextBtn = true
-			},
 			setStep(step) {
 				this.currentStep = step
 				this.changeStep()
@@ -318,6 +282,13 @@
 				padding-right: 24px;
 				border: 1px solid #A6B0AF;
 				border-radius: 4px;
+				-webkit-appearance: none;
+				-moz-appearance:textfield;
+
+				&::-webkit-outer-spin-button,
+				&::-webkit-inner-spin-button{
+					-webkit-appearance: none;
+				}
 
 				&.is-data ~ #{$parent}__title{
 					font-size: 10px;
@@ -336,6 +307,62 @@
 				top: 50%;
 				right: 8px;
 				margin-top: -8px;
+			}
+			&-info{
+				&-error{
+					width: 16px;
+					height: 16px;
+					position: absolute;
+					top: 50%;
+					right: 8px;
+					margin-top: -8px;
+					cursor: pointer;
+
+					$parent: &;
+
+					&.active{
+						#{$parent}__message{
+							opacity: 1;
+							visibility: visible;
+						}
+					}
+					&.error{
+						svg{
+							fill: red;
+						}
+					}
+
+					svg{
+						fill: #A6B0AF;
+					}
+
+					&__message{
+						position: absolute;
+						top: 23px;
+						background: red;
+						color: #fff;
+						width: 160px;
+						left: -75px;
+						font-size: 11px;
+						z-index: 2;
+						text-align: center;
+						border-radius: 2px;
+						padding: 3px;
+						opacity: 0;
+						visibility: hidden;
+						transition: 0.3s;
+						
+						&::before{
+							content: '';
+							position: absolute;
+							border: 6px solid transparent; 
+							border-bottom: 6px solid red;
+							top: -11px;
+							left: 50%;
+							margin-left: -3px;
+						}
+					}
+				}
 			}
 		}
 

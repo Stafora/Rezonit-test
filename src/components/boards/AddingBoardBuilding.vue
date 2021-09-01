@@ -57,12 +57,50 @@
 
 			</div>
 		</div>
+
+		<div class="adding-board-buttons">
+			<div class="adding-board-buttons__btn btn btn-border" v-on:click="prevStep"><span>Назад</span></div>
+			<div class="adding-board-buttons__btn btn btn-default" :class="{disabled: !isSuccessNextBtn}" v-on:click="finishStep"><span>Далее</span></div>
+		</div>
 	</div>
 </template>
 
 <script>
+	import { mapActions, mapGetters } from 'vuex'
+
 	export default {
-		name: 'AddingBoardBuilding'
+		name: 'AddingBoardBuilding',
+		params: {
+			setStep: {
+				type: Function
+			}
+		},
+		data: () => ({
+			isSuccessNextBtn: false,
+			CURRENT_STEP: 3
+		}),
+		created: function (){
+			// this.TEST()
+		},
+		computed: {
+			...mapGetters([
+                'GET_CARD_MATERIALS'
+            ])
+		},
+		methods: {
+			...mapActions([
+                'CARD_MATERIALS',
+				'TEST'
+            ]),
+			finishStep() {
+				if(this.isSuccessNextBtn) {
+					console.log('finish')
+				}
+			},
+			prevStep() {
+				this.$emit('setStep', this.CURRENT_STEP - 1)
+			}
+		}
 	}
 </script>
 

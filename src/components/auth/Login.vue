@@ -172,6 +172,11 @@
 			text-align: center;
 			color: #18b47b;
 		}
+	}
 
+	@media(max-width: 980px){
+		.login{
+			width: 100%;
+		}
 	}
 </style>

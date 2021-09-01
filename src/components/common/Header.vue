@@ -25,6 +25,7 @@
 
 <script>
 	import { mapActions, mapGetters } from 'vuex'
+	import router from '../../router'
 
 	export default {
 		name: 'Header',
@@ -51,6 +52,7 @@
 			logout: function () {
 				this.LOGOUT()
 				this.toggleUserInfo()
+				router.push('/auth');
 			}
 		},
 		created: function () {

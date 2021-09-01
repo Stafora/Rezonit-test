@@ -52,4 +52,17 @@
 			height: 100%;
 		}
 	}
+
+	@media(max-width: 980px){
+		.main-aside{
+			height: auto;
+
+			&__aside{
+				display: none;
+			}
+			&__main{
+				width: 100%;
+			}
+		}
+	}
 </style>
