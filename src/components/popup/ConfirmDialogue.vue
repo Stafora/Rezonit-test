@@ -1,10 +1,10 @@
 <template>
     <popup-modal ref="popup">
-        <h2 style="margin-top: 0">{{ title }}</h2>
-        <p>{{ message }}</p>
-        <div class="btns">
-            <button class="cancel-btn" @click="_cancel">{{ cancelButton }}</button>
-            <span class="ok-btn" @click="_confirm">{{ okButton }}</span>
+        <div class="popup__title">{{ title }}</div>
+        <div class="popup__message">{{ message }}</div>
+        <div class="popup__btns">
+			<div class="ok-btn btn btn-border" @click="_confirm"><span>{{ okButton }}</span></div>
+            <div class="cancel-btn btn btn-border" @click="_cancel"><span>{{ cancelButton }}</span></div>
         </div>
     </popup-modal>
 </template>
@@ -20,8 +20,8 @@
 		data: () => ({
 			title: undefined,
 			message: undefined,
-			okButton: undefined, 
-			cancelButton: 'Назад',
+			okButton: 'Да', 
+			cancelButton: 'Нет',
 			resolvePromise: undefined,
 			rejectPromise: undefined
 		}),
@@ -64,36 +64,27 @@
 </script>
 
 <style scoped>
-	.btns {
+	.ok-btn, .cancel-btn{
+		margin: 0px 8px;
+		width: 56px;
+	}
+	.popup__title{
+		font-size: 16px;
+		font-weight: 500;
+		line-height: 1.4;
+		color: #525B53;
+		text-align: center;
+	}
+	.popup__message{
+		font-size: 14px;
+		line-height: 1.6;
+		color: #525B53;
+		text-align: center;
+	}
+	.popup__btns{
 		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-	}
-	.ok-btn {
-		padding: 0.5em 1em;
-		background-color: #4ad395;
-		color: #fff;
-		border-radius: 5px;
-		font-weight: bold;
-		font-size: 16px;
-		cursor: pointer;
-		min-width: 120px;
-		text-decoration: none;
-		outline: none;
-	}
-	.cancel-btn {
-		padding: 0.5em 1em;
-		color: #fff;
-		background-color: red;
-		border: 2px solid red;
-		border: 0px;
-		text-decoration: underline;
-		font-weight: bold;
-		font-size: 16px;
-		cursor: pointer;
-		border-radius: 5px;
-		min-width: 120px;
-		text-decoration: none;
-		outline: none;
+		align-items: center;
+		justify-content: center;
+		margin-top: 15px
 	}
 </style>
