@@ -7,7 +7,7 @@
 			</div>
 
 			<div class="boards-header-buttons">
-				<div class="btn btn-border boards-header-buttons__btn" :class="{disabled: isDisaledBtnDraft}"><span>Черновик</span></div>
+				<div class="btn btn-border boards-header-buttons__btn" :class="{disabled: isDisaledBtnDraft}" v-on:click="openPopupDraft"><span>Черновик</span></div>
 				<div class="btn btn-default boards-header-buttons__btn" v-on:click="openPopup"><span>Добавить</span></div>
 			</div>
 		</div>
@@ -53,14 +53,14 @@
 			title: 'Список плат'
 		},
 		data: () => ({
-			isOpenPopup: false,
+			isOpenPopup: true,
 			isDisaledBtnDraft: true,
 			issetDraft: false
 		}),
 		created: function (){
 			this.issetDraft = AddingBoardStorageServices.getItem('file') !== null
 			if(this.issetDraft) {
-				this.changeDisabledBtnDraft(true);
+				this.changeDisabledBtnDraft();
 			}
 		},
 		components: {
@@ -71,6 +71,20 @@
 		methods: {
 			openAddPopup() {
 				this.isOpenPopup = !this.isOpenPopup
+				this.changeIssetDraft();
+			},
+			changeDisabledBtnDraft(bool) {
+				if(bool){
+					this.isDisaledBtnDraft = bool
+				} else {
+					this.isDisaledBtnDraft = false
+				}
+			},
+			changeIssetDraft() {
+				this.issetDraft = AddingBoardStorageServices.getItem('file') !== null
+				if(this.issetDraft) {
+					this.changeDisabledBtnDraft();
+				}
 			},
 			async openPopup() {
 				if(this.issetDraft){
@@ -82,19 +96,19 @@
 					if (ok) {
 						this.isOpenPopup = !this.isOpenPopup
 					} else {
-						AddingBoardStorageServices.clearAll();
+						AddingBoardStorageServices.clearAll()
 						this.openAddPopup();
+						this.changeDisabledBtnDraft(true);
 					}
 				} else {
 					this.openAddPopup();
+					this.changeDisabledBtnDraft()
 				}
 			},
-			changeDisabledBtnDraft(boolean) {
-				if(boolean) {
-					this.isDisaledBtnDraft = boolean;
-					return
+			openPopupDraft() {
+				if(!this.isDisaledBtnDraft){
+					this.isOpenPopup = true
 				}
-				this.isDisaledBtnDraft = !this.isDisaledBtnDraft
 			}
 		}
 	}

@@ -6,7 +6,8 @@ export default {
     state: {
 		cardMaterials: null,
 		cardMaterialMarks: null,
-		cardMaterialTypes: null
+		cardMaterialTypes: null,
+		cardMppSets: null
     },
     getters: {
 		GET_CARD_MATERIALS(state){
@@ -14,6 +15,12 @@ export default {
 		},
 		GET_CARD_MATERIAL_MARKS(state){
 			return state.cardMaterialMarks
+		},
+		GET_CARD_MATERIAL_TYPES(state){
+			return state.cardMaterialTypes
+		},
+		GET_CARD_MPP_SETS(state){
+			return state.cardMppSets
 		}
     },
     mutations: {
@@ -23,50 +30,69 @@ export default {
 		SET_CARD_MATERIAL_MARKS: (state, materialMarks) => {
 			state.cardMaterialMarks = materialMarks
 		},
-		ET_CARD_MATERIAL_TYPES: (state, materialTypes) => {
+		SET_CARD_MATERIAL_TYPES: (state, materialTypes) => {
 			state.cardMaterialTypes = materialTypes
+		},
+		SET_CARD_MPP_SETS: (state, mppSets) => {
+			state.cardMppSets = mppSets
 		}
     },
     actions: {
 		CARD_MATERIALS({ commit }) {
-			return axios('api/card_materials', {
-				method: 'GET'              
+			return axios.get('api/card_materials', {
+				headers: {
+					common: {
+						Authorization: null
+					}
+				} 
 			})
 			.then((resp) => {
-				commit('SET_CARD_MATERIALS', resp.data.result)
+				commit('SET_CARD_MATERIALS', resp.data)
 			})
 			.catch((error) => {
 				console.log(error)
 			})
         },
 		CARD_MATERIAL_MARKS({ commit }) {
-			return axios('api/card_material_marks', {
-				method: 'GET'              
+			return axios.get('api/card_material_marks', {
+				headers: {
+					common: {
+						Authorization: null
+					}
+				} 
 			})
 			.then((resp) => {
-				commit('SET_CARD_MATERIAL_MARKS', resp.data.result)
+				commit('SET_CARD_MATERIAL_MARKS', resp.data)
 			})
 			.catch((error) => {
 				console.log(error)
 			})
         },
 		CARD_MATERIAL_TYPES({ commit }) {
-			return axios('api/card_material_types', {
-				method: 'GET'              
+			return axios.get('api/card_material_types', {
+				headers: {
+					common: {
+						Authorization: null
+					}
+				} 
 			})
 			.then((resp) => {
-				commit('SET_CARD_MATERIAL_TYPES', resp.data.result)
+				commit('SET_CARD_MATERIAL_TYPES', resp.data)
 			})
 			.catch((error) => {
 				console.log(error)
 			})
         },
-		TEST({ commit }) {
-			return axios('api/card_mpp_sets', {
-				method: 'GET'              
+		CARD_MPP_SETS({ commit }) {
+			return axios.get('api/card_mpp_sets', {
+				headers: {
+					common: {
+						Authorization: null
+					}
+				} 
 			})
 			.then((resp) => {
-				console.log(resp);
+				commit('SET_CARD_MPP_SETS', resp.data)
 			})
 			.catch((error) => {
 				console.log(error)
