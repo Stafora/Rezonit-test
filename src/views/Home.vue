@@ -31,7 +31,7 @@
 				</div>
 			</div>
 			<div class="boards-list-body scroll">
-				<BoardItem />
+				<BoardItem v-for="card in GET_CARDS" :key="card.id" v-bind:card="card" />
 			</div>
 		</div>
 
@@ -46,6 +46,7 @@
 	import AddingBoard from '@/components/boards/AddingBoard'
 	import { AddingBoardStorageServices } from '@/services/AddingBoardStorageServices'
 	import ConfirmDialogue from '@/components/popup/ConfirmDialogue.vue'
+	import { mapActions, mapGetters } from 'vuex'
 
 	export default {
 		name: 'Home',
@@ -53,7 +54,7 @@
 			title: 'Список плат'
 		},
 		data: () => ({
-			isOpenPopup: true,
+			isOpenPopup: false,
 			isDisaledBtnDraft: true,
 			issetDraft: false
 		}),
@@ -62,6 +63,12 @@
 			if(this.issetDraft) {
 				this.changeDisabledBtnDraft();
 			}
+			this.CARDS();
+		},
+		computed: {
+			...mapGetters([
+                'GET_CARDS'
+            ])
 		},
 		components: {
 			BoardItem,
@@ -69,6 +76,9 @@
 			ConfirmDialogue
 		},
 		methods: {
+			...mapActions([
+				'CARDS'
+            ]),
 			openAddPopup() {
 				this.isOpenPopup = !this.isOpenPopup
 				this.changeIssetDraft();
