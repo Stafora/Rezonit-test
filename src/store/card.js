@@ -34,7 +34,6 @@ export default {
 				method: 'GET'             
 			})
 			.then((resp) => {
-				console.log(resp.data);
 				commit('SET_CARDS', resp.data)
 			})
 			.catch((error) => {
