@@ -11,10 +11,10 @@
 				</defs>
 			</svg>
 
-			Первая плата
+			{{ card.name }}
 		</div>
 		<div class="boards-list-item-col">
-			159753
+			{{ card.id }}
 		</div>
 		<div class="boards-list-item-col">
 			2021.08.20 10:36
@@ -42,6 +42,11 @@
 <script>
 	export default {
 		name: 'BoardItem',
+		props: {
+			card: {
+				type: Object
+			}
+		},
 		data: () => ({
 			isOpenSettingMenu: false
 		}),

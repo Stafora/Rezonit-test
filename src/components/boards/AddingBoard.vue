@@ -27,6 +27,7 @@
 			<div class="adding-board-step" v-bind:class="{active: currentStep == STEP_BUILDING}">
 				<AddingBoardBuilding 
 					v-on:setStep="setStep"
+					v-on:closePopup="closePopup"
 				/>
 			</div>
 

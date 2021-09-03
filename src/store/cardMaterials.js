@@ -7,11 +7,12 @@ export default {
 		cardMaterials: null,
 		cardMaterialMarks: null,
 		cardMaterialTypes: null,
-		cardMppSets: null
+		cardMppSets: null,
+		cardMppLayers: null
     },
     getters: {
 		GET_CARD_MATERIALS(state){
-			return state.materials
+			return state.cardMaterials
 		},
 		GET_CARD_MATERIAL_MARKS(state){
 			return state.cardMaterialMarks
@@ -21,6 +22,9 @@ export default {
 		},
 		GET_CARD_MPP_SETS(state){
 			return state.cardMppSets
+		},
+		GET_CARD_MPP_LAYERS(state){
+			return state.cardMppLayers
 		}
     },
     mutations: {
@@ -35,6 +39,9 @@ export default {
 		},
 		SET_CARD_MPP_SETS: (state, mppSets) => {
 			state.cardMppSets = mppSets
+		},
+		SET_CARD_MPP_LAYERS: (state, mppLayers) => {
+			state.cardMppLayers = mppLayers
 		}
     },
     actions: {
@@ -97,6 +104,35 @@ export default {
 			.catch((error) => {
 				console.log(error)
 			})
+        },
+		CARD_MPP_LAYERS({ commit }, setId) {
+			if(setId){
+				return axios.get(`/api/card_mpp_sets/${setId}/mppSetLayers`, {
+					headers: {
+						common: {
+							Authorization: null
+						}
+					} 
+				})
+				.then((resp) => {
+					commit('SET_CARD_MPP_LAYERS', resp.data)
+				})
+				.catch((error) => {
+					console.log(error)
+				})
+			}
+        },
+		CARD_ADD({ commit }, param) {
+			return axios('/api/cards', {
+				method: 'POST',
+				data: param                
+            })
+            .then((resp) => {
+				console.log(resp);
+            })
+            .catch((error) => {
+				console.log(error);
+            })
         }
     }
 }

@@ -21,6 +21,8 @@ module.exports = {
     'key-spacing': 'off',
     'no-trailing-spaces': 'off',
 	'no-tabs': 'off',
-	'keyword-spacing': 'off'
+	'keyword-spacing': 'off',
+	'dot-notation': 'off',
+	'no-prototype-builtins': 'off'
   }
 }

@@ -51,7 +51,7 @@
 					<div class="adding-board-params__title adding-board-params__title_center">Слои сборки</div>
 
 					<div class="adding-board-building-layers">
-						{{ getMppSetLayers }}
+						<LayersBuilding v-if="!$v.form.$invalid" v-bind:layerId="getMppSetLayersId" />
 					</div>
 
 				</div>
@@ -68,19 +68,29 @@
 <script>
 	import { mapActions, mapGetters } from 'vuex'
 	import { required } from 'vuelidate/lib/validators'
+	import LayersBuilding from '@/components/boards/LayersBuilding'
+	import { AddingBoardStorageServices } from '@/services/AddingBoardStorageServices'
 
 	export default {
 		name: 'AddingBoardBuilding',
 		params: {
 			setStep: {
 				type: Function
+			},
+			closePopup: {
+				type: Function
 			}
+		},
+		components: {
+			LayersBuilding
 		},
 		data: () => ({
 			isSuccessNextBtn: false,
 			CURRENT_STEP: 3,
 			form: {
-				mppSetLayers: null,
+				mppSetLayer: null,
+				mppSetLayersId: null,
+				layersBuilding: null,
 				currentLayer: '',
 				typeMaterial: '',
 				cardWidth: '',
@@ -93,12 +103,22 @@
 			this.CARD_MATERIAL_TYPES();
 			this.CARD_MATERIALS();
 		},
+		watch: {
+			'$v.form.$invalid': function _watch$vForm$invalid (value) {
+				if(!this.$v.$invalid){
+					this.isSuccessNextBtn = true;
+				} else {
+					this.isSuccessNextBtn = false;
+				}
+			}
+		},
 		computed: {
 			...mapGetters([
                 'GET_CARD_MPP_SETS',
 				'GET_CARD_MATERIAL_MARKS',
 				'GET_CARD_MATERIAL_TYPES',
-				'GET_CARD_MATERIALS'
+				'GET_CARD_MATERIALS',
+				'GET_CARD_MPP_LAYERS'
             ]),
 			getLayersList() {
 				if(this.GET_CARD_MPP_SETS){
@@ -133,19 +153,11 @@
 					const materialMarks = [];
 					for(const item of this.GET_CARD_MATERIAL_MARKS) {
 						if(uniqueListMaterialMarkId.indexOf(item.id) !== -1){
-							materialMarks.push(item.card_material_type_id);
+							materialMarks.push(item);
 						}
 					}
 
-					// get all material_types
-					const listMaterialType = []
-					for(const item of this.GET_CARD_MATERIAL_TYPES) {
-						if(materialMarks.indexOf(item.id) !== -1){
-							listMaterialType.push(item);
-						}
-					}
-
-					return (listMaterialType.length) ? listMaterialType : null;
+					return (materialMarks.length) ? materialMarks : null;
 				}
 
 				return null;
@@ -194,17 +206,21 @@
 				}
 				return null;
 			},
-			getMppSetLayers() {
+			getMppSetLayersId() {
 				this.setMppSetLayersDefaultValue()
 
 				if(this.form.currentLayer && this.GET_CARD_MPP_SETS){
 					this.GET_CARD_MPP_SETS.filter(function(obj, index, selfArr){
-						if(obj.layers === this.form.currentLayer && obj.material_mark_id === this.form.typeMaterial && obj.card_width === this.form.cardWidth && obj.foil_width === this.form.foilWidth){
-							this.form.mppSetLayers = obj.id;
+						if(obj.layers === this.form.currentLayer && 
+							obj.material_mark_id === this.form.typeMaterial && 
+							obj.card_width === this.form.cardWidth && 
+							obj.foil_width === this.form.foilWidth){
+							this.form.mppSetLayersId = obj.id;
+							this.form.mppSetLayer = obj;
 						}
 					}.bind(this));
 
-					return this.form.mppSetLayers
+					return this.form.mppSetLayersId;
 				}
 
 				return '';
@@ -215,11 +231,35 @@
                 'CARD_MPP_SETS',
 				'CARD_MATERIAL_MARKS',
 				'CARD_MATERIAL_TYPES',
-				'CARD_MATERIALS'
+				'CARD_MATERIALS',
+				'CARD_MPP_LAYERS',
+				'CARD_ADD'
             ]),
 			finishStep() {
 				if(this.isSuccessNextBtn) {
-					console.log('finish')
+					const storageResult = AddingBoardStorageServices.getAll();
+					
+					const data = {
+						file_id: storageResult.file.id,
+						name: storageResult.param.name,
+						x: storageResult.param.widthX,
+						y: storageResult.param.heightY,
+						is_panel: storageResult.param.isPanel ? 1 : 0,
+						milling: storageResult.param.milling ? 1 : 0,
+						scribing: storageResult.param.scribing ? 1 : 0,
+						panel_x: storageResult.param.panelX,
+						panel_y: storageResult.param.panelY,
+						layers: this.form.mppSetLayer.layers,
+						card_mpp_set_id: this.form.mppSetLayersId,
+						card_material_mark_id: this.form.mppSetLayer.material_mark_id,
+						card_thickness: this.form.cardWidth,
+						base_foil: this.form.mppSetLayer.id
+					}
+
+					this.CARD_ADD(data).then((resp) => {
+						AddingBoardStorageServices.clearAll();
+						this.$emit('closePopup')
+					});
 				}
 			},
 			prevStep() {
@@ -232,7 +272,7 @@
 				this.form.foilWidth = ''
 			},
 			setMppSetLayersDefaultValue() {
-				this.form.mppSetLayers = ''
+				this.form.mppSetLayersId = ''
 			},
 			setTypeMaterialDefaultValie() {
 				this.form.typeMaterial = ''
@@ -264,6 +304,51 @@
 		}
 		&-layers{
 			@include flex-center;
+			background: linear-gradient(0deg, rgba(42, 163, 150, 0.03), rgba(42, 163, 150, 0.03)), #FFFFFF;
+			border-radius: 4px;
+			padding: 40px;
+			flex-direction: column;
+
+			&__text-group{
+				font-size: 12px;
+				position: absolute;
+				right: 0px;
+				top: 0px;
+				writing-mode: vertical-rl;
+				width: auto;
+				height: 100%;
+				text-align: center;
+				color: #2ba396;
+			}
+
+			&-group{
+				width: 100%;
+				margin: 6px 0px;
+				background: #f1f1f1;
+				padding: 6px 0px;
+				position: relative;
+			}
+
+			&-item{
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				width: 100%;
+				padding: 0px 10px;
+
+				&__block{
+					width: calc(100% - 160px);
+					height: 4px;
+					margin: 4px 0px;
+					background: #3D8FB4;
+					color: #fff;
+					font-size: 12px;
+				}
+				&__text{
+					width: 140px;
+					font-size: 10px;
+				}
+			}
 		}
 	}
 </style>
