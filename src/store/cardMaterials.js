@@ -121,18 +121,6 @@ export default {
 					console.log(error)
 				})
 			}
-        },
-		CARD_ADD({ commit }, param) {
-			return axios('/api/cards', {
-				method: 'POST',
-				data: param                
-            })
-            .then((resp) => {
-				console.log(resp);
-            })
-            .catch((error) => {
-				console.log(error);
-            })
         }
     }
 }

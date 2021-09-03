@@ -93,7 +93,7 @@
 			changeIssetDraft() {
 				this.issetDraft = AddingBoardStorageServices.getItem('file') !== null
 				if(this.issetDraft) {
-					this.changeDisabledBtnDraft();
+					this.changeDisabledBtnDraft(true);
 				}
 			},
 			async openPopup() {

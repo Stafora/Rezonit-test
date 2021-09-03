@@ -235,6 +235,21 @@
 				'CARD_MPP_LAYERS',
 				'CARD_ADD'
             ]),
+			prevStep() {
+				this.$emit('setStep', this.CURRENT_STEP - 1)
+			},
+			setCardWidthDefaultValue() {
+				this.form.cardWidth = ''
+			},
+			setFoilWidthDefaultValue() {
+				this.form.foilWidth = ''
+			},
+			setMppSetLayersDefaultValue() {
+				this.form.mppSetLayersId = ''
+			},
+			setTypeMaterialDefaultValie() {
+				this.form.typeMaterial = ''
+			},
 			finishStep() {
 				if(this.isSuccessNextBtn) {
 					const storageResult = AddingBoardStorageServices.getAll();
@@ -256,26 +271,12 @@
 						base_foil: this.form.mppSetLayer.id
 					}
 
-					this.CARD_ADD(data).then((resp) => {
+					const result = this.CARD_ADD(data)
+					result.then((resp) => {
 						AddingBoardStorageServices.clearAll();
 						this.$emit('closePopup')
 					});
 				}
-			},
-			prevStep() {
-				this.$emit('setStep', this.CURRENT_STEP - 1)
-			},
-			setCardWidthDefaultValue() {
-				this.form.cardWidth = ''
-			},
-			setFoilWidthDefaultValue() {
-				this.form.foilWidth = ''
-			},
-			setMppSetLayersDefaultValue() {
-				this.form.mppSetLayersId = ''
-			},
-			setTypeMaterialDefaultValie() {
-				this.form.typeMaterial = ''
 			}
 		},
 		validations: {
