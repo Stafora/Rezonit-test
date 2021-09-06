@@ -79,6 +79,9 @@
 			},
 			closePopup: {
 				type: Function
+			},
+			reloadCardsListParent: {
+				type: Function
 			}
 		},
 		components: {
@@ -275,6 +278,7 @@
 					result.then((resp) => {
 						AddingBoardStorageServices.clearAll();
 						this.$emit('closePopup')
+						this.$emit('reloadCardsListParent')
 					});
 				}
 			}

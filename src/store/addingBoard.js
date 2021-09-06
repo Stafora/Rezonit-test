@@ -5,7 +5,8 @@ axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT
 
 export default {
     state: {
-		boardFile: null
+		boardFile: null,
+		uploadPercentage: 0
     },
     getters: {
 		GET_BOARD_FILE(state){
@@ -26,7 +27,7 @@ export default {
 				return axios.post('/api/upload/files/cards', formData, {
 					headers: {
 						'Content-Type': 'multipart/form-data'
-					} 
+					}
 				})
 				.then((resp) => {
 					AddingBoardStorageServices.setItem('file', resp.data);

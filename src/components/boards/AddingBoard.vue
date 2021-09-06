@@ -28,6 +28,7 @@
 				<AddingBoardBuilding 
 					v-on:setStep="setStep"
 					v-on:closePopup="closePopup"
+					v-on:reloadCardsListParent="reloadCardsListParent"
 				/>
 			</div>
 
@@ -58,6 +59,12 @@
 			},
 			openAddPopup: {
 				type: Function
+			},
+			reloadCardsList: {
+				type: Function
+			},
+			changeIssetDraft: {
+				type: Function
 			}
 		},
 		components: {
@@ -69,6 +76,7 @@
 		methods: {
 			closePopup() {
 				this.$emit('openAddPopup')
+				this.$emit('changeIssetDraft')
 			},
 			changeStep() {
 				switch(this.currentStep) {
@@ -84,6 +92,9 @@
 			setStep(step) {
 				this.currentStep = step
 				this.changeStep()
+			},
+			reloadCardsListParent() {
+				this.$emit('reloadCardsList')
 			}
 		}
 	}

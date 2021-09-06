@@ -1,6 +1,6 @@
-import Vue from "vue"
+import Vue from 'vue'
 
-//use {{date | date('time')}}
+// use {{date | date('time')}}
 Vue.filter('date', function (value, format = 'date') {
     const options = {}
 
@@ -14,6 +14,14 @@ Vue.filter('date', function (value, format = 'date') {
         options.minute = '2-digit'
         options.second = '2-digit'
     }
+	if(format.includes('date-time')){
+		options.day = '2-digit'
+        options.month = '2-digit'
+        options.year = '2-digit'
+        options.hour = '2-digit'
+        options.minute = '2-digit'
+        options.second = '2-digit'
+    }
 
-    return new Intl.DateTimeFormat('ru-RU', options).format(value);
+    return new Intl.DateTimeFormat('ru-RU', options).format(Date.parse(value));
 })

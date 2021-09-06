@@ -114,7 +114,7 @@
 			LOAD_IMAGE_PERCENT_STEP_ONE: 30,
 			LOAD_IMAGE_PERCENT_STEP_TWO: 100,
 			isEndLoadingFile: false,
-			fileBoardStore: AddingBoardStorageServices.getItem('file') || null,
+			fileBoardStore: AddingBoardStorageServices.getItem(AddingBoardStorageServices.STORAGE_KEY_FILE) || null,
 			dragAndDropCapable: false
 		}),
 		created: function (){
@@ -168,10 +168,10 @@
 				this.fileBoardStore = null
 				this.isEndLoadingFile = false
 
-				const file = AddingBoardStorageServices.getItem('file');
+				const file = AddingBoardStorageServices.getItem(AddingBoardStorageServices.STORAGE_KEY_FILE);
 				if(file){
 					this.DELETE_BOARD_FILE(file.id)
-					AddingBoardStorageServices.deleteItem('file')
+					AddingBoardStorageServices.deleteItem(AddingBoardStorageServices.STORAGE_KEY_FILE)
 				}
 				this.isSuccessNextBtn = false
 			},

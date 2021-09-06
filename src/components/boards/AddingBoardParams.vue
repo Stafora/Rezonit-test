@@ -317,7 +317,7 @@
 			}
 		}),
 		created: function (){
-			const boardParams = AddingBoardStorageServices.getItem('param');
+			const boardParams = AddingBoardStorageServices.getItem(AddingBoardStorageServices.STORAGE_KEY_PARAM);
 			if(boardParams){
 				this.$emit('setStep', this.CURRENT_STEP + 1)
 				this.isSuccessNextBtn = true

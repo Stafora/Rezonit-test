@@ -3,7 +3,7 @@
         <div class="boards-header">
 			<div class="boards-header-count">
 				<div class="boards-header-count__title">Всего плат</div>
-				<div class="boards-header-count__number">0</div>
+				<div class="boards-header-count__number">{{ getCountCards }}</div>
 			</div>
 
 			<div class="boards-header-buttons">
@@ -13,7 +13,7 @@
 		</div>
 
 		<div class="boards-list">
-			<div class="boards-list-header">
+			<div v-if="getCountCards" class="boards-list-header">
 				<div class="boards-list-header-col">
 					Название
 				</div>
@@ -31,11 +31,21 @@
 				</div>
 			</div>
 			<div class="boards-list-body scroll">
-				<BoardItem v-for="card in GET_CARDS" :key="card.id" v-bind:card="card" />
+				<BoardItem v-for="(card, index) in GET_CARDS" :key="card.id" v-bind:card="card" v-bind:index="index" />
+
+				<div v-if="!getCountCards" class="boards-list-body-empty">
+					<div class="btn btn-default boards-list-body-empty__btn" v-on:click="openPopup"><span>Добавить</span></div>
+				</div>
 			</div>
 		</div>
 
-		<AddingBoard v-if="isOpenPopup" v-on:openAddPopup="openAddPopup" v-bind:isOpenPopup="isOpenPopup"/>
+		<AddingBoard 
+			v-if="isOpenPopup" 
+			v-on:openAddPopup="openAddPopup" 
+			v-on:reloadCardsList="reloadCardsList"
+			v-on:changeIssetDraft="changeIssetDraft"
+			v-bind:isOpenPopup="isOpenPopup"
+		/>
 		<ConfirmDialogue ref="confirmDialogue"></ConfirmDialogue>
 
     </div>
@@ -59,7 +69,7 @@
 			issetDraft: false
 		}),
 		created: function (){
-			this.issetDraft = AddingBoardStorageServices.getItem('file') !== null
+			this.issetDraft = AddingBoardStorageServices.getItem(AddingBoardStorageServices.STORAGE_KEY_FILE) !== null
 			if(this.issetDraft) {
 				this.changeDisabledBtnDraft();
 			}
@@ -68,7 +78,14 @@
 		computed: {
 			...mapGetters([
                 'GET_CARDS'
-            ])
+            ]),
+			getCountCards() {
+				if(this.GET_CARDS){
+					return this.GET_CARDS.length
+				} else {
+					return 0;
+				}
+			}
 		},
 		components: {
 			BoardItem,
@@ -91,9 +108,9 @@
 				}
 			},
 			changeIssetDraft() {
-				this.issetDraft = AddingBoardStorageServices.getItem('file') !== null
+				this.issetDraft = AddingBoardStorageServices.getItem(AddingBoardStorageServices.STORAGE_KEY_FILE) !== null
 				if(this.issetDraft) {
-					this.changeDisabledBtnDraft(true);
+					this.changeDisabledBtnDraft();
 				}
 			},
 			async openPopup() {
@@ -112,13 +129,15 @@
 					}
 				} else {
 					this.openAddPopup();
-					this.changeDisabledBtnDraft()
 				}
 			},
 			openPopupDraft() {
 				if(!this.isDisaledBtnDraft){
 					this.isOpenPopup = true
 				}
+			},
+			reloadCardsList() {
+				this.CARDS();
 			}
 		}
 	}
@@ -177,6 +196,12 @@
 				position: relative;
 				overflow: auto;
 				height: calc(100vh - 202px);
+
+				&-empty{
+					height: 100%;
+					width: 100%;
+					@include flex-center;
+				}
 			}
 
 			&-header-col, &-item-col{
