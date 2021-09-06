@@ -3,6 +3,8 @@ import { LocalStorageService } from './LocalStorageService'
 export const STORAGE_KEY = 'addingBoard'
 
 export const AddingBoardStorageServices = {
+	STORAGE_KEY_FILE: 'file',
+	STORAGE_KEY_PARAM: 'param',
 	getItem(name) {
 		const data = LocalStorageService.getItem(STORAGE_KEY, {});
 		if(data[name]) {

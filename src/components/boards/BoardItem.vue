@@ -14,13 +14,13 @@
 			{{ card.name }}
 		</div>
 		<div class="boards-list-item-col">
-			{{ card.id }}
+			{{ index + 1 }}
 		</div>
 		<div class="boards-list-item-col">
-			2021.08.20 10:36
+			{{ card.created_at | date('date-time') }}
 		</div>
 		<div class="boards-list-item-col">
-			2021.08.20 10:38
+			{{ card.updated_at | date('date-time') }}
 		</div>
 		<div class="boards-list-item-col">
 			<div class="boards-list-item-setting">
@@ -45,6 +45,9 @@
 		props: {
 			card: {
 				type: Object
+			},
+			index: {
+				type: Number
 			}
 		},
 		data: () => ({

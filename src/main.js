@@ -6,6 +6,8 @@ import Axios from 'axios'
 import VueMeta from 'vue-meta'
 import Vuelidate from 'vuelidate'
 
+import './filters/date.filter'
+
 // style
 import './assets/scss/fonts.scss'
 
