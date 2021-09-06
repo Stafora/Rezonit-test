@@ -6,13 +6,25 @@ Vue.use(VueRouter)
 const routes = [
 	{
 		path: '/',
-		name: 'Home',
+		name: 'CardsList',
 		meta: {
 			requiresAuth: true,
 			headerTitle: 'Список плат'
 		},
 		component: function () {
-			return import('../views/Home.vue')
+			return import('../views/CardsList.vue')
+		}
+	},
+	{
+		path: '/card',
+		name: 'InnerCard',
+		meta: {
+			layout: 'EmptyLayout',
+			requiresAuth: true,
+			headerTitle: 'Внутренняя страница платы'
+		},
+		component: function () {
+			return import('../views/InnerCard.vue')
 		}
 	},
 	{

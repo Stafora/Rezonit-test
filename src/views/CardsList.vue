@@ -31,9 +31,9 @@
 				</div>
 			</div>
 			<div class="boards-list-body scroll">
-				<BoardItem v-for="(card, index) in GET_CARDS" :key="card.id" v-bind:card="card" v-bind:index="index" />
+				<BoardItem v-for="(card, index) in GET_CARDS" :key="card.id" v-bind:card="card" v-bind:index="index" v-on:reloadCardsList="reloadCardsList" />
 
-				<div v-if="!getCountCards" class="boards-list-body-empty">
+				<div v-if="getCountCards < 1" class="boards-list-body-empty">
 					<div class="btn btn-default boards-list-body-empty__btn" v-on:click="openPopup"><span>Добавить</span></div>
 				</div>
 			</div>
@@ -59,7 +59,7 @@
 	import { mapActions, mapGetters } from 'vuex'
 
 	export default {
-		name: 'Home',
+		name: 'CardsList',
 		metaInfo: {
 			title: 'Список плат'
 		},

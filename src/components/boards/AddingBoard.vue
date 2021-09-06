@@ -133,6 +133,7 @@
 			height: auto;
 			padding: 24px 32px;
 			min-height: 540px;
+			max-height: 600px;
 		}
 
 		&__title{
@@ -481,6 +482,10 @@
 				background-position: center right 15px;
 				cursor: pointer;
 				z-index: 1;
+
+				&:disabled{
+					opacity: 0.3;
+				}
 			}
 		}
 	}

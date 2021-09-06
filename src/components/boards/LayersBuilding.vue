@@ -2,10 +2,31 @@
 	<div style="width: 100%">
 		<template v-for="list in getFilterLayers">
 			<div :class="{'adding-board-building-layers-group': list.length > 1}" :key="list.id">
-				<div class="adding-board-building-layers-item" v-for="item in list" :key="item.id">
-					<div class="adding-board-building-layers-item__block"></div>
-					<div class="adding-board-building-layers-item__text">{{ item.material[0].name }} </div>
-				</div>
+
+				<template v-for="item in list">
+					<div class="adding-board-building-layers-item" :key="item.id" v-if="item.card_material_type_id === 1">
+						<div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_foil"></div>
+						<div class="adding-board-building-layers-item__text">{{ item.material[0].name }} </div>
+					</div>
+				</template>
+
+				<template v-for="item in list">
+					<div class="adding-board-building-layers-item" :key="item.id" v-if="item.card_material_type_id === 2">
+						<div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_prepreg">
+							{{ item.material[0].name }}
+						</div>
+						<div class="adding-board-building-layers-item__text"></div>
+					</div>
+				</template>
+
+				<template v-for="item in list">
+					<div class="adding-board-building-layers-item" :key="item.id" v-if="item.card_material_type_id === 3">
+						<div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_base">
+							{{ item.material[0].name }}
+						</div>
+						<div class="adding-board-building-layers-item__text"></div>
+					</div>
+				</template>
 
 				<div v-if="list.length > 1" class="adding-board-building-layers__text-group">Группа</div>
 			</div>
@@ -35,7 +56,8 @@
 		computed: {
 			...mapGetters([
 				'GET_CARD_MPP_LAYERS',
-				'GET_CARD_MATERIALS'
+				'GET_CARD_MATERIALS',
+				'GET_CARD_MATERIAL_TYPES'
             ]),
 			getFilterLayers() {
 				if(this.GET_CARD_MPP_LAYERS) {
@@ -45,6 +67,7 @@
 						if(mppSetLayersList.hasOwnProperty(item.layer_group) === false){
 							mppSetLayersList[item.layer_group] = []
 						}
+						item.materialType = this.getMaterialTypeId(item.card_material_type_id);
 						item.material = this.getMaterialId(item.material_id);
 						mppSetLayersList[item.layer_group].push(item)
 					}
@@ -57,13 +80,20 @@
 		methods: {
 			...mapActions([
 				'CARD_MPP_LAYERS',
-				'CARD_MATERIALS'
+				'CARD_MATERIALS',
+				'CARD_MATERIAL_TYPES'
             ]),
 			getMaterialId(id) {
 				const cardMaterial = this.GET_CARD_MATERIALS.filter(function(value, index, selfArr){
 					return value.id === id
 				});
 				return cardMaterial;
+			},
+			getMaterialTypeId(id) {
+				const cardMaterialType = this.GET_CARD_MATERIAL_TYPES.filter(function(value, index, selfArr){
+					return value.id === id
+				});
+				return cardMaterialType;
 			}
 		}
 	}
