@@ -202,6 +202,9 @@
 			&-4{
 				width: 33.333333%;
 			}
+			&-8{
+				width: 66.666666%;
+			}
 			&-6{
 				width: 50%;
 			}
@@ -243,6 +246,16 @@
 						}
 					}
 				}
+				#{$parent}{
+					&-info-error{
+						svg{
+							fill: #A6B0AF !important;
+						}
+					}
+				}
+				input{
+					border-color: #A6B0AF !important;
+				}
 			}
 			&.success{
 				input{
@@ -254,8 +267,23 @@
 					border-color: red;
 				}
 			}
+			&.success, &.error{
+				&:hover, &:focus-within{
+					#{$parent}{
+						&__title{
+							font-size: 10px;
+							padding-left: 8px;
+							padding-right: 8px;
+							height: 14px;
+							top: -8px;
+							left: 10px;
+							background: #fff;
+						}
+					}
+				}
+			}
 
-			&:hover, &:focus-within, {
+			&:hover, &:focus-within {
 				#{$parent}{
 					&__title{
 						font-size: 10px;
@@ -419,6 +447,13 @@
 					&::before{
 						background: #fff;
 						left: 12px;
+					}
+				}
+				&:disabled + #{$parent}-toggle{
+					background: #fff;
+
+					&::before{
+						background: #E3EBE7;
 					}
 				}
 			}
