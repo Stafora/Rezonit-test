@@ -31,7 +31,7 @@
 				</div>
 				<div class="boards-list-item-setting-menu" :class="{active: isOpenSettingMenu}">
 					<a href="#" class="boards-list-item-setting-menu__item">Изменить</a>
-					<a href="#" class="boards-list-item-setting-menu__item">Удалить</a>
+					<a href="#" class="boards-list-item-setting-menu__item" v-on:click="deleteItem">Удалить</a>
 				</div>
 			</div>
 			
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+	import { mapActions } from 'vuex'
+
 	export default {
 		name: 'BoardItem',
 		props: {
@@ -48,14 +50,27 @@
 			},
 			index: {
 				type: Number
+			},
+			reloadCardsList: {
+				type: Function
 			}
 		},
 		data: () => ({
 			isOpenSettingMenu: false
 		}),
 		methods: {
+			...mapActions([
+				'CARD_REMOVE'
+            ]),
 			openSettingMenu: function () {
 				this.isOpenSettingMenu = !this.isOpenSettingMenu
+			},
+			deleteItem() {
+				this.CARD_REMOVE(this.card.id).then((resp) => {
+					this.$emit('reloadCardsList')
+					this.$destroy()
+					this.$el.parentNode.removeChild(this.$el)
+				})
 			}
 		}
 	}

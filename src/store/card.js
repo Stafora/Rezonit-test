@@ -1,3 +1,4 @@
+import resource from 'resource-axios'
 import axios from 'axios'
 
 axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT
@@ -23,7 +24,7 @@ export default {
 				data: param                
             })
             .then((resp) => {
-				console.log(resp);
+				
             })
             .catch((error) => {
 				console.log(error);
@@ -39,6 +40,20 @@ export default {
 			.catch((error) => {
 				console.log(error);
 			})
+        },
+		CARD_REMOVE({ commit }, id) {
+			if(id) {
+				return resource('/api/cards', axios)
+				.delete({
+					id: id
+				})
+				.then((resp) => {
+					
+				})
+				.catch((error) => {
+					console.log(error);
+				})
+			}
         }
     }
 }

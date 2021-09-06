@@ -8,7 +8,7 @@
 
 <script>
 	import DefaulLayout from '@/layouts/DefaultLayout.vue'
-	import HomeLayout from '@/layouts/HomeLayout.vue'
+	import EmptyLayout from '@/layouts/EmptyLayout.vue'
 	import AuthLayout from '@/layouts/AuthLayout.vue'
 	import store from './store'
 
@@ -28,7 +28,7 @@
 		},
 		components: {
 			DefaulLayout, 
-			HomeLayout, 
+			EmptyLayout, 
 			AuthLayout
 		},
 		created: function () {

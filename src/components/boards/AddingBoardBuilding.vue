@@ -22,25 +22,25 @@
 						</select>
 					</div>
 
-					<div class="adding-board-select" v-if="getTypeMaterial">
+					<div class="adding-board-select">
 						<div class="adding-board-select__title">Тип материала базы</div>
-						<select v-model="form.typeMaterial" @blur="$v.form.typeMaterial.$touch()">
+						<select v-model="form.typeMaterial" @blur="$v.form.typeMaterial.$touch()" :disabled="!getTypeMaterial">
 							<option value="">Выберите тип материала базы</option>
 							<option v-for="item in getTypeMaterial" :key="item.id" :value="item.id">{{ item.name }}</option>
 						</select>
 					</div>
 
-					<div class="adding-board-select" v-if="getCardWidth">
+					<div class="adding-board-select">
 						<div class="adding-board-select__title">Толщина платы</div>
-						<select v-model="form.cardWidth" @blur="$v.form.cardWidth.$touch()">
+						<select v-model="form.cardWidth" @blur="$v.form.cardWidth.$touch()" :disabled="!getCardWidth">
 							<option value="">Выберите толщину платы</option>
 							<option v-for="value in getCardWidth" :key="value" :value="value">{{ value }}</option>
 						</select>
 					</div>
 
-					<div class="adding-board-select" v-if="getFoilWidth">
+					<div class="adding-board-select">
 						<div class="adding-board-select__title">Толщина фольги</div>
-						<select v-model="form.foilWidth" @blur="$v.form.foilWidth.$touch()">
+						<select v-model="form.foilWidth" @blur="$v.form.foilWidth.$touch()" :disabled="!getFoilWidth">
 							<option value="">Выберите толщина фольги</option>
 							<option v-for="value in getFoilWidth" :key="value" :value="value">{{ value }}</option>
 						</select>
@@ -50,7 +50,7 @@
 				<div class="adding-board-col adding-board-col-6">
 					<div class="adding-board-params__title adding-board-params__title_center">Слои сборки</div>
 
-					<div class="adding-board-building-layers">
+					<div class="adding-board-building-layers scroll">
 						<LayersBuilding v-if="!$v.form.$invalid" v-bind:layerId="getMppSetLayersId" />
 					</div>
 
@@ -271,7 +271,7 @@
 						card_mpp_set_id: this.form.mppSetLayersId,
 						card_material_mark_id: this.form.mppSetLayer.material_mark_id,
 						card_thickness: this.form.cardWidth,
-						base_foil: this.form.mppSetLayer.id
+						base_foil: this.form.foilWidth
 					}
 
 					const result = this.CARD_ADD(data)
@@ -308,11 +308,12 @@
 			min-height: 300px;
 		}
 		&-layers{
-			@include flex-center;
+			display: block;
 			background: linear-gradient(0deg, rgba(42, 163, 150, 0.03), rgba(42, 163, 150, 0.03)), #FFFFFF;
 			border-radius: 4px;
 			padding: 40px;
-			flex-direction: column;
+			height: 290px;
+			overflow: auto;
 
 			&__text-group{
 				font-size: 12px;
@@ -342,15 +343,29 @@
 				padding: 0px 10px;
 
 				&__block{
-					width: calc(100% - 160px);
-					height: 4px;
+					width: calc(100% - 110px);
 					margin: 4px 0px;
-					background: #3D8FB4;
-					color: #fff;
 					font-size: 12px;
+					text-align: center;
+
+					&_foil{
+						height: 4px;
+						background: #3D8FB4;
+					}
+					&_prepreg{
+						background: #E5E5E5;
+						color: #222;
+						height: auto;
+						padding: 4px 2px;
+					}
+					&_base{
+						background: #0B7A6E;
+						padding: 20px 0px;
+						color: #fff;
+					}
 				}
 				&__text{
-					width: 140px;
+					width: 100px;
 					font-size: 10px;
 				}
 			}
