@@ -1,254 +1,268 @@
 <template>
 	<div class="adding-board-params">
 		<div class="adding-board-row">
-			<div class="adding-board-col adding-board-col-4">
-				<div class="adding-board-params__title">Параметры платы</div>
+			<div class="adding-board-col adding-board-col-8">
+				<div class="adding-board-row">
+					<div class="adding-board-col adding-board-col-6">
+						<div class="adding-board-params__title">Параметры платы</div>
 
-				<!-- Название платы -->
-				<label class="adding-board-input" :class="{'error' : $v.form.name.$error, 'success' : !$v.form.name.$invalid}" >
-					<div class="adding-board-input-wrapper">
-						<input type="text" 
-							v-model.lazy="form.name"
-							@blur="$v.form.name.$touch()"
-							v-on:input="changeInput"
-							:class="{'is-data': form.name}"
-						>
-						<div class="adding-board-input__title">Название платы</div>
-						<div class="adding-board-input-info-error" :class="{error: $v.form.name.$error}" v-on:click="openInfoErrorInInput">
-							<div class="adding-board-input-info-error__message"  v-if="$v.form.name.$error">
-								<template v-if="!$v.form.name.required">
-									Поле обязательно к заполнению
-								</template>
-								<template v-if="!$v.form.name.minLength">
-									Длина имени не должно быть меньше {{ $v.form.name.$params.minLength.min }} символов
-								</template>
-								<template v-if="!$v.form.name.maxLength">
-									Длина имени не должно быть больше {{ $v.form.name.$params.maxLength.max }} символов
-								</template>
+						<!-- Название платы -->
+						<label class="adding-board-input" :class="{'error' : $v.form.name.$error, 'success' : !$v.form.name.$invalid}" >
+							<div class="adding-board-input-wrapper">
+								<input type="text" 
+									v-model.lazy="form.name"
+									@blur="$v.form.name.$touch()"
+									v-on:input="changeInput"
+									:class="{'is-data': form.name}"
+								>
+								<div class="adding-board-input__title">Название платы</div>
+								<div class="adding-board-input-info-error" :class="{error: $v.form.name.$error}" v-on:click="openInfoErrorInInput">
+									<div class="adding-board-input-info-error__message"  v-if="$v.form.name.$error">
+										<template v-if="!$v.form.name.required">
+											Поле обязательно к заполнению
+										</template>
+										<template v-if="!$v.form.name.minLength">
+											Длина имени не должно быть меньше {{ $v.form.name.$params.minLength.min }} символов
+										</template>
+										<template v-if="!$v.form.name.maxLength">
+											Длина имени не должно быть больше {{ $v.form.name.$params.maxLength.max }} символов
+										</template>
+									</div>
+									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+										<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
+									</svg>
+								</div>
 							</div>
-							<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
-							</svg>
+						</label>
+
+						<div class="adding-board-row">
+							<div class="adding-board-col adding-board-col-6">
+								<!-- Ширина X -->
+								<label class="adding-board-input" :class="{'error' : $v.form.widthX.$error, 'success' : !$v.form.widthX.$invalid}">
+									<div class="adding-board-input-wrapper">
+										<input type="text" 
+											v-model.lazy="form.widthX"
+											@blur="$v.form.widthX.$touch()"
+											v-on:input="changeInput"
+											:class="{'is-data': form.widthX}"
+										>
+										<div class="adding-board-input__title">Ширина X, мм</div>
+										<div class="adding-board-input-info-error" :class="{error: $v.form.widthX.$error}" v-on:click="openInfoErrorInInput">
+											<div class="adding-board-input-info-error__message"  v-if="$v.form.widthX.$error">
+												<template v-if="!$v.form.widthX.required">
+													Поле обязательно к заполнению
+												</template>
+												<template v-if="!$v.form.widthX.between">
+													Значение должно быть между  {{$v.form.widthX.$params.between.min}} и {{$v.form.widthX.$params.between.max}}
+												</template>
+											</div>
+											<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
+											</svg>
+										</div>
+									</div>
+								</label>
+							</div>
+							<div class="adding-board-col adding-board-col-6">
+								<!-- Высота Y -->
+								<label class="adding-board-input" :class="{'error' : $v.form.heightY.$error, 'success' : !$v.form.heightY.$invalid}">
+									<div class="adding-board-input-wrapper">
+										<input type="text" 
+											v-model.lazy="form.heightY"
+											@blur="$v.form.heightY.$touch()"
+											v-on:input="changeInput"
+											:class="{'is-data': form.heightY}"
+										>
+										<div class="adding-board-input__title">Высота Y, мм</div>
+										<div class="adding-board-input-info-error" :class="{error: $v.form.heightY.$error}" v-on:click="openInfoErrorInInput">
+											<div class="adding-board-input-info-error__message"  v-if="$v.form.heightY.$error">
+												<template v-if="!$v.form.heightY.required">
+													Поле обязательно к заполнению
+												</template>
+												<template v-if="!$v.form.heightY.between">
+													Значение должно быть между  {{$v.form.heightY.$params.between.min}} и {{$v.form.heightY.$params.between.max}}
+												</template>
+											</div>
+											<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
+											</svg>
+										</div>
+									</div>
+								</label>
+							</div>
+						</div>
+
+						<label class="adding-board-checkbox">
+							<div class="adding-board-checkbox__title">Изготовить в панели</div>
+							<input type="checkbox" v-model="form.isPanel">
+							<div class="adding-board-checkbox-toggle"></div>
+						</label>
+
+						<div class="adding-board-params-square">
+							<div class="adding-board-params-square__name">Площадь</div>
+							<div class="adding-board-params-square__value">{{ square }} дм2</div>
+						</div>
+
+					</div>
+					<div class="adding-board-col adding-board-col-6">
+						<div class="adding-board-params__title">Параметры панели</div>
+
+						<div class="adding-board-row">
+							<div class="adding-board-col adding-board-col-6">
+								<label class="adding-board-input" :class="{disabled: !form.isPanel, 'error' : $v.form.panelX.$error, 'success' : !$v.form.panelX.$invalid}">
+									<div class="adding-board-input-wrapper">
+										<input 
+											type="text"
+											:disabled="!form.isPanel"
+											v-model.lazy="form.panelX"
+											@blur="$v.form.panelX.$touch()"
+											v-on:input="changeInput"
+											:class="{'is-data': form.panelX}"
+										>
+										<div class="adding-board-input__title">Плат по Х, шт</div>
+										<div class="adding-board-input-info-error" :class="{error: $v.form.panelX.$error}" v-on:click="openInfoErrorInInput">
+											<div class="adding-board-input-info-error__message"  v-if="$v.form.panelX.$error">
+												<template v-if="!$v.form.panelX.required">
+													Поле обязательно к заполнению
+												</template>
+												<template v-if="!$v.form.name.between">
+													Значение должно быть между  {{$v.form.panelX.$params.between.min}} и {{$v.form.panelX.$params.between.max}}
+												</template>
+											</div>
+											<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
+											</svg>
+										</div>
+									</div>
+								</label>
+							</div>
+							<div class="adding-board-col adding-board-col-6">
+								<label class="adding-board-input" :class="{disabled: !form.isPanel, 'error' : $v.form.panelY.$error, 'success' : !$v.form.panelY.$invalid}">
+									<div class="adding-board-input-wrapper">
+										<input 
+											type="text"
+											:disabled="!form.isPanel"
+											v-model.lazy="form.panelY"
+											@blur="$v.form.panelY.$touch()"
+											v-on:input="changeInput"
+											:class="{'is-data': form.panelY}"
+										>
+										<div class="adding-board-input__title">Плат по Y, шт </div>
+										<div class="adding-board-input-info-error" :class="{error: $v.form.panelY.$error}" v-on:click="openInfoErrorInInput">
+											<div class="adding-board-input-info-error__message"  v-if="$v.form.panelY.$error">
+												<template v-if="!$v.form.panelY.required">
+													Поле обязательно к заполнению
+												</template>
+												<template v-if="!$v.form.panelY.between">
+													Значение должно быть между  {{$v.form.panelY.$params.between.min}} и {{$v.form.panelY.$params.between.max}}
+												</template>
+											</div>
+											<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
+											</svg>
+										</div>
+									</div>
+								</label>
+							</div>
+						</div>
+
+						<div class="adding-board-row">
+							<div class="adding-board-col adding-board-col-6">
+								<label class="adding-board-input" :class="{disabled: !form.isPanel, 'error' : $v.form.panelGapX.$error, 'success' : !$v.form.panelGapX.$invalid}">
+									<input 
+										type="text"
+										:disabled="!form.isPanel"
+										v-model.lazy="form.panelGapX"
+										@blur="$v.form.panelGapX.$touch()"
+										v-on:input="changeInput"
+										:class="{'is-data': form.panelGapX}"
+									>
+									<div class="adding-board-input__title">Зазор X, мм</div>
+									<div class="adding-board-input-info-error" :class="{error: $v.form.panelGapX.$error}" v-on:click="openInfoErrorInInput">
+										<div class="adding-board-input-info-error__message"  v-if="$v.form.panelGapX.$error">
+											<template v-if="!$v.form.panelGapX.between">
+												Значение должно быть между  {{$v.form.panelGapX.$params.between.min}} и {{$v.form.panelGapX.$params.between.max}}
+											</template>
+											<template v-if="!$v.form.panelGapX.panelGapXMillingAndScribing">
+												Если включено фрезерование то значение должно быть >= 2<br>
+												Если включено скрайбирование то значение должно быть = 0<br>
+												Если включено фрезерование и скрайбирование то значение должно быть = 0 или >= 2<br>
+											</template>
+										</div>
+										<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
+										</svg>
+									</div>
+								</label>
+							</div>
+							<div class="adding-board-col adding-board-col-6">
+								<label class="adding-board-input" :class="{disabled: !form.isPanel, 'error' : $v.form.panelGapY.$error, 'success' : !$v.form.panelGapY.$invalid}">
+									<input 
+										type="text" 
+										:disabled="!form.isPanel"
+										v-model.lazy="form.panelGapY"
+										@blur="$v.form.panelGapY.$touch()"
+										v-on:input="changeInput"
+										:class="{'is-data': form.panelGapY}"
+									>
+									<div class="adding-board-input__title">Зазор Y, мм</div>
+									<div class="adding-board-input-info-error" :class="{error: $v.form.panelGapY.$error}" v-on:click="openInfoErrorInInput">
+										<div class="adding-board-input-info-error__message"  v-if="$v.form.panelGapY.$error">
+											<template v-if="!$v.form.panelGapY.between">
+												Значение должно быть между  {{$v.form.panelGapY.$params.between.min}} и {{$v.form.panelGapY.$params.between.max}}
+											</template>
+											<template v-if="!$v.form.panelGapY.panelGapYMillingAndScribing">
+												Если включено фрезерование то значение должно быть >= 2<br>
+												Если включено скрайбирование то значение должно быть = 0<br>
+												Если включено фрезерование и скрайбирование то значение должно быть = 0 или >= 2<br>
+											</template>
+										</div>
+										<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
+										</svg>
+									</div>
+								</label>
+							</div>
+						</div>
+
+						<label class="adding-board-checkbox" :class="{disabled: !form.isPanel}">
+							<div class="adding-board-checkbox__title">Фрезерование</div>
+							<input 
+								type="checkbox" 
+								v-model="form.milling" 
+								:disabled="!form.isPanel"
+								v-on:change="$v.form.milling.$touch()"
+							>
+							<div class="adding-board-checkbox-toggle"></div>
+						</label>
+						<label class="adding-board-checkbox" :class="{disabled: !form.isPanel}">
+							<div class="adding-board-checkbox__title">Скрайбирование</div>
+							<input 
+								type="checkbox" 
+								v-model="form.scribing" 
+								:disabled="!form.isPanel"
+								v-on:change="$v.form.scribing.$touch()"
+							>
+							<div class="adding-board-checkbox-toggle"></div>
+						</label>
+						<div class="adding-board-input__error" v-if="$v.form.milling.$error || $v.form.panelGapY.$error || $v.form.panelGapX.$error">
+							<template>
+								Фрезерование или Скрайбирование обязательно к заполнению
+							</template>
 						</div>
 					</div>
-				</label>
-
-				<div class="adding-board-row">
-					<div class="adding-board-col adding-board-col-6">
-						<!-- Ширина X -->
-						<label class="adding-board-input" :class="{'error' : $v.form.widthX.$error, 'success' : !$v.form.widthX.$invalid}">
-							<div class="adding-board-input-wrapper">
-								<input type="text" 
-									v-model.lazy="form.widthX"
-									@blur="$v.form.widthX.$touch()"
-									v-on:input="changeInput"
-									:class="{'is-data': form.widthX}"
-								>
-								<div class="adding-board-input__title">Ширина X, мм</div>
-								<div class="adding-board-input-info-error" :class="{error: $v.form.widthX.$error}" v-on:click="openInfoErrorInInput">
-									<div class="adding-board-input-info-error__message"  v-if="$v.form.widthX.$error">
-										<template v-if="!$v.form.widthX.required">
-											Поле обязательно к заполнению
-										</template>
-										<template v-if="!$v.form.widthX.between">
-											Значение должно быть между  {{$v.form.widthX.$params.between.min}} и {{$v.form.widthX.$params.between.max}}
-										</template>
-									</div>
-									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
-									</svg>
-								</div>
-							</div>
-						</label>
-					</div>
-					<div class="adding-board-col adding-board-col-6">
-						<!-- Высота Y -->
-						<label class="adding-board-input" :class="{'error' : $v.form.heightY.$error, 'success' : !$v.form.heightY.$invalid}">
-							<div class="adding-board-input-wrapper">
-								<input type="text" 
-									v-model.lazy="form.heightY"
-									@blur="$v.form.heightY.$touch()"
-									v-on:input="changeInput"
-									:class="{'is-data': form.heightY}"
-								>
-								<div class="adding-board-input__title">Высота Y, мм</div>
-								<div class="adding-board-input-info-error" :class="{error: $v.form.heightY.$error}" v-on:click="openInfoErrorInInput">
-									<div class="adding-board-input-info-error__message"  v-if="$v.form.heightY.$error">
-										<template v-if="!$v.form.heightY.required">
-											Поле обязательно к заполнению
-										</template>
-										<template v-if="!$v.form.heightY.between">
-											Значение должно быть между  {{$v.form.heightY.$params.between.min}} и {{$v.form.heightY.$params.between.max}}
-										</template>
-									</div>
-									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
-									</svg>
-								</div>
-							</div>
-						</label>
-					</div>
 				</div>
-
-				<label class="adding-board-checkbox">
-					<div class="adding-board-checkbox__title">Изготовить в панели</div>
-					<input type="checkbox" v-model="form.isPanel">
-					<div class="adding-board-checkbox-toggle"></div>
-				</label>
-
-				<div class="adding-board-params-square">
-					<div class="adding-board-params-square__name">Площадь</div>
-					<div class="adding-board-params-square__value">{{ square }} дм2</div>
-				</div>
-
+				
+				<!-- <div class="adding-board-params-error-panel">
+					<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
+					</svg>
+					<div class="adding-board-params-error-panel-text">
+						asdas asdasd
+					</div>
+				</div> -->
 			</div>
-			<div class="adding-board-col adding-board-col-4">
-				<div class="adding-board-params__title">Параметры панели</div>
 
-				<div class="adding-board-row">
-					<div class="adding-board-col adding-board-col-6">
-						<label class="adding-board-input" :class="{disabled: !form.isPanel, 'error' : $v.form.panelX.$error, 'success' : !$v.form.panelX.$invalid}">
-							<div class="adding-board-input-wrapper">
-								<input 
-									type="text"
-									:disabled="!form.isPanel"
-									v-model.lazy="form.panelX"
-									@blur="$v.form.panelX.$touch()"
-									v-on:input="changeInput"
-									:class="{'is-data': form.panelX}"
-								>
-								<div class="adding-board-input__title">Плат по Х, шт</div>
-								<div class="adding-board-input-info-error" :class="{error: $v.form.panelX.$error}" v-on:click="openInfoErrorInInput">
-									<div class="adding-board-input-info-error__message"  v-if="$v.form.panelX.$error">
-										<template v-if="!$v.form.panelX.required">
-											Поле обязательно к заполнению
-										</template>
-										<template v-if="!$v.form.name.between">
-											Значение должно быть между  {{$v.form.panelX.$params.between.min}} и {{$v.form.panelX.$params.between.max}}
-										</template>
-									</div>
-									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
-									</svg>
-								</div>
-							</div>
-						</label>
-					</div>
-					<div class="adding-board-col adding-board-col-6">
-						<label class="adding-board-input" :class="{disabled: !form.isPanel, 'error' : $v.form.panelY.$error, 'success' : !$v.form.panelY.$invalid}">
-							<div class="adding-board-input-wrapper">
-								<input 
-									type="text"
-									:disabled="!form.isPanel"
-									v-model.lazy="form.panelY"
-									@blur="$v.form.panelY.$touch()"
-									v-on:input="changeInput"
-									:class="{'is-data': form.panelY}"
-								>
-								<div class="adding-board-input__title">Плат по Y, шт </div>
-								<div class="adding-board-input-info-error" :class="{error: $v.form.panelY.$error}" v-on:click="openInfoErrorInInput">
-									<div class="adding-board-input-info-error__message"  v-if="$v.form.panelY.$error">
-										<template v-if="!$v.form.panelY.required">
-											Поле обязательно к заполнению
-										</template>
-										<template v-if="!$v.form.panelY.between">
-											Значение должно быть между  {{$v.form.panelY.$params.between.min}} и {{$v.form.panelY.$params.between.max}}
-										</template>
-									</div>
-									<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
-									</svg>
-								</div>
-							</div>
-						</label>
-					</div>
-				</div>
-
-				<div class="adding-board-row">
-					<div class="adding-board-col adding-board-col-6">
-						<label class="adding-board-input" :class="{disabled: !form.isPanel, 'error' : $v.form.panelGapX.$error, 'success' : !$v.form.panelGapX.$invalid}">
-							<input 
-								type="text"
-								:disabled="!form.isPanel"
-								v-model.lazy="form.panelGapX"
-								@blur="$v.form.panelGapX.$touch()"
-								v-on:input="changeInput"
-								:class="{'is-data': form.panelGapX}"
-							>
-							<div class="adding-board-input__title">Зазор X, мм</div>
-							<div class="adding-board-input-info-error" :class="{error: $v.form.panelGapX.$error}" v-on:click="openInfoErrorInInput">
-								<div class="adding-board-input-info-error__message"  v-if="$v.form.panelGapX.$error">
-									<template v-if="!$v.form.panelGapX.between">
-										Значение должно быть между  {{$v.form.panelGapX.$params.between.min}} и {{$v.form.panelGapX.$params.between.max}}
-									</template>
-									<template v-if="!$v.form.panelGapX.panelGapXMillingAndScribing">
-										Если включено фрезерование то значение должно быть >= 2<br>
-										Если включено скрайбирование то значение должно быть = 0<br>
-										Если включено фрезерование и скрайбирование то значение должно быть = 0 или >= 2<br>
-									</template>
-								</div>
-								<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
-								</svg>
-							</div>
-						</label>
-					</div>
-					<div class="adding-board-col adding-board-col-6">
-						<label class="adding-board-input" :class="{disabled: !form.isPanel, 'error' : $v.form.panelGapY.$error, 'success' : !$v.form.panelGapY.$invalid}">
-							<input 
-								type="text" 
-								:disabled="!form.isPanel"
-								v-model.lazy="form.panelGapY"
-								@blur="$v.form.panelGapY.$touch()"
-								v-on:input="changeInput"
-								:class="{'is-data': form.panelGapY}"
-							>
-							<div class="adding-board-input__title">Зазор Y, мм</div>
-							<div class="adding-board-input-info-error" :class="{error: $v.form.panelGapY.$error}" v-on:click="openInfoErrorInInput">
-								<div class="adding-board-input-info-error__message"  v-if="$v.form.panelGapY.$error">
-									<template v-if="!$v.form.panelGapY.between">
-										Значение должно быть между  {{$v.form.panelGapY.$params.between.min}} и {{$v.form.panelGapY.$params.between.max}}
-									</template>
-									<template v-if="!$v.form.panelGapY.panelGapYMillingAndScribing">
-										Если включено фрезерование то значение должно быть >= 2<br>
-										Если включено скрайбирование то значение должно быть = 0<br>
-										Если включено фрезерование и скрайбирование то значение должно быть = 0 или >= 2<br>
-									</template>
-								</div>
-								<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-									<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
-								</svg>
-							</div>
-						</label>
-					</div>
-				</div>
-
-				<label class="adding-board-checkbox" :class="{disabled: !form.isPanel}">
-					<div class="adding-board-checkbox__title">Фрезерование</div>
-					<input 
-						type="checkbox" 
-						v-model="form.milling" 
-						:disabled="!form.isPanel"
-						v-on:change="$v.form.milling.$touch()"
-					>
-					<div class="adding-board-checkbox-toggle"></div>
-				</label>
-				<label class="adding-board-checkbox" :class="{disabled: !form.isPanel}">
-					<div class="adding-board-checkbox__title">Скрайбирование</div>
-					<input 
-						type="checkbox" 
-						v-model="form.scribing" 
-						:disabled="!form.isPanel"
-						v-on:change="$v.form.scribing.$touch()"
-					>
-					<div class="adding-board-checkbox-toggle"></div>
-				</label>
-				<div class="adding-board-input__error" v-if="$v.form.milling.$error || $v.form.panelGapY.$error || $v.form.panelGapX.$error">
-					<template>
-						Фрезерование или Скрайбирование обязательно к заполнению
-					</template>
-				</div>
-			</div>
 			<div class="adding-board-col adding-board-col-4">
 				<div class="adding-board-params__title">Вид панели</div>
 
@@ -276,6 +290,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="adding-board-buttons">
 			<div class="adding-board-buttons__btn btn btn-border" v-on:click="prevStep"><span>Назад</span></div>
 			<div class="adding-board-buttons__btn btn btn-default" :class="{disabled: !isSuccessNextBtn}" v-on:click="nextStep"><span>Далее</span></div>
@@ -376,10 +391,12 @@
 			},
 			square() {
 				if(this.form.widthX && this.form.heightY && this.form.panelX && this.form.panelY && this.form.panelGapX && this.form.panelGapY) {
-					const result = ((Number(this.form.widthX) + Number(this.form.panelGapX)) * Number(this.form.panelX) - Number(this.form.panelGapX)) * ((Number(this.form.heightY) + Number(this.form.panelGapY)) * Number(this.form.panelY) - Number(this.form.panelGapY))
+					const result = ((Number(this.form.widthX) + Number(this.form.panelGapX)) * Number(this.form.panelX) - Number(this.form.panelGapX)) * ((Number(this.form.heightY) + Number(this.form.panelGapY)) * Number(this.form.panelY) - Number(this.form.panelGapY)) / 10000
 					return parseFloat(result).toFixed(2)
+				} else if(this.form.widthX && this.form.heightY) {
+					return Number(this.form.widthX) * Number(this.form.heightY)
 				} else {
-					return 0;
+					return 0
 				}
 			}
 		},
@@ -623,6 +640,25 @@
 <style lang="scss">
 	.adding-board-params{
 		min-height: 290px;
+
+		&-error-panel{
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			border-top: 1px solid #eee;
+			margin-top: 20px;
+			padding-top: 20px;
+
+			svg{
+				fill: #2AA396;
+				position: relative;
+				top: 2px;
+			}
+			&-text{
+				color: #2AA396;
+				width: calc(100% - 20px);
+			}
+		}
 
 		&__title{
 			font-weight: 500;
