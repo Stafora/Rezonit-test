@@ -1,6 +1,14 @@
 <template>
-    <header class="header">
-        <div class="header__logo">
+	<header class="header">
+		<div class="header-open-mobile-menu" v-on:click="toggleMobileMenu">
+			<svg version="1.1" width="20" height="20" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 341.333 341.333" style="enable-background:new 0 0 341.333 341.333;" xml:space="preserve">
+				<rect y="277.333" width="341.333" height="42.667"/>
+				<rect y="149.333" width="341.333" height="42.667"/>
+				<rect y="21.333" width="341.333" height="42.667"/>
+			</svg>
+		</div>
+
+		<div class="header__logo">
 			<img :src="logo" alt="">
 		</div>
 		<div class="header__page-name">{{ getMetaTitle }}</div>
@@ -20,18 +28,26 @@
 				<div class="header-profile-panel__logout" v-on:click="logout">Выйти</div>
 			</div>
 		</div>
-    </header>
+
+		<MobileMenu v-bind:isOpenMobileMenu="isOpenMobileMenu" v-on:toggleMobileMenu="toggleMobileMenu" />
+
+	</header>
 </template>
 
 <script>
 	import { mapActions, mapGetters } from 'vuex'
+	import MobileMenu from './MobileMenu'
 
 	export default {
 		name: 'Header',
 		data: () => ({
 			logo: require('@/assets/img/cabinet-logo.svg'),
-			isOpenUserInfo: false
+			isOpenUserInfo: false,
+			isOpenMobileMenu: false
 		}),
+		components: {
+			MobileMenu
+		},
 		computed: {
 			...mapGetters([
                 'GET_USER'
@@ -45,6 +61,9 @@
                 'USER',
 				'LOGOUT'
             ]),
+			toggleMobileMenu() {
+				this.isOpenMobileMenu = !this.isOpenMobileMenu
+			},
 			toggleUserInfo() {
 				this.isOpenUserInfo = !this.isOpenUserInfo
 			},
@@ -70,6 +89,15 @@
 		box-shadow: 0px 10px 92px rgba(60, 145, 179, 0.1), 0px 10px 20px rgba(60, 145, 179, 0.1), 0px 5px 10px rgba(60, 145, 179, 0.1), 0px 5px 5px rgba(60, 145, 179, 0.1), 0px 2px 3px rgba(60, 145, 179, 0.1);
 		position: relative;
 		z-index: 3;
+
+		&-open-mobile-menu{
+			margin-right: 10px;
+			display: none;
+
+			svg{
+				fill: #14B775;
+			}
+		}
 
 		&__logo{
 			display: flex;
@@ -172,6 +200,10 @@
 	@media(max-width: 980px){
 		.header{
 			padding: 0px 15px;
+
+			&-open-mobile-menu{
+				display: flex;
+			}
 
 			&__logo{
 				width: 90px;

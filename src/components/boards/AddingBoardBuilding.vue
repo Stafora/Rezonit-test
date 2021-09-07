@@ -7,7 +7,7 @@
 					<div class="adding-board-select">
 						<div class="adding-board-select__title">Слоев, шт</div>
 						<input type="range" value="1" step="1" min="1" :max="getLayersList.length" v-on:change="rangeChange">
-						<div class="adding-board-select-hint">Выбрано слоёв: {{ form.currentLayer }}</div>
+						<div class="adding-board-select-hint">Выбрано слоёв: {{ form.currentLayer }} шт</div>
 					</div>
 
 					<div class="adding-board-select">
@@ -82,7 +82,7 @@
 				mppSetLayer: null,
 				mppSetLayersId: null,
 				layersBuilding: null,
-				currentLayer: '',
+				currentLayer: null,
 				typeMaterial: '',
 				cardWidth: '',
 				foilWidth: ''
@@ -93,8 +93,6 @@
 			this.CARD_MATERIAL_MARKS();
 			this.CARD_MATERIAL_TYPES();
 			this.CARD_MATERIALS();
-
-			this.form.currentLayer = this.layersList()[0]
 		},
 		watch: {
 			'$v.form.$invalid': function _watch$vForm$invalid (value) {
@@ -122,14 +120,16 @@
 					const uniqueListLayers = listLayers.filter(function(value, index, selfArr){
 						return selfArr.indexOf(value) === index
 					});
-					return uniqueListLayers;
+					if(!this.form.currentLayer){
+						this.rangeChange()
+					}
+					return uniqueListLayers
 				} else {
 					return [];
 				}
 			},
 			getTypeMaterial() {
 				this.setTypeMaterialDefaultValie()
-
 				if(this.form.currentLayer && this.GET_CARD_MPP_SETS){
 					const fileteredMppSetsByLayer = this.GET_CARD_MPP_SETS.filter(function(obj, index, selfArr){
 						return obj.layers === this.form.currentLayer
@@ -244,7 +244,11 @@
 				this.form.typeMaterial = ''
 			},
 			rangeChange(e) {
-				this.form.currentLayer = this.layersList()[e.target.value - 1]
+				if(e) {
+					this.form.currentLayer = this.layersList()[e.target.value - 1]
+				} else {
+					this.form.currentLayer = this.layersList()[0]
+				}
 			},
 			layersList() {
 				if(this.GET_CARD_MPP_SETS){
