@@ -4,10 +4,10 @@ axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT
 
 export default {
     state: {
-		cardMaterials: null,
-		cardMaterialMarks: null,
-		cardMaterialTypes: null,
-		cardMppSets: null,
+		cardMaterials: [],
+		cardMaterialMarks: [],
+		cardMaterialTypes: [],
+		cardMppSets: [],
 		cardMppLayers: null
     },
     getters: {
