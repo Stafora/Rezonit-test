@@ -44,6 +44,7 @@
 			v-on:openAddPopup="openAddPopup" 
 			v-on:reloadCardsList="reloadCardsList"
 			v-on:changeIssetDraft="changeIssetDraft"
+			v-on:finishPopupAllStep="finishPopupAllStep"
 			v-bind:isOpenPopup="isOpenPopup"
 		/>
 		<ConfirmDialogue ref="confirmDialogue"></ConfirmDialogue>
@@ -71,9 +72,9 @@
 		created: function (){
 			this.issetDraft = AddingBoardStorageServices.getItem(AddingBoardStorageServices.STORAGE_KEY_FILE) !== null
 			if(this.issetDraft) {
-				this.changeDisabledBtnDraft();
+				this.changeDisabledBtnDraft()
 			}
-			this.CARDS();
+			this.CARDS()
 		},
 		computed: {
 			...mapGetters([
@@ -96,6 +97,11 @@
 			...mapActions([
 				'CARDS'
             ]),
+			finishPopupAllStep() {
+				this.isOpenPopup = false;
+				this.changeDisabledBtnDraft(true);
+				this.issetDraft = false;
+			},
 			openAddPopup() {
 				this.isOpenPopup = !this.isOpenPopup
 				this.changeIssetDraft();

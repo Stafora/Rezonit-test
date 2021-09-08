@@ -57,6 +57,7 @@
 			transition: 0.8s;
 			opacity: 1;
 			visibility: visible;
+			z-index: 2;
 		}
 		&-register{
 			display: flex;
@@ -66,6 +67,7 @@
 			transition: 0.8s;
 			opacity: 0;
 			visibility: hidden;
+			z-index: 1;
 		}
 
 		&.change{
@@ -76,6 +78,7 @@
 					opacity: 0;
 					visibility: hidden;
 					position: absolute;
+					z-index: 1;
 				}
 				&-register{
 					transform: rotate3d(0, 1, 0, 0deg);
@@ -83,6 +86,7 @@
 					opacity: 1;
 					visibility: visible;
 					position: relative;
+					z-index: 2;
 				}
 			}
 		}

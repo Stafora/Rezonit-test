@@ -22,8 +22,9 @@
 
 	&-default{
 		color: #fff;
+		background: linear-gradient(90deg, #14B775 0.66%, #3D8FB4 100%), linear-gradient(90deg, #14B775 0%, #3D8FB4 100%);
+		background-blend-mode: soft-light, normal;
 		box-shadow: 0px 10px 20px rgba(43, 161, 153, 0.3);
-		background: linear-gradient(90deg, #14B775 0%, #3D8FB4 100%);
 
 		&::before, &::after{
 			position: absolute;
@@ -37,12 +38,13 @@
 			visibility: hidden;
 		}
 		&::before{
-			background: linear-gradient(90deg, #14B775 0.66%, #3D8FB4 100%), linear-gradient(90deg, #14B775 0%, #3D8FB4 100%);
-			background-blend-mode: soft-light, normal;
+			background: linear-gradient(90deg, #14B775 0%, #3D8FB4 100%);
+			box-shadow: 0px 10px 20px rgba(43, 161, 153, 0.3);
 		}
 		&::after{
 			background: linear-gradient(90deg, rgba(20, 183, 117, 0.3) 0%, rgba(61, 143, 180, 0.3) 100%), linear-gradient(90deg, #14B775 0%, #3D8FB4 100%);
 			background-blend-mode: color-burn, normal;
+			box-shadow: 0px 10px 20px rgba(43, 161, 153, 0.3);
 		}
 
 		&:hover{
@@ -50,11 +52,19 @@
 				opacity: 1;
 				visibility: visible;
 			}
+			&::after{
+				opacity: 0;
+				visibility: hidden;
+			}
 		}
-		&:focus{
+		&:active{
 			&::after{
 				opacity: 1;
 				visibility: visible;
+			}
+			&::before{
+				opacity: 0;
+				visibility: hidden;
 			}
 		}
 

@@ -6,6 +6,7 @@ import addingBoard from './addingBoard'
 import addingParam from './addingParam'
 import cardMaterials from './cardMaterials'
 import card from './card'
+import language from './language'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
 		addingBoard,
 		addingParam,
 		cardMaterials,
-		card
+		card,
+		language
 	}
 })

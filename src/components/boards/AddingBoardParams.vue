@@ -195,24 +195,27 @@
 
 				<div class="adding-board-params-visually">
 					<div class="adding-board-params-visually-panel">
-
-						<div class="adding-board-params-visually-panel-inner" 
-							v-for="index in getPanelRenderY" 
-							v-bind:key="index"
+						<template 
+							v-if="!$v.form.panelX.$invalid && !$v.form.panelY.$invalid && !$v.form.panelGapX.$invalid && !$v.form.panelGapY.$invalid"
 						>
-							<div 
-								class="adding-board-params-visually-panel__block" 
-								v-for="index in getPanelRenderX" v-bind:key="index" 
-								:style="{
-									'margin-top': `-${getPanelStyleMarginTopBottom / 2}px`,
-									width: `${getPanelStyleWidth}px`, 
-									height: `${getPanelStyleHeight}px`,
-									margin: `${getPanelStyleMarginTopBottom}px ${getPanelStyleMarginLeftRight}px`
-								}"
+							<div class="adding-board-params-visually-panel-inner"
+								v-for="index in getPanelRenderY" 
+								v-bind:key="index"
 							>
+								<div 
+									class="adding-board-params-visually-panel__block" 
+									v-for="index in getPanelRenderX" 
+									v-bind:key="index" 
+									:style="{
+										'margin-top': `-${getPanelStyleMarginTopBottom / 2}px`,
+										width: `${getPanelStyleWidth}px`, 
+										height: `${getPanelStyleHeight}px`,
+										margin: `${getPanelStyleMarginTopBottom}px ${getPanelStyleMarginLeftRight}px`
+									}"
+								>
+								</div>
 							</div>
-						</div>
-
+						</template>
 					</div>
 				</div>
 			</div>
@@ -278,16 +281,16 @@
 				if(this.form.panelX){
 					return parseInt(this.form.panelX)
 				}
-				return null
+				return [0]
 			},
 			getPanelRenderY() {
 				if(this.form.panelY){
 					return parseInt(this.form.panelY)
 				}
-				return null
+				return [0]
 			},
 			getPanelStyleWidth() {
-				if(this.form.panelX){
+				if(!this.$v.form.panelX.$invalid && !this.$v.form.panelGapX.$invalid){
 					const result = this.panel.width / this.form.panelX;
 					if(this.form.panelGapX) {
 						return result - (this.form.panelGapX * 2)
@@ -298,7 +301,7 @@
 				return null
 			},
 			getPanelStyleHeight() {
-				if(this.form.panelY){
+				if(!this.$v.form.panelY.$invalid && !this.$v.form.panelGapY.$invalid){
 					const result = this.panel.height / this.form.panelY;
 					if(this.form.panelGapY) {
 						return result - (this.form.panelGapY * 2)
@@ -321,11 +324,11 @@
 				return null
 			},
 			square() {
-				if(this.form.widthX && this.form.heightY && this.form.panelX && this.form.panelY && this.form.panelGapX && this.form.panelGapY) {
+				if(this.form.widthX && this.form.heightY && this.form.panelX && this.form.panelY && this.form.panelGapX && this.form.panelGapY && this.form.isPanel) {
 					const result = ((Number(this.form.widthX) + Number(this.form.panelGapX)) * Number(this.form.panelX) - Number(this.form.panelGapX)) * ((Number(this.form.heightY) + Number(this.form.panelGapY)) * Number(this.form.panelY) - Number(this.form.panelGapY)) / 10000
 					return parseFloat(result).toFixed(2)
 				} else if(this.form.widthX && this.form.heightY) {
-					return Number(this.form.widthX) * Number(this.form.heightY)
+					return parseFloat(this.form.widthX).toFixed(2) * parseFloat(this.form.heightY).toFixed(2)
 				} else {
 					return 0
 				}
@@ -379,31 +382,19 @@
 				}
 			},
 			'form.widthX': function limitWidthX (value) {
-				if(value > 300) {
-					this.form.widthX = 300
-				} else if(value < 0) {
-					this.form.widthX = 0
+				const result = parseFloat(value).toFixed(2);
+				if(isNaN(result)){
+					this.form.widthX = 0;
 				} else {
-					const result = parseFloat(value).toFixed(2);
-					if(isNaN(result)){
-						this.form.widthX = 0;
-					} else {
-						this.form.widthX = result
-					}
+					this.form.widthX = result
 				}
 			},
 			'form.heightY': function limitHeightY (value) {
-				if(value > 300) {
-					this.form.heightY = 300
-				} else if(value < 0) {
-					this.form.heightY = 0
+				const result = parseFloat(value).toFixed(2);
+				if(isNaN(result)){
+					this.form.heightY = 0;
 				} else {
-					const result = parseFloat(value).toFixed(2);
-					if(isNaN(result)){
-						this.form.heightY = 0;
-					} else {
-						this.form.heightY = result
-					}
+					this.form.heightY = result
 				}
 			},
 			'form.isPanel': function limitWidthX (value) {
@@ -417,59 +408,35 @@
 				}
 			},
 			'form.panelX': function limitPanelX (value) {
-				if(value > 10) {
-					this.form.panelX = 10
-				} else if(value < 0) {
-					this.form.panelX = 0
+				const result = parseFloat(value).toFixed(2);
+				if(isNaN(result)){
+					this.form.panelX = 0;
 				} else {
-					const result = parseFloat(value).toFixed(2);
-					if(isNaN(result)){
-						this.form.panelX = 0;
-					} else {
-						this.form.panelX = result
-					}
+					this.form.panelX = result
 				}
 			},
 			'form.panelY': function limitPanelY (value) {
-				if(value > 10) {
-					this.form.panelY = 10
-				} else if(value < 0) {
-					this.form.panelY = 0
+				const result = parseFloat(value).toFixed(2);
+				if(isNaN(result)){
+					this.form.panelY = 0;
 				} else {
-					const result = parseFloat(value).toFixed(2);
-					if(isNaN(result)){
-						this.form.panelY = 0;
-					} else {
-						this.form.panelY = result
-					}
+					this.form.panelY = result
 				}
 			},
 			'form.panelGapX': function limitPanelGapX (value) {
-				if(value > 10) {
-					this.form.panelGapX = 10
-				} else if(value < 0) {
-					this.form.panelGapX = 0
+				const result = parseFloat(value).toFixed(2);
+				if(isNaN(result)){
+					this.form.panelGapX = 0;
 				} else {
-					const result = parseFloat(value).toFixed(2);
-					if(isNaN(result)){
-						this.form.panelGapX = 0;
-					} else {
-						this.form.panelGapX = result
-					}
+					this.form.panelGapX = result
 				}
 			},
 			'form.panelGapY': function limitpanelGapY (value) {
-				if(value > 10) {
-					this.form.panelGapY = 10
-				} else if(value < 0) {
-					this.form.panelGapY = 0
+				const result = parseFloat(value).toFixed(2);
+				if(isNaN(result)){
+					this.form.panelGapY = 0;
 				} else {
-					const result = parseFloat(value).toFixed(2);
-					if(isNaN(result)){
-						this.form.panelGapY = 0;
-					} else {
-						this.form.panelGapY = result
-					}
+					this.form.panelGapY = result
 				}
 			},
 			'form.milling': function millingChange (value) {
@@ -560,7 +527,7 @@
 					},
 					betweenCustom() {
 						if(this.form.isPanel) {
-							if(this.form.panelX >= 1 && this.form.panelX <= 300){
+							if(this.form.panelX >= 1 && this.form.panelX <= 10){
 								return true
 							}
 							return false
@@ -583,7 +550,7 @@
 					},
 					betweenCustom() {
 						if(this.form.isPanel) {
-							if(this.form.panelY >= 1 && this.form.panelY <= 300){
+							if(this.form.panelY >= 1 && this.form.panelY <= 10){
 								return true
 							}
 							return false
@@ -766,6 +733,8 @@
 
 		&-visually{
 			padding: 16px;
+			background: linear-gradient(0deg, rgba(42, 163, 150, 0.03), rgba(42, 163, 150, 0.03)), #FFFFFF;
+			border-radius: 4px;
 			
 			&-panel{
 				border: 1px solid #2AA396;

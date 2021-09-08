@@ -17,6 +17,7 @@
 			<div class="adding-board-step" v-bind:class="{active: currentStep == STEP_IMAGE}">
 				<AddingBoardFile
 					v-on:setStep="setStep"
+					v-on:closePopup="closePopup"
 				/>
 			</div>
 			<div class="adding-board-step" v-bind:class="{active: currentStep == STEP_PARAMS}">
@@ -29,6 +30,7 @@
 					v-on:setStep="setStep"
 					v-on:closePopup="closePopup"
 					v-on:reloadCardsListParent="reloadCardsListParent"
+					v-on:finishPopupAllStep="finishPopupAllStep"
 				/>
 			</div>
 
@@ -95,6 +97,9 @@
 			},
 			reloadCardsListParent() {
 				this.$emit('reloadCardsList')
+			},
+			finishPopupAllStep() {
+				this.$emit('finishPopupAllStep')
 			}
 		}
 	}
@@ -162,6 +167,7 @@
 				}
 				&.current{
 					border: 1px solid #2AA396;
+					background: #fff;
 				}
 			}
 		}
@@ -523,6 +529,9 @@
 
 				&:disabled{
 					opacity: 0.3;
+				}
+				&.success{
+					border-color: #15B776;
 				}
 			}
 			input[type="range"]{

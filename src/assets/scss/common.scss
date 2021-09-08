@@ -29,10 +29,11 @@ ul{
 		height: 4px;
 	}
 	&::-webkit-scrollbar-track {
-		background: #fff;
+		background: linear-gradient(0deg, rgba(42, 163, 150, 0.03), rgba(42, 163, 150, 0.03)), #FFFFFF;
 	}
 	&::-webkit-scrollbar-thumb {
 		background: #2AA396;
+		border-radius: 4px;
 	}
 }
 

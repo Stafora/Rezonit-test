@@ -2,26 +2,29 @@ import Vue from 'vue'
 
 // use {{date | date('time')}}
 Vue.filter('date', function (value, format = 'date') {
-    const options = {}
+	const date = Date.parse(value);
+	const year = new Intl.DateTimeFormat('ru-RU', {
+		year: 'numeric'
+	}).format(date);
 
-    if(format.includes('date')){
-        options.day = '2-digit'
-        options.month = 'long'
-        options.year = 'numeric'
-    }
-    if(format.includes('time')){
-        options.hour = '2-digit'
-        options.minute = '2-digit'
-        options.second = '2-digit'
-    }
-	if(format.includes('date-time')){
-		options.day = '2-digit'
-        options.month = '2-digit'
-        options.year = '2-digit'
-        options.hour = '2-digit'
-        options.minute = '2-digit'
-        options.second = '2-digit'
-    }
+	const month = new Intl.DateTimeFormat('ru-RU', {
+		month: '2-digit'
+	}).format(date);
 
-    return new Intl.DateTimeFormat('ru-RU', options).format(Date.parse(value));
+	const day = new Intl.DateTimeFormat('ru-RU', {
+		day: '2-digit'
+	}).format(date);
+
+	const hour = new Intl.DateTimeFormat('ru-RU', {
+		hour: '2-digit'
+	}).format(date);
+	const minute = new Intl.DateTimeFormat('ru-RU', {
+		minute: '2-digit'
+	}).format(date);
+
+	if(format === 'date-time'){
+		return `${year}.${month}.${day} ${hour}:${minute}`
+	} else {
+		return `${year}.${month}.${day}`
+	}  
 })

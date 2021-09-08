@@ -13,8 +13,8 @@
 		</div>
 		<div class="header__page-name">{{ getMetaTitle }}</div>
 
-		<div class="header-profile">
-			<div class="header-profile__img" v-on:click="toggleUserInfo">
+		<div class="header-profile" v-click-outside="closeUserInfo">
+			<div class="header-profile__img" v-on:click="openUserInfo">
 				<img :src="GET_USER.photo_url" alt="">				
 			</div>
 			<div class="header-profile-panel" :class="{active: isOpenUserInfo}">
@@ -45,6 +45,12 @@
 			isOpenUserInfo: false,
 			isOpenMobileMenu: false
 		}),
+		created: function () {
+			this.USER()
+		},
+		mounted() {
+			document.addEventListener('click', this.outsideClickHeaderProfile)
+		},
 		components: {
 			MobileMenu
 		},
@@ -64,17 +70,17 @@
 			toggleMobileMenu() {
 				this.isOpenMobileMenu = !this.isOpenMobileMenu
 			},
-			toggleUserInfo() {
-				this.isOpenUserInfo = !this.isOpenUserInfo
+			openUserInfo() {
+				this.isOpenUserInfo = true
+			},
+			closeUserInfo() {
+				this.isOpenUserInfo = false
 			},
 			logout: function () {
 				this.LOGOUT()
-				this.toggleUserInfo()
+				this.closeUserInfo()
 				window.location.reload();
 			}
-		},
-		created: function () {
-			this.USER()
 		}
 	}
 </script>
@@ -192,6 +198,14 @@
 					line-height: 1.3;
 					color: #A6B0AF;
 					cursor: pointer;
+					width: 68px;
+					height: 16px;
+					@include flex-center;
+					transition: 0.4s;
+
+					&:hover{
+						background: rgba(196, 196, 196, 0.1);
+					}
 				}
 			}
 		}

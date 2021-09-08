@@ -12,7 +12,7 @@
 
 					<div class="adding-board-select">
 						<div class="adding-board-select__title">Тип материала базы</div>
-						<select v-model="form.typeMaterial" @blur="$v.form.typeMaterial.$touch()" :disabled="!getTypeMaterial">
+						<select v-model="form.typeMaterial" @blur="$v.form.typeMaterial.$touch()" :disabled="!getTypeMaterial" :class="{success: form.typeMaterial}">
 							<option value="">Выберите тип материала базы</option>
 							<option v-for="item in getTypeMaterial" :key="item.id" :value="item.id">{{ item.name }}</option>
 						</select>
@@ -20,7 +20,7 @@
 
 					<div class="adding-board-select">
 						<div class="adding-board-select__title">Толщина платы</div>
-						<select v-model="form.cardWidth" @blur="$v.form.cardWidth.$touch()" :disabled="!getCardWidth">
+						<select v-model="form.cardWidth" @blur="$v.form.cardWidth.$touch()" :disabled="!getCardWidth"  :class="{success: form.cardWidth}">
 							<option value="">Выберите толщину платы</option>
 							<option v-for="value in getCardWidth" :key="value" :value="value">{{ value }}</option>
 						</select>
@@ -28,7 +28,7 @@
 
 					<div class="adding-board-select">
 						<div class="adding-board-select__title">Толщина фольги</div>
-						<select v-model="form.foilWidth" @blur="$v.form.foilWidth.$touch()" :disabled="!getFoilWidth">
+						<select v-model="form.foilWidth" @blur="$v.form.foilWidth.$touch()" :disabled="!getFoilWidth" :class="{success: form.foilWidth}">
 							<option value="">Выберите толщина фольги</option>
 							<option v-for="value in getFoilWidth" :key="value" :value="value">{{ value }}</option>
 						</select>
@@ -288,7 +288,7 @@
 					const result = this.CARD_ADD(data)
 					result.then((resp) => {
 						AddingBoardStorageServices.clearAll();
-						this.$emit('closePopup')
+						this.$emit('finishPopupAllStep')
 						this.$emit('reloadCardsListParent')
 					});
 				}
@@ -325,18 +325,6 @@
 			padding: 40px;
 			height: 290px;
 			overflow: auto;
-
-			&__text-group{
-				font-size: 12px;
-				position: absolute;
-				right: 0px;
-				top: 0px;
-				writing-mode: vertical-rl;
-				width: auto;
-				height: 100%;
-				text-align: center;
-				color: #2ba396;
-			}
 
 			&-group{
 				width: 100%;

@@ -8,6 +8,9 @@
 		<div class="adding-board-params-error-panel-text">
 			<div v-if="vForm.name.$error">
 				<strong>Название платы: </strong>
+				<template v-if="!vForm.name.checkName">
+					Название платы должно быть уникальным<br>
+				</template>
 				<template v-if="!vForm.name.required">
 					Поле обязательно к заполнению<br>
 				</template>
@@ -45,7 +48,7 @@
 					Поле обязательно к заполнению<br>
 				</template>
 				<template v-if="!vForm.panelX.betweenCustom">
-					Значение должно быть между 1 и 300<br>
+					Значение должно быть между 1 и 10<br>
 				</template>
 			</div>
 
@@ -54,8 +57,8 @@
 				<template v-if="!vForm.panelY.requiredCustom">
 					Поле обязательно к заполнению<br>
 				</template>
-				<template v-if="!vForm.panelY.requiredCustom">
-					Значение должно быть между  1 и 300<br>
+				<template v-if="!vForm.panelY.betweenCustom">
+					Значение должно быть между  1 и 10<br>
 				</template>
 			</div>
 

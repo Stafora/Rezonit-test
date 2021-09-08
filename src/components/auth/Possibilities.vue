@@ -1,10 +1,10 @@
 <template>
     <div class="auth-possibilities">
 		<div class="auth-possibilities-bg" :style="{ backgroundImage: `url('${imgBg}')` }"></div>
-        <div class="auth-possibilities__title">Возможности</div>
+        <div class="auth-possibilities__title">{{ getTitle }}</div>
 		
 		<ul class="auth-possibilities-list">
-			<li v-for="item in items" class="auth-possibilities-item" :key="item">
+			<li v-for="item in getItems" class="auth-possibilities-item" :key="item">
 				<img :src="icoPossibilitie" :alt="item" class="auth-possibilities-item__ico">
 				{{ item }}
 			</li>
@@ -13,20 +13,50 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
+	import { LANG_RU, LANG_EN } from '@/services/languageService'
+
 	export default {
 		name: 'Possibilities',
 		data: () => ({ 
 			imgBg: require('@/assets/img/possibilities-bg.png'), 
 			icoPossibilitie: require('@/assets/img/possibilities-ico.svg'), 
+			LANG_RU: LANG_RU,
+			LANG_EN: LANG_EN,
+			title: 'Возможности',
+			titleEn: 'Features',
 			items: [
 				'Предварительный расчет стоимости',
 				'On-line DRC и DFM проверка плат',
 				'Оформление и оплата заказов',
 				'Мониторинг состояния заказов',
 				'Просмотр и скачивание документов'
+			],
+			itemsEn: [
+				'Preliminary cost calculation',
+				'Online DRC и DFM PCB testing',
+				'Ordering and payment',
+				'Online order tracking',
+				'View and download docs'
 			]
-		})
-
+		}),
+		computed: {
+			...mapGetters([
+                'CURRENT_LANGUAGE'
+            ]),
+			getItems() {
+				if(this.CURRENT_LANGUAGE === this.LANG_EN){
+					return this.itemsEn;
+				}
+				return this.items
+			},
+			getTitle() {
+				if(this.CURRENT_LANGUAGE === this.LANG_EN){
+					return this.titleEn;
+				}
+				return this.title
+			}
+		}
 	}
 </script>
 
@@ -54,6 +84,7 @@
 			height: 100%;
 			left: 0px;
 			top: 0px;
+			opacity: 0.5;
 		}
 
 		&__title{
@@ -66,7 +97,7 @@
 			
 		}
 		&-item{
-			margin-bottom: 16px;
+			margin-bottom: 20px;
 			position: relative;
 			font-size: 14px;
 			line-height: 1.3;

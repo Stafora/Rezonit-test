@@ -10,7 +10,7 @@
 				Регистрация в Личном кабинете
 			</div>
 
-			<div class="form-element" :class="{error: this.REGISTRATION_ERRORS.name}">
+			<div class="form-element" :class="{error: REGISTRATION_ERRORS.name || $v.registrationName.$error, success: !$v.registrationName.$invalid}">
 				<div class="form-element-input-wrapper">
 					<input 
 						type="text" 
@@ -18,39 +18,58 @@
 						class="form-element__input" 
 						placeholder="Ваше имя" 
 						autocomplete="off"
+						@blur="$v.registrationName.$touch()"
 					>
 				</div>
 				<div class="form-element__error">
-					<template v-for="error in this.REGISTRATION_ERRORS.name">
+					<template v-for="error in REGISTRATION_ERRORS.name">
 						{{ error }}
+					</template>
+					<template v-if="$v.registrationName.$error">
+						<template v-if="!$v.registrationName.required">
+							Поле обязательно к заполнению
+						</template>
+						<template v-if="!$v.registrationName.minLength">
+							Имя должно быть минимум из {{ $v.registrationName.$params.minLength.min }} символов
+						</template>
 					</template>
 				</div>
 			</div>
 
-			<div class="form-element" :class="{error: this.REGISTRATION_ERRORS.email}">
+			<div class="form-element" :class="{error: REGISTRATION_ERRORS.email || $v.registrationEmail.$error, success: !$v.registrationEmail.$invalid}">
 				<div class="form-element-input-wrapper">
 					<input 
 						v-model="registrationEmail" 
 						class="form-element__input"
 						placeholder="Введите email" 
 						autocomplete="off"
+						@blur="$v.registrationEmail.$touch()"
 					>
 				</div>
 				<div class="form-element__error">
-					<template v-for="error in this.REGISTRATION_ERRORS.email">
+					<template v-for="error in REGISTRATION_ERRORS.email">
 						{{ error }}
+					</template>
+					<template v-if="$v.registrationEmail.$error">
+						<template v-if="!$v.registrationEmail.required">
+							Поле обязательно к заполнению
+						</template>
+						<template v-if="!$v.registrationEmail.email">
+							Поле должно содержать email адрес
+						</template>
 					</template>
 				</div>
 			</div>
 
-			<div class="form-element" :class="{error: this.REGISTRATION_ERRORS.password}">
+			<div class="form-element" :class="{error: REGISTRATION_ERRORS.password || $v.registrationPassword.$error, success: !$v.registrationPassword.$invalid}">
 				<div class="form-element-input-wrapper">
-					<input 
+					<input
 						:type="passwordVisible ? 'text' : 'password'"
 						v-model="registrationPassword" 
 						class="form-element__input" 
 						placeholder="Придумайте пароль" 
 						autocomplete="off"
+						@blur="$v.registrationPassword.$touch()"
 					>
 
 					<div class="form-element__visible-password" v-on:click="changeVisiblePassword">
@@ -65,12 +84,20 @@
 					</div>
 				</div>
 				<div class="form-element__error">
-					<template v-for="error in this.REGISTRATION_ERRORS.password">
+					<template v-for="error in REGISTRATION_ERRORS.password">
 						{{ error }}
+					</template>
+					<template v-if="$v.registrationPassword.$error">
+						<template v-if="!$v.registrationPassword.required">
+							Поле обязательно к заполнению
+						</template>
+						<template v-if="!$v.registrationPassword.minLength">
+							Пароль должен содержать минимум {{ $v.registrationName.$params.minLength.min }} символов
+						</template>
 					</template>
 				</div>
 			</div>
-			<div class="form-element" :class="{error: this.REGISTRATION_ERRORS.password_confirmation}">
+			<div class="form-element" :class="{error: REGISTRATION_ERRORS.password_confirmation || $v.registrationPasswordRepeat.$error, success: !$v.registrationPasswordRepeat.$invalid}">
 				<div class="form-element-input-wrapper">
 					<input 
 						:type="passwordVisible ? 'text' : 'password'"
@@ -78,6 +105,7 @@
 						class="form-element__input" 
 						placeholder="Повторите пароль" 
 						autocomplete="off"
+						@blur="$v.registrationPasswordRepeat.$touch()"
 					>
 
 					<div class="form-element__visible-password" v-on:click="changeVisiblePassword">
@@ -92,15 +120,26 @@
 					</div>
 				</div>
 				<div class="form-element__error">
-					<template v-for="error in this.REGISTRATION_ERRORS.password_confirmation">
+					<template v-for="error in REGISTRATION_ERRORS.password_confirmation">
 						{{ error }}
+					</template>
+					<template v-if="$v.registrationPasswordRepeat.$error">
+						<template v-if="!$v.registrationPasswordRepeat.required">
+							Поле обязательно к заполнению
+						</template>
+						<template v-if="!$v.registrationPasswordRepeat.minLength">
+							Повторение пароля должно содержать минимум {{ $v.registrationName.$params.minLength.min }} символов
+						</template>
+						<template v-if="!$v.registrationPasswordRepeat.coincidences">
+							Поле Пароль и Повторите пароль должно совпадать
+						</template>
 					</template>
 				</div>
 			</div>
 
 			<div class="registration-buttons">
 				<div class="btn btn-border" v-on:click="changeRegistrationPanel"><span>Войти</span></div>
-				<button class="btn btn-default"><span>Регистрация</span></button>
+				<button class="btn btn-default" :disabled="isDisabledRegistrationBtn"><span>Регистрация</span></button>
 			</div>
 
 		</form>
@@ -112,8 +151,8 @@
 
 <script>
 	import LanguageAuth from '../language/Language-auth.vue'
-	// import { mapActions, mapGetters } from 'vuex'
 	import { mapActions, mapGetters } from 'vuex'
+	import { required, minLength, email } from 'vuelidate/lib/validators'
 
 	export default {
 		name: 'Registration',
@@ -125,6 +164,7 @@
 		data: () => ({ 
 			logo: require('@/assets/img/logo.svg'),
 			registrationMessage: 'Регистрация прошла успешно, войдите в кабинет',
+			isDisabledRegistrationBtn: true,
 			passwordVisible: false,
 			registrationName: '',
 			registrationEmail: '',
@@ -133,6 +173,15 @@
 		}),
 		components: {
 			LanguageAuth
+		},
+		watch: {
+			'$v.$invalid': function _watch$v$invalid (value) {
+				if(value === false) {
+					this.isDisabledRegistrationBtn = false
+				} else {
+					this.isDisabledRegistrationBtn = true
+				}
+			}
 		},
 		computed: {
             ...mapGetters([
@@ -168,6 +217,30 @@
 					}
 				})
 			}
+		},
+		validations: {
+			registrationName: {
+				required,
+				minLength: minLength(3)
+			},
+			registrationEmail: {
+				required,
+				email
+			},
+			registrationPassword: {
+				required,
+				minLength: minLength(6)
+			},
+			registrationPasswordRepeat: {
+				required,
+				minLength: minLength(6),
+				coincidences() {
+					if(this.registrationPassword === this.registrationPasswordRepeat) {
+						return true
+					}
+					return false;
+				}
+			}
 		}
 	}
 </script>
@@ -176,8 +249,12 @@
 	.registration{
 		width: 468px;
 		max-width: 100%;
-		padding: 15px 28px;
+		padding: 22px 16px;
 		background: #fff;
+
+		.language-auth-list{
+			justify-content: flex-start;
+		}
 
 		&__logo{
 			margin-bottom: 35px;
