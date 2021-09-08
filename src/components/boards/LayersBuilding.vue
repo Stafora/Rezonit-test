@@ -27,8 +27,6 @@
 						<div class="adding-board-building-layers-item__text"></div>
 					</div>
 				</template>
-
-				<div v-if="list.length > 1" class="adding-board-building-layers__text-group">Группа</div>
 			</div>
 		</template>
 	</div>
@@ -71,6 +69,7 @@
 						item.material = this.getMaterialId(item.material_id);
 						mppSetLayersList[item.layer_group].push(item)
 					}
+					console.log(mppSetLayersList);
 					return mppSetLayersList
 				}
 				

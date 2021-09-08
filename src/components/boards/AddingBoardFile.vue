@@ -51,7 +51,7 @@
 						Размер файла превышает {{ MAX_SIZE_FILE }} мб
 					</div>
 					<div class="adding-board-file-progress__error-text" v-if="!$v.form.fileBoard.checkSVG">
-						Формат файла не соответстует требованиям, загрузите svg файл
+						Формат файла не соответствует требованиям, загрузите svg файл
 					</div>
 				</div>
 				<div class="adding-board-file-progress-cancel" v-on:click="deleteFileBoard">
@@ -74,7 +74,7 @@
 				<div class="adding-board-file-progress-info">
 					<div class="adding-board-file-progress__file-name">{{ fileBoardStore.file_name }}</div>
 					<div class="adding-board-file-progress__succes-text">
-						Файл загружен, можете переходить к следующему шагу
+						Успешно загружен
 					</div>
 				</div>
 				<div class="adding-board-file-progress-cancel" v-on:click="deleteFileBoard">
@@ -86,6 +86,7 @@
 
 		</form>
 		<div class="adding-board-buttons">
+			<div class="adding-board-buttons__btn btn btn-border" v-on:click="closePopup"><span>Назад</span></div>
 			<div class="adding-board-buttons__btn btn btn-default" :class="{disabled: !isSuccessNextBtn}" v-on:click="nextStep"><span>Далее</span></div>
 		</div>
 	</div>
@@ -217,7 +218,9 @@
 					this.$emit('setStep', this.CURRENT_STEP + 1)
 				}
 			},
-
+			closePopup() {
+				this.$emit('closePopup')
+			},
 			// dragan drop file
 			determineDragAndDropCapable(){
 				var div = document.createElement('div');

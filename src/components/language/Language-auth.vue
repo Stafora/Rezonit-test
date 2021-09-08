@@ -1,15 +1,35 @@
 <template>
 	<div class="language-auth">
 		<ul class="language-auth-list">
-			<li class="language-auth-item"><a class="language-auth-link" href="#">EN</a></li>
-			<li class="language-auth-item"><a class="language-auth-link active" href="#">RU</a></li>
+			<li class="language-auth-item"><div class="language-auth-link" :class="{active: CURRENT_LANGUAGE === LANG_EN}" v-on:click="changeLanguage(LANG_EN)">EN</div></li>
+			<li class="language-auth-item"><div class="language-auth-link" :class="{active: CURRENT_LANGUAGE === LANG_RU}" v-on:click="changeLanguage(LANG_RU)">RU</div></li>
 		</ul>
 	</div>
 </template>
 
 <script>
+	import { mapActions, mapGetters } from 'vuex'
+	import { LANG_RU, LANG_EN } from '@/services/languageService'
+
 	export default {
-		name: 'LanguageAuth'
+		name: 'LanguageAuth',
+		data: () => ({
+			LANG_RU: LANG_RU,
+			LANG_EN: LANG_EN
+		}),
+		computed: {
+			...mapGetters([
+                'CURRENT_LANGUAGE'
+            ])
+		},
+		methods: {
+			...mapActions([
+                'SET_LANGUAGE'
+            ]),
+			changeLanguage(lang) {
+				this.SET_LANGUAGE(lang)
+			}
+		}
 	}
 </script>
 
@@ -47,6 +67,7 @@
 			color: #A6B0AF;
 			text-transform: uppercase;
 			font-size: 12px;
+			cursor: pointer;
 
 			&.active{
 				color: #14B775;

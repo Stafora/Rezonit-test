@@ -12,7 +12,7 @@
 
 			<p class="login__succes-registration-message" v-if="getRegistrationMessage">{{ getRegistrationMessage }}</p>
 
-			<div class="form-element" :class="{error: this.LOGIN_ERRORS.email}">
+			<div class="form-element" :class="{error: this.LOGIN_ERRORS.email || $v.loginEmail.$error, success: !$v.loginEmail.$invalid}">
 				<div class="form-element-input-wrapper">
 					<input 
 						type="text" 
@@ -20,15 +20,24 @@
 						class="form-element__input" 
 						placeholder="Email" 
 						autocomplete="off"
+						@blur="$v.loginEmail.$touch()"
 					>
 				</div>
 				<div class="form-element__error">
 					<template v-for="error in this.LOGIN_ERRORS.email">
 						{{ error }}
 					</template>
+					<template v-if="$v.loginEmail.$error">
+						<template v-if="!$v.loginEmail.required">
+							Поле обязательно к заполнению
+						</template>
+						<template v-if="!$v.loginEmail.email">
+							Поле должно содержать email адрес
+						</template>
+					</template>
 				</div>
 			</div>
-			<div class="form-element" :class="{error: this.LOGIN_ERRORS.email}">
+			<div class="form-element" :class="{error: this.LOGIN_ERRORS.email || $v.loginPassword.$error, success: !$v.loginPassword.$invalid}">
 				<div class="form-element-input-wrapper">
 					<input 
 						:type="passwordVisible ? 'text' : 'password'"
@@ -36,6 +45,7 @@
 						class="form-element__input"
 						placeholder="Пароль" 
 						autocomplete="off"
+						@blur="$v.loginPassword.$touch()"
 					>
 
 					<div class="form-element__visible-password" v-on:click="changeVisiblePassword">
@@ -53,6 +63,14 @@
 					<template v-for="error in this.LOGIN_ERRORS.email">
 						{{ error }}
 					</template>
+					<template v-if="$v.loginPassword.$error">
+						<template v-if="!$v.loginPassword.required">
+							Поле обязательно к заполнению
+						</template>
+						<template v-if="!$v.loginPassword.minLength">
+							Пароль должен содержать минимум {{ $v.loginPassword.$params.minLength.min }} символов
+						</template>
+					</template>
 				</div>
 			</div>
 
@@ -60,7 +78,7 @@
 
 			<div class="login-buttons">
 				<div class="btn btn-border" v-on:click="changeLoginPanel"><span>Регистрация</span></div>
-				<button class="btn btn-default"><span>Войти</span></button>
+				<button class="btn btn-default" :disabled="isDisabledLoginBtn"><span>Войти</span></button>
 			</div>
 
 		</form>
@@ -73,6 +91,7 @@
 <script>
 	import LanguageAuth from '../language/Language-auth.vue'
 	import { mapActions, mapGetters } from 'vuex'
+	import { required, minLength, email } from 'vuelidate/lib/validators'
 
 	export default {
 		name: 'Login',
@@ -86,12 +105,22 @@
 		},
 		data: () => ({ 
 			logo: require('@/assets/img/logo.svg'),
+			isDisabledLoginBtn: true,
 			loginEmail: '',
 			loginPassword: '',
 			passwordVisible: false
 		}),
 		components: {
 			LanguageAuth
+		},
+		watch: {
+			'$v.$invalid': function _watch$v$invalid (value) {
+				if(value === false) {
+					this.isDisabledLoginBtn = false
+				} else {
+					this.isDisabledLoginBtn = true
+				}
+			}
 		},
 		computed: {
             ...mapGetters([
@@ -120,6 +149,16 @@
 					password: loginPassword
 				});
 			}
+		},
+		validations: {
+			loginEmail: {
+				required,
+				email
+			},
+			loginPassword: {
+				required,
+				minLength: minLength(6)
+			}
 		}
 	}
 </script>
@@ -128,7 +167,7 @@
 	.login{
 		width: 468px;
 		max-width: 100%;
-		padding: 15px 28px;
+		padding: 22px 16px;
 		background: #fff;
 
 		&__logo{

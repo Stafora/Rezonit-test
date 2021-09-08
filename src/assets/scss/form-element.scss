@@ -29,6 +29,7 @@
 		border-radius: 4px;
 		font-size: 14px;
 		color: #A6B0AF;
+		caret-color: #3C91B3;
 
 		&::placeholder{
 			color: #A6B0AF;
@@ -39,7 +40,7 @@
 			color: #A6B0AF !important;
 		}
 
-		&:focus{
+		&:focus, &:hover{
 			border-color: #3C91B3;
 		}
 	}
