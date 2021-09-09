@@ -7,7 +7,7 @@
 
 		<form @submit.prevent="registration" class="registration-form">
 			<div class="registration__title">
-				Регистрация в Личном кабинете
+				{{ CURRENT_LANGUAGE === LANG_RU ? 'Регистрация в Личном кабинете' : 'Create New Account' }}
 			</div>
 
 			<div class="form-element" :class="{error: REGISTRATION_ERRORS.name || $v.registrationName.$error, success: !$v.registrationName.$invalid}">
@@ -16,7 +16,7 @@
 						type="text" 
 						v-model="registrationName" 
 						class="form-element__input" 
-						placeholder="Ваше имя" 
+						:placeholder="CURRENT_LANGUAGE === LANG_RU ? 'Ваше имя' : 'Your name'"
 						autocomplete="off"
 						@blur="$v.registrationName.$touch()"
 					>
@@ -27,10 +27,10 @@
 					</template>
 					<template v-if="$v.registrationName.$error">
 						<template v-if="!$v.registrationName.required">
-							Поле обязательно к заполнению
+							{{ CURRENT_LANGUAGE === LANG_RU ? 'Поле обязательно к заполнению' : 'The field must be filled in' }}
 						</template>
 						<template v-if="!$v.registrationName.minLength">
-							Имя должно быть минимум из {{ $v.registrationName.$params.minLength.min }} символов
+							{{ CURRENT_LANGUAGE === LANG_RU ? `Пароль должен содержать минимум ${$v.registrationName.$params.minLength.min} символов` : `The password must contain at least ${$v.registrationName.$params.minLength.min} characters` }}
 						</template>
 					</template>
 				</div>
@@ -41,7 +41,7 @@
 					<input 
 						v-model="registrationEmail" 
 						class="form-element__input"
-						placeholder="Введите email" 
+						:placeholder="CURRENT_LANGUAGE === LANG_RU ? 'Введите email' : 'Enter Email'" 
 						autocomplete="off"
 						@blur="$v.registrationEmail.$touch()"
 					>
@@ -52,10 +52,10 @@
 					</template>
 					<template v-if="$v.registrationEmail.$error">
 						<template v-if="!$v.registrationEmail.required">
-							Поле обязательно к заполнению
+							{{ CURRENT_LANGUAGE === LANG_RU ? 'Поле обязательно к заполнению' : 'The field must be filled in' }}
 						</template>
 						<template v-if="!$v.registrationEmail.email">
-							Поле должно содержать email адрес
+							{{ CURRENT_LANGUAGE === LANG_RU ? 'Поле должно содержать email адрес' : 'The field must contain an email address' }}
 						</template>
 					</template>
 				</div>
@@ -67,7 +67,7 @@
 						:type="passwordVisible ? 'text' : 'password'"
 						v-model="registrationPassword" 
 						class="form-element__input" 
-						placeholder="Придумайте пароль" 
+						:placeholder="CURRENT_LANGUAGE === LANG_RU ? 'Придумайте пароль' : 'Create Password'" 
 						autocomplete="off"
 						@blur="$v.registrationPassword.$touch()"
 					>
@@ -89,10 +89,7 @@
 					</template>
 					<template v-if="$v.registrationPassword.$error">
 						<template v-if="!$v.registrationPassword.required">
-							Поле обязательно к заполнению
-						</template>
-						<template v-if="!$v.registrationPassword.minLength">
-							Пароль должен содержать минимум {{ $v.registrationName.$params.minLength.min }} символов
+							{{ CURRENT_LANGUAGE === LANG_RU ? 'Поле обязательно к заполнению' : 'The field must be filled in' }}
 						</template>
 					</template>
 				</div>
@@ -103,7 +100,7 @@
 						:type="passwordVisible ? 'text' : 'password'"
 						v-model="registrationPasswordRepeat" 
 						class="form-element__input" 
-						placeholder="Повторите пароль" 
+						:placeholder="CURRENT_LANGUAGE === LANG_RU ? 'Повторите пароль' : 'Reenter Password'" 
 						autocomplete="off"
 						@blur="$v.registrationPasswordRepeat.$touch()"
 					>
@@ -125,21 +122,18 @@
 					</template>
 					<template v-if="$v.registrationPasswordRepeat.$error">
 						<template v-if="!$v.registrationPasswordRepeat.required">
-							Поле обязательно к заполнению
-						</template>
-						<template v-if="!$v.registrationPasswordRepeat.minLength">
-							Повторение пароля должно содержать минимум {{ $v.registrationName.$params.minLength.min }} символов
+							{{ CURRENT_LANGUAGE === LANG_RU ? 'Поле обязательно к заполнению' : 'The field must be filled in' }}
 						</template>
 						<template v-if="!$v.registrationPasswordRepeat.coincidences">
-							Поле Пароль и Повторите пароль должно совпадать
+							{{ CURRENT_LANGUAGE === LANG_RU ? 'Поле Пароль и Повторите пароль должно совпадать' : 'The Password and Repeat password field must match' }}
 						</template>
 					</template>
 				</div>
 			</div>
 
 			<div class="registration-buttons">
-				<div class="btn btn-border" v-on:click="changeRegistrationPanel"><span>Войти</span></div>
-				<button class="btn btn-default" :disabled="isDisabledRegistrationBtn"><span>Регистрация</span></button>
+				<div class="btn btn-border" v-on:click="changeRegistrationPanel"><span>{{ CURRENT_LANGUAGE === LANG_RU ? 'Войти' : 'Log In' }}</span></div>
+				<button class="btn btn-default" :disabled="isDisabledRegistrationBtn"><span>{{ CURRENT_LANGUAGE === LANG_RU ? 'Регистрация' : 'Sign Up' }}</span></button>
 			</div>
 
 		</form>
@@ -153,6 +147,7 @@
 	import LanguageAuth from '../language/Language-auth.vue'
 	import { mapActions, mapGetters } from 'vuex'
 	import { required, minLength, email } from 'vuelidate/lib/validators'
+	import { LANG_RU, LANG_EN } from '@/services/languageService'
 
 	export default {
 		name: 'Registration',
@@ -169,7 +164,9 @@
 			registrationName: '',
 			registrationEmail: '',
 			registrationPassword: '',
-			registrationPasswordRepeat: ''
+			registrationPasswordRepeat: '',
+			LANG_RU: LANG_RU,
+			LANG_EN: LANG_EN
 		}),
 		components: {
 			LanguageAuth
@@ -186,7 +183,8 @@
 		computed: {
             ...mapGetters([
                 'CHEK_SUCCES_REGISTRATION',
-				'REGISTRATION_ERRORS'
+				'REGISTRATION_ERRORS',
+				'CURRENT_LANGUAGE'
             ])
         },
 		methods: {
@@ -228,12 +226,10 @@
 				email
 			},
 			registrationPassword: {
-				required,
-				minLength: minLength(6)
+				required
 			},
 			registrationPasswordRepeat: {
 				required,
-				minLength: minLength(6),
 				coincidences() {
 					if(this.registrationPassword === this.registrationPasswordRepeat) {
 						return true

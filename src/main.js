@@ -9,6 +9,11 @@ import Vuelidate from 'vuelidate'
 import './filters/date.filter'
 
 // style
+import './assets/scss/_mixins.scss'
+import './assets/scss/_animation.scss'
+import './assets/scss/common.scss'
+import './assets/scss/form-element.scss'
+import './assets/scss/buttons.scss'
 import './assets/scss/fonts.scss'
 
 router.beforeEach((to, from, next) => {

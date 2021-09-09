@@ -93,6 +93,11 @@
 		display: flex;
 		align-items: center;
 		border-top: 1px solid #E4E4E7;
+		transition: 0.4s;
+
+		&:hover{
+			background: rgba(196, 196, 196, 0.1);
+		}
 
 		&:last-child{
 			border-bottom: 1px solid #E4E4E7;

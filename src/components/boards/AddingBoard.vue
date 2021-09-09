@@ -227,9 +227,10 @@
 			}
 
 			&__error{
-				font-size: 12px;
+				font-size: 10px;
 				color: red;
-				margin-top: 3px;
+				position: absolute;
+				top: 37px;
 			}
 
 			$parent: &;
@@ -240,15 +241,15 @@
 				&:hover, &:focus-within{
 					#{$parent}{
 						&__title{
-							font-size: 14px;
-							padding-left: 14px;
-							padding-right: 14px;
-							padding-left: 14px;
-							padding-right: 14px;
-							height: 100%;
-							background: none;
-							left: 0px;
-							top: 0px;
+							font-size: 14px !important;
+							padding-left: 14px !important;
+							padding-right: 14px !important;
+							padding-left: 14px !important;
+							padding-right: 14px !important;
+							height: 100% !important;
+							background: none !important;
+							left: 0px !important;
+							top: 0px !important;
 						}
 					}
 				}
@@ -532,6 +533,7 @@
 				}
 				&.success{
 					border-color: #15B776;
+					color: #222;
 				}
 			}
 			input[type="range"]{

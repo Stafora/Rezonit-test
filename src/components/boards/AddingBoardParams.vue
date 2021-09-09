@@ -22,6 +22,17 @@
 									</svg>
 								</div>
 							</div>
+							<div class="adding-board-input__error" v-if="$v.form.name.$error">
+								<template v-if="!$v.form.name.checkName">
+									Должно быть уникальным<br>
+								</template>
+								<template v-else-if="!$v.form.name.required">
+									Обязательно к заполнению<br>
+								</template>
+								<template v-else-if="!$v.form.name.minLength || !$v.form.name.maxLength">
+									{{ $v.form.name.$params.minLength.min }} - {{ $v.form.name.$params.maxLength.max }} символов
+								</template>
+							</div>
 						</label>
 
 						<div class="adding-board-row">
@@ -42,6 +53,14 @@
 											</svg>
 										</div>
 									</div>
+									<div class="adding-board-input__error" v-if="$v.form.widthX.$error">
+										<template v-if="!$v.form.widthX.required">
+											Обязательное
+										</template>
+										<template v-else-if="!$v.form.widthX.between">
+											{{$v.form.widthX.$params.between.min}} - {{$v.form.widthX.$params.between.max}}
+										</template>
+									</div>
 								</label>
 							</div>
 							<div class="adding-board-col adding-board-col-6">
@@ -60,6 +79,14 @@
 												<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
 											</svg>
 										</div>
+									</div>
+									<div class="adding-board-input__error" v-if="$v.form.heightY.$error">
+										<template v-if="!$v.form.heightY.required">
+											Обязательное
+										</template>
+										<template v-else-if="!$v.form.heightY.between">
+											{{$v.form.heightY.$params.between.min}} - {{$v.form.heightY.$params.between.max}}
+										</template>
 									</div>
 								</label>
 							</div>
@@ -99,6 +126,14 @@
 											</svg>
 										</div>
 									</div>
+									<div class="adding-board-input__error" v-if="$v.form.panelX.$error">
+										<template v-if="!$v.form.panelX.requiredCustom">
+											Обязательное
+										</template>
+										<template v-else-if="!$v.form.panelX.betweenCustom">
+											1 и 10
+										</template>
+									</div>
 								</label>
 							</div>
 							<div class="adding-board-col adding-board-col-6">
@@ -119,6 +154,14 @@
 												<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
 											</svg>
 										</div>
+									</div>
+									<div class="adding-board-input__error" v-if="$v.form.panelY.$error">
+										<template v-if="!$v.form.panelY.requiredCustom">
+											Обязательное
+										</template>
+										<template v-else-if="!$v.form.panelY.betweenCustom">
+											1 и 10
+										</template>
 									</div>
 								</label>
 							</div>
@@ -141,6 +184,14 @@
 											<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
 										</svg>
 									</div>
+									<div class="adding-board-input__error" v-if="$v.form.panelGapX.$error">
+										<template v-if="!$v.form.panelGapX.requiredCustom">
+											Обязательное
+										</template>
+										<template v-else-if="!$v.form.panelGapX.betweenCustom">
+											0 и 10
+										</template>
+									</div>
 								</label>
 							</div>
 							<div class="adding-board-col adding-board-col-6">
@@ -158,6 +209,14 @@
 										<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 											<path d="M8 0C12.4184 0 16 3.5816 16 8C16 12.4184 12.4184 16 8 16C3.5816 16 0 12.4184 0 8C0 3.5816 3.5816 0 8 0ZM8 1.116C6.17425 1.116 4.42328 1.84128 3.13228 3.13228C1.84128 4.42328 1.116 6.17425 1.116 8C1.116 9.82575 1.84128 11.5767 3.13228 12.8677C4.42328 14.1587 6.17425 14.884 8 14.884C9.82575 14.884 11.5767 14.1587 12.8677 12.8677C14.1587 11.5767 14.884 9.82575 14.884 8C14.884 6.17425 14.1587 4.42328 12.8677 3.13228C11.5767 1.84128 9.82575 1.116 8 1.116ZM7.884 5.768C8.192 5.768 8.4416 6.0184 8.4416 6.3264V12.3728C8.43613 12.5171 8.37495 12.6537 8.27091 12.7539C8.16686 12.8541 8.02804 12.9101 7.8836 12.9101C7.73916 12.9101 7.60034 12.8541 7.4963 12.7539C7.39225 12.6537 7.33107 12.5171 7.3256 12.3728V6.3256C7.3256 6.0176 7.5752 5.7672 7.884 5.7672V5.768ZM7.9064 3.536C8.10372 3.536 8.29296 3.61439 8.43249 3.75391C8.57201 3.89344 8.6504 4.08268 8.6504 4.28C8.6504 4.47732 8.57201 4.66656 8.43249 4.80609C8.29296 4.94561 8.10372 5.024 7.9064 5.024C7.70908 5.024 7.51984 4.94561 7.38031 4.80609C7.24079 4.66656 7.1624 4.47732 7.1624 4.28C7.1624 4.08268 7.24079 3.89344 7.38031 3.75391C7.51984 3.61439 7.70908 3.536 7.9064 3.536Z"/>
 										</svg>
+									</div>
+									<div class="adding-board-input__error" v-if="$v.form.panelGapY.$error">
+										<template v-if="!$v.form.panelGapY.requiredCustom">
+											Обязательное
+										</template>
+										<template v-else-if="!$v.form.panelGapY.betweenCustom">
+											0 и 10
+										</template>
 									</div>
 								</label>
 							</div>
@@ -194,10 +253,8 @@
 				<div class="adding-board-params__title">Вид панели</div>
 
 				<div class="adding-board-params-visually">
-					<div class="adding-board-params-visually-panel">
-						<template 
-							v-if="!$v.form.panelX.$invalid && !$v.form.panelY.$invalid && !$v.form.panelGapX.$invalid && !$v.form.panelGapY.$invalid"
-						>
+					<div class="adding-board-params-visually-panel" v-if="form.isPanel && !$v.form.isPanel.$invalid && !$v.form.panelX.$invalid && !$v.form.panelY.$invalid && !$v.form.panelGapX.$invalid && !$v.form.panelGapY.$invalid">
+						
 							<div class="adding-board-params-visually-panel-inner"
 								v-for="index in getPanelRenderY" 
 								v-bind:key="index"
@@ -215,8 +272,22 @@
 								>
 								</div>
 							</div>
-						</template>
 					</div>
+
+					<div class="adding-board-params-visually-panel" v-if="!form.isPanel && form.widthX && form.heightY" style="width: 100%; height: 260px;">
+						
+							<div class="adding-board-params-visually-panel-inner">
+								<div 
+									class="adding-board-params-visually-panel__block"
+									:style="{
+										width: `${getWidthNoPanel}px`, 
+										height: `${getHeightNoPanel}px`,
+									}"
+								>
+								</div>
+							</div>
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -261,8 +332,8 @@
 				scribing: false
 			},
 			panel: {
-				width: 225,
-				height: 250
+				width: 240,
+				height: 240
 			}
 		}),
 		created: function (){
@@ -277,6 +348,20 @@
 			...mapGetters([
                 'GET_BOARD_PARAM_NAME'
             ]),
+			getWidthNoPanel() {
+				if(this.form.widthX > this.panel.width){
+					return this.panel.width - 10
+				} else {
+					return this.form.widthX
+				}
+			},
+			getHeightNoPanel() {
+				if(this.form.heightY > this.panel.height){
+					return this.panel.height - 10
+				} else {
+					return this.form.heightY
+				}
+			},
 			getPanelRenderX() {
 				if(this.form.panelX){
 					return parseInt(this.form.panelX)
@@ -291,35 +376,37 @@
 			},
 			getPanelStyleWidth() {
 				if(!this.$v.form.panelX.$invalid && !this.$v.form.panelGapX.$invalid){
-					const result = this.panel.width / this.form.panelX;
-					if(this.form.panelGapX) {
-						return result - (this.form.panelGapX * 2)
+					const block = 25;
+					const resWithGap = (block - this.form.panelGapX)
+					if(this.form.widthX < this.form.heightY) {
+						return resWithGap - (Number(resWithGap) / 100 * 30)
 					} else {
-						return result;
+						return resWithGap;
 					}
 				}
 				return null
 			},
 			getPanelStyleHeight() {
 				if(!this.$v.form.panelY.$invalid && !this.$v.form.panelGapY.$invalid){
-					const result = this.panel.height / this.form.panelY;
-					if(this.form.panelGapY) {
-						return result - (this.form.panelGapY * 2)
+					const block = 25;
+					const resWithGap = (block - this.form.panelGapY)
+					if(this.form.widthX > this.form.heightY) {
+						return resWithGap - (Number(resWithGap) / 100 * 30)
 					} else {
-						return result;
+						return resWithGap;
 					}
 				}
 				return null
 			},
 			getPanelStyleMarginTopBottom() {
 				if (this.form.panelGapY && this.form.panelGapX){
-					return this.form.panelGapY 
+					return this.form.panelGapY / 2
 				}
 				return null
 			},
 			getPanelStyleMarginLeftRight() {
 				if (this.form.panelGapY && this.form.panelGapY){
-					return this.form.panelGapX
+					return this.form.panelGapX / 2
 				}
 				return null
 			},
@@ -328,7 +415,7 @@
 					const result = ((Number(this.form.widthX) + Number(this.form.panelGapX)) * Number(this.form.panelX) - Number(this.form.panelGapX)) * ((Number(this.form.heightY) + Number(this.form.panelGapY)) * Number(this.form.panelY) - Number(this.form.panelGapY)) / 10000
 					return parseFloat(result).toFixed(2)
 				} else if(this.form.widthX && this.form.heightY) {
-					return parseFloat(this.form.widthX).toFixed(2) * parseFloat(this.form.heightY).toFixed(2)
+					return parseFloat(this.form.widthX).toFixed(2) * parseFloat(this.form.heightY).toFixed(2) / 10000
 				} else {
 					return 0
 				}
@@ -384,7 +471,7 @@
 			'form.widthX': function limitWidthX (value) {
 				const result = parseFloat(value).toFixed(2);
 				if(isNaN(result)){
-					this.form.widthX = 0;
+					this.form.widthX = '';
 				} else {
 					this.form.widthX = result
 				}
@@ -392,7 +479,7 @@
 			'form.heightY': function limitHeightY (value) {
 				const result = parseFloat(value).toFixed(2);
 				if(isNaN(result)){
-					this.form.heightY = 0;
+					this.form.heightY = '';
 				} else {
 					this.form.heightY = result
 				}
@@ -410,7 +497,7 @@
 			'form.panelX': function limitPanelX (value) {
 				const result = parseFloat(value).toFixed(2);
 				if(isNaN(result)){
-					this.form.panelX = 0;
+					this.form.panelX = '';
 				} else {
 					this.form.panelX = result
 				}
@@ -418,7 +505,7 @@
 			'form.panelY': function limitPanelY (value) {
 				const result = parseFloat(value).toFixed(2);
 				if(isNaN(result)){
-					this.form.panelY = 0;
+					this.form.panelY = '';
 				} else {
 					this.form.panelY = result
 				}
@@ -426,7 +513,7 @@
 			'form.panelGapX': function limitPanelGapX (value) {
 				const result = parseFloat(value).toFixed(2);
 				if(isNaN(result)){
-					this.form.panelGapX = 0;
+					this.form.panelGapX = '';
 				} else {
 					this.form.panelGapX = result
 				}
@@ -434,7 +521,7 @@
 			'form.panelGapY': function limitpanelGapY (value) {
 				const result = parseFloat(value).toFixed(2);
 				if(isNaN(result)){
-					this.form.panelGapY = 0;
+					this.form.panelGapY = '';
 				} else {
 					this.form.panelGapY = result
 				}
@@ -514,10 +601,27 @@
 					required,
 					between: between(1, 300)
 				},
+				isPanel: {
+					millingAndScribing() {
+						if(this.form.isPanel) {
+							if(this.form.scribing === true && this.form.milling === false){
+								return true
+							}
+							if(this.form.scribing === false && this.form.milling === true){
+								return true
+							}
+							if(this.form.scribing === true && this.form.milling === true){
+								return true
+							}
+							return false;
+						}
+						return true;
+					}
+				},
 				panelX: {
 					requiredCustom() {
 						if(this.form.isPanel) {
-							if(this.form.panelX !== 0 && this.form.panelX !== null){
+							if(this.form.panelX !== 0 && this.form.panelX !== null && this.form.panelX !== ''){
 								return true
 							}
 							return false
@@ -540,7 +644,7 @@
 				panelY: {
 					requiredCustom() {
 						if(this.form.isPanel) {
-							if(this.form.panelY !== 0 && this.form.panelY !== null){
+							if(this.form.panelY !== 0 && this.form.panelY !== null && this.form.panelY !== ''){
 								return true
 							}
 							return false
@@ -562,7 +666,7 @@
 				panelGapX: {
 					requiredCustom() {
 						if(this.form.isPanel) {
-							if(this.form.panelGapX !== 0 && this.form.panelGapX !== null){
+							if(this.form.panelGapX !== '' && this.form.panelGapX !== null){
 								return true
 							}
 							return false
@@ -584,7 +688,7 @@
 				panelGapY: {
 					requiredCustom() {
 						if(this.form.isPanel) {
-							if(this.form.panelGapY !== 0 && this.form.panelGapY !== null){
+							if(this.form.panelGapY !== '' && this.form.panelGapY !== null){
 								return true
 							}
 							return false
@@ -681,7 +785,7 @@
 								return true
 							}
 							return false;
-							}
+						}
 						return true
 					},
 					panelXMin() {
@@ -735,18 +839,28 @@
 			padding: 16px;
 			background: linear-gradient(0deg, rgba(42, 163, 150, 0.03), rgba(42, 163, 150, 0.03)), #FFFFFF;
 			border-radius: 4px;
+			min-height: 280px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
 			
 			&-panel{
 				border: 1px solid #2AA396;
-				padding: 15px 15px;
-				height: 280px;
+				padding: 5px 5px;
+				height: auto;
 				display: flex;
 				align-items: center;
 				flex-wrap: wrap;
+				flex-direction: column;
 				justify-content: center;
+				width: 100%;
+				height: auto;
+				min-height: 240px;
 				
 				&-inner{
 					display: flex;
+					width: 100%;
+					justify-content: center;
 				}
 
 				&__block{

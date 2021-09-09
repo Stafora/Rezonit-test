@@ -4,10 +4,14 @@
 			<div class="adding-board-row">
 				<div class="adding-board-col adding-board-col-4">
 					<div class="adding-board-params__title">Параметры сборки</div>
-					<div class="adding-board-select">
+					<div class="adding-board-input" :class="{error: $v.form.currentLayer.$error, success: !$v.form.currentLayer.$invalid}">
 						<div class="adding-board-select__title">Слоев, шт</div>
-						<input type="range" value="1" step="1" min="1" :max="getLayersList.length" v-on:change="rangeChange">
-						<div class="adding-board-select-hint">Выбрано слоёв: {{ form.currentLayer }} шт</div>
+						<input type="text" v-model="form.currentLayer" @blur="$v.form.currentLayer.$touch()">
+						<div class="adding-board-input__error" v-if="$v.form.currentLayer.$error">
+							<template v-if="!$v.form.currentLayer.onlyThisParam">
+								Доступные слои: {{getLayersListString}}
+							</template>
+						</div>
 					</div>
 
 					<div class="adding-board-select">
@@ -111,7 +115,7 @@
 				'GET_CARD_MATERIALS',
 				'GET_CARD_MPP_LAYERS'
             ]),
-			getLayersList() {
+			getLayersListString() {
 				if(this.GET_CARD_MPP_SETS){
 					const listLayers = []
 					for(const item of this.GET_CARD_MPP_SETS){
@@ -120,19 +124,16 @@
 					const uniqueListLayers = listLayers.filter(function(value, index, selfArr){
 						return selfArr.indexOf(value) === index
 					});
-					if(!this.form.currentLayer){
-						this.rangeChange()
-					}
-					return uniqueListLayers
+					return uniqueListLayers.join()
 				} else {
-					return [];
+					return '';
 				}
 			},
 			getTypeMaterial() {
 				this.setTypeMaterialDefaultValie()
 				if(this.form.currentLayer && this.GET_CARD_MPP_SETS){
 					const fileteredMppSetsByLayer = this.GET_CARD_MPP_SETS.filter(function(obj, index, selfArr){
-						return obj.layers === this.form.currentLayer
+						return obj.layers === Number(this.form.currentLayer)
 					}.bind(this));
 					
 					// get material_mark_id
@@ -160,7 +161,7 @@
 
 				if(this.form.currentLayer && this.GET_CARD_MPP_SETS){
 					const fileteredMppSetsByLayer = this.GET_CARD_MPP_SETS.filter(function(obj, index, selfArr){
-						return obj.layers === this.form.currentLayer && obj.material_mark_id === this.form.typeMaterial
+						return obj.layers === Number(this.form.currentLayer) && obj.material_mark_id === this.form.typeMaterial
 					}.bind(this));
 
 					// get all material_mark_id
@@ -182,7 +183,7 @@
 
 				if(this.form.currentLayer && this.GET_CARD_MPP_SETS){
 					const fileteredMppSetsByLayer = this.GET_CARD_MPP_SETS.filter(function(obj, index, selfArr){
-						return obj.layers === this.form.currentLayer && obj.material_mark_id === this.form.typeMaterial && obj.card_width === this.form.cardWidth
+						return obj.layers === Number(this.form.currentLayer) && obj.material_mark_id === this.form.typeMaterial && obj.card_width === this.form.cardWidth
 					}.bind(this));
 
 					// get all material_mark_id
@@ -204,7 +205,7 @@
 
 				if(this.form.currentLayer && this.GET_CARD_MPP_SETS){
 					this.GET_CARD_MPP_SETS.filter(function(obj, index, selfArr){
-						if(obj.layers === this.form.currentLayer && 
+						if(obj.layers === Number(this.form.currentLayer) && 
 							obj.material_mark_id === this.form.typeMaterial && 
 							obj.card_width === this.form.cardWidth && 
 							obj.foil_width === this.form.foilWidth){
@@ -243,14 +244,7 @@
 			setTypeMaterialDefaultValie() {
 				this.form.typeMaterial = ''
 			},
-			rangeChange(e) {
-				if(e) {
-					this.form.currentLayer = this.layersList()[e.target.value - 1]
-				} else {
-					this.form.currentLayer = this.layersList()[0]
-				}
-			},
-			layersList() {
+			getLayersList() {
 				if(this.GET_CARD_MPP_SETS){
 					const listLayers = []
 					for(const item of this.GET_CARD_MPP_SETS){
@@ -259,7 +253,7 @@
 					const uniqueListLayers = listLayers.filter(function(value, index, selfArr){
 						return selfArr.indexOf(value) === index
 					});
-					return uniqueListLayers;
+					return uniqueListLayers
 				} else {
 					return [];
 				}
@@ -297,7 +291,11 @@
 		validations: {
 			form: {
 				currentLayer: {
-					required
+					required,
+					onlyThisParam() {
+						const layersArray = this.getLayersList();
+						return layersArray.includes(Number(this.form.currentLayer));
+					}
 				},
 				typeMaterial: {
 					required
