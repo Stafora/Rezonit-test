@@ -39,7 +39,7 @@
 						<div class="adding-board-file-progress-bar-percent" :style="{width: percentLoadFile+'%'}"></div>
 					</div>
 					<div class="adding-board-file-progress__succes-text" v-if="isEndLoadingFile">
-						Файл загружен, можете переходить к следующему шагу
+						Успешно загружен
 					</div>
 					<div class="adding-board-file-progress__succes-text" v-if="!$v.form.fileBoard.$invalid && !isEndLoadingFile">
 						Файл прошёл валидацию, идёт загрузка ...

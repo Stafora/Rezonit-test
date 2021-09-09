@@ -7,7 +7,7 @@
 
 		<form @submit.prevent="login" class="login-form">
 			<div class="login__title">
-				Вход в Личный кабинет
+				{{ CURRENT_LANGUAGE === LANG_RU ? 'Вход в Личный кабинет' : 'Log In to Your Account' }}
 			</div>
 
 			<p class="login__succes-registration-message" v-if="getRegistrationMessage">{{ getRegistrationMessage }}</p>
@@ -29,10 +29,10 @@
 					</template>
 					<template v-if="$v.loginEmail.$error">
 						<template v-if="!$v.loginEmail.required">
-							Поле обязательно к заполнению
+							{{ CURRENT_LANGUAGE === LANG_RU ? 'Поле обязательно к заполнению' : 'The field must be filled in' }}
 						</template>
 						<template v-if="!$v.loginEmail.email">
-							Поле должно содержать email адрес
+							{{ CURRENT_LANGUAGE === LANG_RU ? 'Поле должно содержать email адрес' : 'The field must contain an email address' }}
 						</template>
 					</template>
 				</div>
@@ -43,7 +43,7 @@
 						:type="passwordVisible ? 'text' : 'password'"
 						v-model="loginPassword" 
 						class="form-element__input"
-						placeholder="Пароль" 
+						:placeholder="CURRENT_LANGUAGE === LANG_RU ? 'Пароль' : 'Password'" 
 						autocomplete="off"
 						@blur="$v.loginPassword.$touch()"
 					>
@@ -65,20 +65,20 @@
 					</template>
 					<template v-if="$v.loginPassword.$error">
 						<template v-if="!$v.loginPassword.required">
-							Поле обязательно к заполнению
+							{{ CURRENT_LANGUAGE === LANG_RU ? 'Поле обязательно к заполнению' : 'The field must be filled in' }}
 						</template>
 						<template v-if="!$v.loginPassword.minLength">
-							Пароль должен содержать минимум {{ $v.loginPassword.$params.minLength.min }} символов
+							{{ CURRENT_LANGUAGE === LANG_RU ? `Пароль должен содержать минимум ${$v.loginPassword.$params.minLength.min} символов` : `The password must contain at least ${$v.loginPassword.$params.minLength.min} characters` }}
 						</template>
 					</template>
 				</div>
 			</div>
 
-			<a href="#" class="login__forget-password">Забыли пароль?</a>
+			<a href="#" class="login__forget-password">{{ CURRENT_LANGUAGE === LANG_RU ? 'Забыли пароль?' : 'Fogrot Password?'}}</a>
 
 			<div class="login-buttons">
-				<div class="btn btn-border" v-on:click="changeLoginPanel"><span>Регистрация</span></div>
-				<button class="btn btn-default" :disabled="isDisabledLoginBtn"><span>Войти</span></button>
+				<div class="btn btn-border" v-on:click="changeLoginPanel"><span>{{ CURRENT_LANGUAGE === LANG_RU ? 'Регистрация' : 'Sign Up'}}</span></div>
+				<button class="btn btn-default" :disabled="isDisabledLoginBtn"><span>{{ CURRENT_LANGUAGE === LANG_RU ? 'Войти' : 'Log In'}}</span></button>
 			</div>
 
 		</form>
@@ -92,6 +92,7 @@
 	import LanguageAuth from '../language/Language-auth.vue'
 	import { mapActions, mapGetters } from 'vuex'
 	import { required, minLength, email } from 'vuelidate/lib/validators'
+	import { LANG_RU, LANG_EN } from '@/services/languageService'
 
 	export default {
 		name: 'Login',
@@ -108,7 +109,9 @@
 			isDisabledLoginBtn: true,
 			loginEmail: '',
 			loginPassword: '',
-			passwordVisible: false
+			passwordVisible: false,
+			LANG_RU: LANG_RU,
+			LANG_EN: LANG_EN
 		}),
 		components: {
 			LanguageAuth
@@ -124,7 +127,8 @@
 		},
 		computed: {
             ...mapGetters([
-                'LOGIN_ERRORS'
+                'LOGIN_ERRORS',
+				'CURRENT_LANGUAGE'
             ]),
 			getRegistrationMessage: function () {
 				return this.registrationMessage

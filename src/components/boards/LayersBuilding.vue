@@ -69,7 +69,6 @@
 						item.material = this.getMaterialId(item.material_id);
 						mppSetLayersList[item.layer_group].push(item)
 					}
-					console.log(mppSetLayersList);
 					return mppSetLayersList
 				}
 				
