@@ -1,7 +1,7 @@
 <template>
     <div class="inner-card">
 		<div class="document-top">
-			<Header />
+			<Header v-bind:title="getName" />
 		</div>
 		<div class="main-aside">
 			<aside class="main-aside__aside inner-card__aside">
@@ -32,17 +32,17 @@
 					<div class="inner-card-layers-settings__title">Параметры платы</div>
 					<div class="inner-card-layers-settings-params">
 						<div class="inner-card-layers-settings-params__value">Номер</div>
-						<div class="inner-card-layers-settings-params__value">123456</div>
+						<div class="inner-card-layers-settings-params__value">{{ GET_CARD ? GET_CARD.id : "" }}</div>
 					</div>
 					<div class="inner-card-layers-settings-params">
 						<div class="inner-card-layers-settings-params__value">Размеры (мм)</div>
-						<div class="inner-card-layers-settings-params__value">30х40</div>
+						<div class="inner-card-layers-settings-params__value">{{ GET_CARD ? GET_CARD.x : "" }} х {{ GET_CARD ? GET_CARD.y : "" }}</div>
 					</div>
 				</div>
 			</aside>
 			<main class="main-aside__main">
 				<div class="main-aside__content">
-					<slot/>
+					<iframe class="inner-card-iframe" src="http://developcretewebs.rezonit.ru/indexTest11.html"></iframe>
 				</div>
 			</main>
 		</div>
@@ -51,17 +51,47 @@
 
 <script>
 	import Header from '@/components/common/Header'
+    import { mapActions, mapGetters } from 'vuex'
 
 	export default {
 		name: 'DefaultLayout',
+        metaInfo: {
+            title: 'Список плат'
+        },
+        data: () => ({
+            id: null
+		}),
+        created: function (){
+            this.id = this.$route.params.id
+            this.CARD(this.id)
+        },
 		components: {
 			Header
-		}
+		},
+        computed: {
+            ...mapGetters([
+                'GET_CARD'
+            ]),
+            getName() {
+                return this.GET_CARD.name
+            }
+        },
+        methods: {
+            ...mapActions([
+                'CARD'
+            ])
+        }
 	}
 </script>
 
 <style lang="scss">
 	.inner-card{
+
+        &-iframe{
+            width: 100%;
+            height: 100%;
+        }
+
 		&__aside{
 			background: none;
 			padding-left: 16px;

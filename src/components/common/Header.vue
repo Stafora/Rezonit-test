@@ -45,6 +45,11 @@
 			isOpenUserInfo: false,
 			isOpenMobileMenu: false
 		}),
+        props: {
+            title: {
+                type: String
+            }
+        },
 		created: function () {
 			this.USER()
 		},
@@ -59,7 +64,7 @@
                 'GET_USER'
             ]),
 			getMetaTitle: function() {
-				return this.$route.meta.headerTitle
+				return this.title ? this.title : this.$route.meta.headerTitle
 			}
 		},
 		methods: {
@@ -202,6 +207,7 @@
 					height: 16px;
 					@include flex-center;
 					transition: 0.4s;
+                    border-radius: 4px;
 
 					&:hover{
 						background: rgba(196, 196, 196, 0.1);

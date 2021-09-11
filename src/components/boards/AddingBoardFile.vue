@@ -86,7 +86,7 @@
 
 		</form>
 		<div class="adding-board-buttons">
-			<div class="adding-board-buttons__btn btn btn-border" v-on:click="closePopup"><span>Назад</span></div>
+			<div class="adding-board-buttons__btn btn btn-border" v-on:click="closePopup"><div class="btn-border__bg"><div class="btn-border__gradient-text">Назад</div></div></div>
 			<div class="adding-board-buttons__btn btn btn-default" :class="{disabled: !isSuccessNextBtn}" v-on:click="nextStep"><span>Далее</span></div>
 		</div>
 	</div>

@@ -15,8 +15,19 @@ const routes = [
 			return import('../views/CardsList.vue')
 		}
 	},
+    {
+		path: '/cards',
+		name: 'CardsList',
+		meta: {
+			requiresAuth: true,
+			headerTitle: 'Список плат'
+		},
+		component: function () {
+			return import('../views/CardsList.vue')
+		}
+	},
 	{
-		path: '/card',
+		path: '/cards/:id',
 		name: 'InnerCard',
 		meta: {
 			layout: 'EmptyLayout',

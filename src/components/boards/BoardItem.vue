@@ -1,6 +1,6 @@
 <template>
     <div class="boards-list-item">
-		<div class="boards-list-item__title boards-list-item-col">
+		<router-link :to="`/cards/${card.id}`" class="boards-list-item__title boards-list-item-col">
 			<svg width="20" height="17" viewBox="0 0 20 17" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M3.25 0.5V2H0.25V15.5H3.25V17H4.75V15.5H6.25V17H7.75V15.5H9.25V17H10.75V15.5H12.25V17H13.75V15.5H15.25V17H16.75V15.5H19.75V2H16.75V0.5H15.25V2H13.75V0.5H12.25V2H10.75V0.5H9.25V2H7.75V0.5H6.25V2H4.75V0.5H3.25ZM1.75 3.5H18.25V14H1.75V3.5ZM4 5C3.5875 5 3.25 5.3375 3.25 5.75C3.25 6.1625 3.5875 6.5 4 6.5C4.4125 6.5 4.75 6.1625 4.75 5.75C4.75 5.3375 4.4125 5 4 5ZM7 5C6.5875 5 6.25 5.3375 6.25 5.75C6.25 6.1625 6.5875 6.5 7 6.5C7.4125 6.5 7.75 6.1625 7.75 5.75C7.75 5.3375 7.4125 5 7 5ZM10 5C9.5875 5 9.25 5.3375 9.25 5.75C9.25 6.1625 9.5875 6.5 10 6.5C10.4125 6.5 10.75 6.1625 10.75 5.75C10.75 5.3375 10.4125 5 10 5ZM13 5C12.5875 5 12.25 5.3375 12.25 5.75C12.25 6.1625 12.5875 6.5 13 6.5C13.4125 6.5 13.75 6.1625 13.75 5.75C13.75 5.3375 13.4125 5 13 5ZM16 5C15.5875 5 15.25 5.3375 15.25 5.75C15.25 6.1625 15.5875 6.5 16 6.5C16.4125 6.5 16.75 6.1625 16.75 5.75C16.75 5.3375 16.4125 5 16 5ZM4 8C3.5875 8 3.25 8.3375 3.25 8.75C3.25 9.1625 3.5875 9.5 4 9.5C4.4125 9.5 4.75 9.1625 4.75 8.75C4.75 8.3375 4.4125 8 4 8ZM16 8C15.5875 8 15.25 8.3375 15.25 8.75C15.25 9.1625 15.5875 9.5 16 9.5C16.4125 9.5 16.75 9.1625 16.75 8.75C16.75 8.3375 16.4125 8 16 8ZM4 11C3.5875 11 3.25 11.3375 3.25 11.75C3.25 12.1625 3.5875 12.5 4 12.5C4.4125 12.5 4.75 12.1625 4.75 11.75C4.75 11.3375 4.4125 11 4 11ZM7 11C6.5875 11 6.25 11.3375 6.25 11.75C6.25 12.1625 6.5875 12.5 7 12.5C7.4125 12.5 7.75 12.1625 7.75 11.75C7.75 11.3375 7.4125 11 7 11ZM10 11C9.5875 11 9.25 11.3375 9.25 11.75C9.25 12.1625 9.5875 12.5 10 12.5C10.4125 12.5 10.75 12.1625 10.75 11.75C10.75 11.3375 10.4125 11 10 11ZM13 11C12.5875 11 12.25 11.3375 12.25 11.75C12.25 12.1625 12.5875 12.5 13 12.5C13.4125 12.5 13.75 12.1625 13.75 11.75C13.75 11.3375 13.4125 11 13 11ZM16 11C15.5875 11 15.25 11.3375 15.25 11.75C15.25 12.1625 15.5875 12.5 16 12.5C16.4125 12.5 16.75 12.1625 16.75 11.75C16.75 11.3375 16.4125 11 16 11Z" fill="url(#paint0_linear)"/>
 				<defs>
@@ -12,16 +12,16 @@
 			</svg>
 
 			{{ card.name }}
-		</div>
-		<div class="boards-list-item-col">
+		</router-link>
+		<router-link :to="`/cards/${card.id}`" class="boards-list-item-col">
 			{{ index + 1 }}
-		</div>
-		<div class="boards-list-item-col">
+		</router-link>
+		<router-link :to="`/cards/${card.id}`" class="boards-list-item-col">
 			{{ card.created_at | date('date-time') }}
-		</div>
-		<div class="boards-list-item-col">
+		</router-link>
+		<router-link :to="`/cards/${card.id}`" class="boards-list-item-col">
 			{{ card.updated_at | date('date-time') }}
-		</div>
+		</router-link>
 		<div class="boards-list-item-col">
 			<div class="boards-list-item-setting">
 				<div class="boards-list-item-setting__open" v-on:click="openSettingMenu">
@@ -30,8 +30,12 @@
 					</svg>
 				</div>
 				<div class="boards-list-item-setting-menu" v-click-outside="closeSettingMenu" :class="{active: isOpenSettingMenu}">
-					<a href="#" class="boards-list-item-setting-menu__item">Изменить</a>
-					<a href="#" class="boards-list-item-setting-menu__item" v-on:click="deleteItem">Удалить</a>
+                    <div class="boards-list-item-setting-menu__item">
+                        <a href="#" class="boards-list-item-setting-menu__link">Изменить</a>
+                    </div>
+                    <div class="boards-list-item-setting-menu__item">
+                        <a href="#" class="boards-list-item-setting-menu__link" v-on:click="deleteItem">Удалить</a>
+                    </div>
 				</div>
 			</div>
 			
@@ -105,6 +109,11 @@
 
 		&-col{
 			font-size: 12px;
+            color: #525B53;
+
+            &:hover{
+                text-decoration: none;
+            }
 		}
 
 		&__title{
@@ -145,7 +154,6 @@
 				}
 
 				&__item{
-					color: #A6B0AF;
 					font-size: 10px;
 					line-height: 1.3;
 					border-bottom: 1px solid rgba(166, 176, 175, 0.25);
@@ -157,6 +165,18 @@
 						border-bottom: none;
 					}
 				}
+
+                &__link{
+                    border-radius: 4px;
+                    color: #A6B0AF;
+                    padding: 3px 10px;
+                    transition: 0.3s;
+
+                    &:hover{
+                        background: rgba(196, 196, 196, 0.1);
+                        text-decoration: none;
+                    }
+                }
 			}
 		}
 	}
