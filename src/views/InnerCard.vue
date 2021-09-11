@@ -1,5 +1,5 @@
 <template>
-    <div class="inner-card">
+    <div class="inner-card" v-if="GET_CARD">
 		<div class="document-top">
 			<Header v-bind:title="getName" />
 		</div>
@@ -32,11 +32,11 @@
 					<div class="inner-card-layers-settings__title">Параметры платы</div>
 					<div class="inner-card-layers-settings-params">
 						<div class="inner-card-layers-settings-params__value">Номер</div>
-						<div class="inner-card-layers-settings-params__value">{{ GET_CARD ? GET_CARD.id : "" }}</div>
+						<div class="inner-card-layers-settings-params__value">{{ GET_CARD.id }}</div>
 					</div>
 					<div class="inner-card-layers-settings-params">
 						<div class="inner-card-layers-settings-params__value">Размеры (мм)</div>
-						<div class="inner-card-layers-settings-params__value">{{ GET_CARD ? GET_CARD.x : "" }} х {{ GET_CARD ? GET_CARD.y : "" }}</div>
+						<div class="inner-card-layers-settings-params__value">{{ GET_CARD.x }} х {{ GET_CARD.y }}</div>
 					</div>
 				</div>
 			</aside>
