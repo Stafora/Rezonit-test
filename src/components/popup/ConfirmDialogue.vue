@@ -3,8 +3,8 @@
         <div class="popup__title">{{ title }}</div>
         <div class="popup__message">{{ message }}</div>
         <div class="popup__btns">
-			<div class="ok-btn btn btn-border" @click="_confirm"><span>{{ okButton }}</span></div>
-            <div class="cancel-btn btn btn-border" @click="_cancel"><span>{{ cancelButton }}</span></div>
+			<div class="ok-btn btn btn-border" @click="_confirm"><div class="btn-border__bg"><div class="btn-border__gradient-text">{{ okButton }}</div></div></div>
+            <div class="cancel-btn btn btn-border" @click="_cancel"><div class="btn-border__bg"><div class="btn-border__gradient-text">{{ cancelButton }}</div></div></div>
         </div>
     </popup-modal>
 </template>

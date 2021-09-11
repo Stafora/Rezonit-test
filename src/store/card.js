@@ -5,16 +5,23 @@ axios.defaults.baseURL = process.env.VUE_APP_API_ENDPOINT
 
 export default {
     state: {
-		cards: null
+		cards: null,
+        card: null
     },
     getters: {
 		GET_CARDS(state){
 			return state.cards
+		},
+        GET_CARD(state){
+			return state.card
 		}
     },
     mutations: {
 		SET_CARDS: (state, cards) => {
 			state.cards = cards
+		},
+        SET_CARD: (state, card) => {
+			state.card = card
 		}
     },
     actions: {
@@ -54,6 +61,18 @@ export default {
 					console.log(error);
 				})
 			}
+        },
+        CARD({ commit }, id) {
+			return resource('/api/cards', axios)
+            .get({
+                id: id
+            })
+			.then((resp) => {
+				commit('SET_CARD', resp.data)
+			})
+			.catch((error) => {
+				console.log(error);
+			})
         }
     }
 }

@@ -74,10 +74,10 @@
 				</div>
 			</div>
 
-			<a href="#" class="login__forget-password">{{ CURRENT_LANGUAGE === LANG_RU ? 'Забыли пароль?' : 'Fogrot Password?'}}</a>
+			<a href="#" class="login__forget-password">{{ CURRENT_LANGUAGE === LANG_RU ? 'Забыли пароль?' : 'Forgot Password?'}}</a>
 
 			<div class="login-buttons">
-				<div class="btn btn-border" v-on:click="changeLoginPanel"><span>{{ CURRENT_LANGUAGE === LANG_RU ? 'Регистрация' : 'Sign Up'}}</span></div>
+				<div class="btn btn-border" v-on:click="changeLoginPanel"><div class="btn-border__bg"><div class="btn-border__gradient-text">{{ CURRENT_LANGUAGE === LANG_RU ? 'Регистрация' : 'Sign Up'}}</div></div></div>
 				<button class="btn btn-default" :disabled="isDisabledLoginBtn"><span>{{ CURRENT_LANGUAGE === LANG_RU ? 'Войти' : 'Log In'}}</span></button>
 			</div>
 

@@ -1,33 +1,33 @@
 <template>
 	<div style="width: 100%">
 		<template v-for="list in getFilterLayers">
-			<div :class="{'adding-board-building-layers-group': list.length > 1}" :key="list.id">
+			<!-- <div :class="{'adding-board-building-layers-group': list.length > 1}" :key="list.id">
+            </div> -->
+            <template v-for="item in list">
+                <div class="adding-board-building-layers-item" :key="item.id" v-if="item.card_material_type_id === 1">
+                    <div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_foil"></div>
+                    <div class="adding-board-building-layers-item__text">{{ item.material[0].name }} (медь) {{ Number(item.material[0].upper_foil_width) }} мкм</div>
+                </div>
+            </template>
 
-				<template v-for="item in list">
-					<div class="adding-board-building-layers-item" :key="item.id" v-if="item.card_material_type_id === 1">
-						<div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_foil"></div>
-						<div class="adding-board-building-layers-item__text">{{ item.material[0].name }} </div>
-					</div>
-				</template>
+            <template v-for="item in list">
+                <div class="adding-board-building-layers-item" :key="item.id" v-if="item.card_material_type_id === 2">
+                    <div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_prepreg">
+                        {{ item.material[0].name }} мм
+                    </div>
+                    <div class="adding-board-building-layers-item__text"></div>
+                </div>
+            </template>
 
-				<template v-for="item in list">
-					<div class="adding-board-building-layers-item" :key="item.id" v-if="item.card_material_type_id === 2">
-						<div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_prepreg">
-							{{ item.material[0].name }}
-						</div>
-						<div class="adding-board-building-layers-item__text"></div>
-					</div>
-				</template>
-
-				<template v-for="item in list">
-					<div class="adding-board-building-layers-item" :key="item.id" v-if="item.card_material_type_id === 3">
-						<div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_base">
-							{{ item.material[0].name }}
-						</div>
-						<div class="adding-board-building-layers-item__text"></div>
-					</div>
-				</template>
-			</div>
+            <template v-for="item in list">
+                <div class="adding-board-building-layers-item" :key="item.id" v-if="item.card_material_type_id === 3">
+                    <div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_base">
+                        {{ item.material[0].name }} мм
+                    </div>
+                    <div class="adding-board-building-layers-item__text"></div>
+                </div>
+            </template>
+			
 		</template>
 	</div>
 </template>

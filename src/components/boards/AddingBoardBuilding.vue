@@ -5,8 +5,14 @@
 				<div class="adding-board-col adding-board-col-4">
 					<div class="adding-board-params__title">Параметры сборки</div>
 					<div class="adding-board-input" :class="{error: $v.form.currentLayer.$error, success: !$v.form.currentLayer.$invalid}">
-						<div class="adding-board-select__title">Слоев, шт</div>
-						<input type="text" v-model="form.currentLayer" @blur="$v.form.currentLayer.$touch()">
+						
+						<input 
+                            type="text" 
+                            v-model="form.currentLayer" 
+                            @blur="$v.form.currentLayer.$touch()"
+                            :class="{'is-data': form.currentLayer}"
+                        >
+                        <div class="adding-board-input__title">Слоев, шт</div>
 						<div class="adding-board-input__error" v-if="$v.form.currentLayer.$error">
 							<template v-if="!$v.form.currentLayer.onlyThisParam">
 								Доступные слои: {{getLayersListString}}
@@ -39,7 +45,7 @@
 					</div>
 
 				</div>
-				<div class="adding-board-col adding-board-col-6">
+				<div class="adding-board-col adding-board-col-7">
 					<div class="adding-board-params__title adding-board-params__title_center">Слои сборки</div>
 
 					<div class="adding-board-building-layers scroll">
@@ -51,7 +57,7 @@
 		</div>
 
 		<div class="adding-board-buttons">
-			<div class="adding-board-buttons__btn btn btn-border" v-on:click="prevStep"><span>Назад</span></div>
+			<div class="adding-board-buttons__btn btn btn-border" v-on:click="prevStep"><div class="btn-border__bg"><div class="btn-border__gradient-text">Назад</div></div></div>
 			<div class="adding-board-buttons__btn btn btn-default" :class="{disabled: !isSuccessNextBtn}" v-on:click="finishStep"><span>Завершить</span></div>
 		</div>
 	</div>
@@ -270,8 +276,8 @@
 						is_panel: storageResult.param.isPanel ? 1 : 0,
 						milling: storageResult.param.milling ? 1 : 0,
 						scribing: storageResult.param.scribing ? 1 : 0,
-						panel_x: storageResult.param.panelX,
-						panel_y: storageResult.param.panelY,
+						panel_x: storageResult.param.isPanel ? storageResult.param.panelX : null,
+						panel_y: storageResult.param.isPanel ? storageResult.param.panelY : null,
 						layers: this.form.mppSetLayer.layers,
 						card_mpp_set_id: this.form.mppSetLayersId,
 						card_material_mark_id: this.form.mppSetLayer.material_mark_id,
@@ -340,7 +346,7 @@
 				padding: 0px 10px;
 
 				&__block{
-					width: calc(100% - 110px);
+					width: calc(100% - 140px);
 					margin: 4px 0px;
 					font-size: 12px;
 					text-align: center;
@@ -362,8 +368,9 @@
 					}
 				}
 				&__text{
-					width: 100px;
-					font-size: 10px;
+					width: 130px;
+					font-size: 9px;
+                    line-height: 1.4;
 				}
 			}
 		}

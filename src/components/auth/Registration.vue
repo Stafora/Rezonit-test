@@ -30,7 +30,7 @@
 							{{ CURRENT_LANGUAGE === LANG_RU ? 'Поле обязательно к заполнению' : 'The field must be filled in' }}
 						</template>
 						<template v-if="!$v.registrationName.minLength">
-							{{ CURRENT_LANGUAGE === LANG_RU ? `Пароль должен содержать минимум ${$v.registrationName.$params.minLength.min} символов` : `The password must contain at least ${$v.registrationName.$params.minLength.min} characters` }}
+							{{ CURRENT_LANGUAGE === LANG_RU ? `Имя должно содержать минимум ${$v.registrationName.$params.minLength.min} символов` : `The password must contain at least ${$v.registrationName.$params.minLength.min} characters` }}
 						</template>
 					</template>
 				</div>
@@ -132,7 +132,7 @@
 			</div>
 
 			<div class="registration-buttons">
-				<div class="btn btn-border" v-on:click="changeRegistrationPanel"><span>{{ CURRENT_LANGUAGE === LANG_RU ? 'Войти' : 'Log In' }}</span></div>
+				<div class="btn btn-border" v-on:click="changeRegistrationPanel"><div class="btn-border__bg"><div class="btn-border__gradient-text">{{ CURRENT_LANGUAGE === LANG_RU ? 'Войти' : 'Log In' }}</div></div></div>
 				<button class="btn btn-default" :disabled="isDisabledRegistrationBtn"><span>{{ CURRENT_LANGUAGE === LANG_RU ? 'Регистрация' : 'Sign Up' }}</span></button>
 			</div>
 

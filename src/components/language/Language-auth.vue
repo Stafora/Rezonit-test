@@ -70,7 +70,9 @@
 			cursor: pointer;
 
 			&.active{
-				color: #14B775;
+				background-image: linear-gradient(to right, #14B775, #3D8FB4);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
 			}
 		}
 	}
