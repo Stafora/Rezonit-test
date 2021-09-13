@@ -74,3 +74,18 @@ ul{
 		}
 	}
 }
+
+.ps__thumb-x, .ps__thumb-y{
+    background: #2AA396 !important;
+    border-radius: 4px !important;
+}
+.ps__rail-y.ps--clicking .ps__thumb-y, .ps__rail-y:focus>.ps__thumb-y, .ps__rail-y:hover>.ps__thumb-y{
+    background: #2AA396 !important;
+    width: 8px !important;
+}
+.ps__rail-x, .ps__rail-y{
+    opacity: 1 !important;
+}
+.ps__rail-y {
+    width: 12px !important;
+}

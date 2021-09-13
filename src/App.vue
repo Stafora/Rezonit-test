@@ -11,6 +11,7 @@
 	import EmptyLayout from '@/layouts/EmptyLayout.vue'
 	import AuthLayout from '@/layouts/AuthLayout.vue'
 	import store from './store'
+    import router from './router'
 
 	export default {
 		name: 'App',
@@ -36,6 +37,14 @@
 				return new Promise(function (resolve, reject) {
 					if (err.response.status === 401 && err.response.statusText === 'Unauthorized') {
 						store.dispatch('LOGOUT')
+                        if (router.history.current.path !== '/auth') {
+                            router.push('/auth')
+                        }
+					}
+                    if (err.response.status === 404) {
+                        if (router.history.current.path !== '/404') {
+                            router.push('/404')
+                        }
 					}
 					throw err;
 				})

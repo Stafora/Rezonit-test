@@ -30,13 +30,20 @@
                     
                 </div>
             </div>
-            <div class="boards-list-body scroll">
-                <BoardItem v-for="(card, index) in GET_CARDS" :key="card.id" v-bind:card="card" v-bind:index="index" v-on:reloadCardsList="reloadCardsList" />
+            <vue-custom-scrollbar class="boards-list-body">
+                <BoardItem 
+                    v-for="(card, index) in GET_CARDS" 
+                    :key="card.id" 
+                    v-bind:card="card" 
+                    v-bind:index="index" 
+                    v-on:reloadCardsList="reloadCardsList"
+                    v-on:changeRecord="changeRecord"
+                />
 
                 <div v-if="getCountCards < 1" class="boards-list-body-empty">
                     <div class="btn btn-default boards-list-body-empty__btn" v-on:click="openPopup"><span>Добавить</span></div>
                 </div>
-            </div>
+            </vue-custom-scrollbar>
         </div>
 
         <AddingBoard 
@@ -67,7 +74,8 @@
         data: () => ({
             isOpenPopup: false,
             isDisaledBtnDraft: true,
-            issetDraft: false
+            issetDraft: false,
+            changeRecordId: null
         }),
         created: function (){
             this.issetDraft = AddingBoardStorageServices.getItem(AddingBoardStorageServices.STORAGE_KEY_FILE) !== null
@@ -98,9 +106,10 @@
                 'CARDS'
             ]),
             finishPopupAllStep() {
-                this.isOpenPopup = false;
-                this.changeDisabledBtnDraft(true);
-                this.issetDraft = false;
+                this.isOpenPopup = false
+                this.changeDisabledBtnDraft(true)
+                this.issetDraft = false
+                this.reloadCardsList()
             },
             openAddPopup() {
                 this.isOpenPopup = !this.isOpenPopup
@@ -144,6 +153,9 @@
             },
             reloadCardsList() {
                 this.CARDS();
+            },
+            changeRecord(id) {
+                this.changeRecordId = id
             }
         }
     }

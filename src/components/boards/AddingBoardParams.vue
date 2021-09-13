@@ -415,20 +415,10 @@
                     let percentPlateWidth = 0;
                     
                     if(WSUM >= HSUM) {
-                        // плата горизонтальная
-                        // если она горизонтальная - она займёт 100% ширины, а по высоте снизу и сверху останутся пустоты
-
-                        // ширина платы
                         percentPlateWidth = 100 * plateWidth / WSUM
                     } else {
-                        // плата вертикальная
-                        // если она вертикальная - она займёт 100% высоты, а по ширине слева и справа останутся пустоты
-
-                        // посчитаем ширину панели в процентах относительно высоты
                         const tempPlateWidth = 100 * panelHeight / panelWidth
                         const coefficient = 100 / tempPlateWidth
-
-                        // ширина платы
                         percentPlateWidth = (100 * plateWidth / HSUM) / coefficient
                     }
 
@@ -465,7 +455,6 @@
                         percentPlateHeight = (100 * plateHeight / WSUM) / coefficient
                     } else {
                         percentPlateHeight = 100 * plateHeight / HSUM
-                        console.log(2)
                     }
 
                     return percentPlateHeight
@@ -530,20 +519,10 @@
                     let percentPlateGapX = 0;
                     
                     if(WSUM >= HSUM) {
-                        // плата горизонтальная
-                        // если она горизонтальная - она займёт 100% ширины, а по высоте снизу и сверху останутся пустоты
-
-                        // ширина платы
                         percentPlateGapX = 100 * plateGapX / WSUM
                     } else {
-                        // плата вертикальная
-                        // если она вертикальная - она займёт 100% высоты, а по ширине слева и справа останутся пустоты
-
-                        // посчитаем ширину панели в процентах относительно высоты
                         const tempPlateWidth = 100 * panelHeight / panelWidth
                         const coefficient = 100 / tempPlateWidth
-
-                        // ширина платы
                         percentPlateGapX = (100 * plateGapX / HSUM) / coefficient
                     }
                     
