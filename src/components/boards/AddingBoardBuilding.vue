@@ -48,9 +48,9 @@
 				<div class="adding-board-col adding-board-col-7">
 					<div class="adding-board-params__title adding-board-params__title_center">Слои сборки</div>
 
-					<div class="adding-board-building-layers scroll">
+					<vue-custom-scrollbar class="adding-board-building-layers">
 						<LayersBuilding v-if="!$v.form.$invalid" v-bind:layerId="getMppSetLayersId" />
-					</div>
+					</vue-custom-scrollbar>
 
 				</div>
 			</div>

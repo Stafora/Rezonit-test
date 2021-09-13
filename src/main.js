@@ -5,6 +5,7 @@ import store from './store'
 import Axios from 'axios'
 import VueMeta from 'vue-meta'
 import Vuelidate from 'vuelidate'
+import vueCustomScrollbar from 'vue-custom-scrollbar'
 
 import './filters/date.filter'
 
@@ -15,6 +16,7 @@ import './assets/scss/common.scss'
 import './assets/scss/form-element.scss'
 import './assets/scss/buttons.scss'
 import './assets/scss/fonts.scss'
+import 'vue-custom-scrollbar/dist/vueScrollbar.css'
 
 router.beforeEach((to, from, next) => {
 	if(to.matched.some(record => record.meta.requiresAuth)) {
@@ -41,6 +43,9 @@ if (token) {
 }
 
 Vue.config.productionTip = false
+
+// register global components
+Vue.component('vue-custom-scrollbar', vueCustomScrollbar)
 
 Vue.use(VueMeta)
 Vue.use(Vuelidate)

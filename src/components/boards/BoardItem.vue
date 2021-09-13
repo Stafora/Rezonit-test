@@ -31,7 +31,7 @@
 				</div>
 				<div class="boards-list-item-setting-menu" v-click-outside="closeSettingMenu" :class="{active: isOpenSettingMenu}">
                     <div class="boards-list-item-setting-menu__item">
-                        <a href="#" class="boards-list-item-setting-menu__link">Изменить</a>
+                        <a href="#" class="boards-list-item-setting-menu__link"  v-on:click="changeRecord">Изменить</a>
                     </div>
                     <div class="boards-list-item-setting-menu__item">
                         <a href="#" class="boards-list-item-setting-menu__link" v-on:click="deleteItem">Удалить</a>
@@ -87,7 +87,10 @@
 					this.$destroy()
 					this.$el.parentNode.removeChild(this.$el)
 				})
-			}
+			},
+            changeRecord() {
+                this.$emit('changeRecord', this.card.id)
+            }
 		}
 	}
 </script>

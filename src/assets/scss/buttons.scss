@@ -92,6 +92,8 @@
 		transition: 0s;
 		@include flex-center;
 
+        $parent: &;
+
 		&__bg{
 			width: 100%;
 			height: 100%;
@@ -106,18 +108,28 @@
         }
 
 		&:hover{
-			background: #15B776;
-			color: #15B776;
+            background: #15B776;
+            #{$parent}__gradient-text{
+                color: #15B776;
+            }
 		}
 		&:active{
-			background: #3C91B3;
-			color: #3C91B3;
+            background: #3C91B3;
+            #{$parent}__gradient-text{
+                -webkit-text-fill-color: initial;
+                background: none;
+			    color: #3C91B3;
+            }
 		}
 
 		&.disabled, &:disabled{
-			background: #D5DBDD;
-			color: #D5DBDD;
-			cursor: default;
+            cursor: default;
+            background: #D5DBDD;
+            #{$parent}__gradient-text{
+                -webkit-text-fill-color: initial;
+                background: none;
+                color: #D5DBDD;
+            }
 		}
 		
 	}

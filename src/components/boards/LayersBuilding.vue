@@ -6,13 +6,13 @@
             <template v-for="item in list">
                 <div class="adding-board-building-layers-item" :key="item.id" v-if="item.card_material_type_id === 1">
                     <div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_foil"></div>
-                    <div class="adding-board-building-layers-item__text">{{ item.material[0].name }} (медь) {{ Number(item.material[0].upper_foil_width) }} мкм</div>
+                    <div class="adding-board-building-layers-item__text" v-if="item.material[0].name">{{ item.material[0].name }} (медь) {{ Number(item.material[0].upper_foil_width) }} мкм</div>
                 </div>
             </template>
 
             <template v-for="item in list">
                 <div class="adding-board-building-layers-item" :key="item.id" v-if="item.card_material_type_id === 2">
-                    <div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_prepreg">
+                    <div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_prepreg" v-if="item.material[0].name">
                         {{ item.material[0].name }} мм
                     </div>
                     <div class="adding-board-building-layers-item__text"></div>
@@ -21,7 +21,7 @@
 
             <template v-for="item in list">
                 <div class="adding-board-building-layers-item" :key="item.id" v-if="item.card_material_type_id === 3">
-                    <div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_base">
+                    <div class="adding-board-building-layers-item__block adding-board-building-layers-item__block_base" v-if="item.material[0].name">
                         {{ item.material[0].name }} мм
                     </div>
                     <div class="adding-board-building-layers-item__text"></div>
