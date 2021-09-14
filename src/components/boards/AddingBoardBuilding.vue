@@ -266,7 +266,18 @@
 			},
 			finishStep() {
 				if(this.isSuccessNextBtn) {
-					const storageResult = AddingBoardStorageServices.getAll();
+                    const data = {
+						layers: this.form.mppSetLayer.layers,
+						card_mpp_set_id: this.form.mppSetLayersId,
+						card_material_mark_id: this.form.mppSetLayer.material_mark_id,
+						card_thickness: this.form.cardWidth,
+						base_foil: this.form.foilWidth
+					}
+
+                    AddingBoardStorageServices.setItem(AddingBoardStorageServices.STORAGE_KEY_BUILDING, data);
+                    this.$emit('openResultPopup');
+                    
+                    /* const storageResult = AddingBoardStorageServices.getAll();
 					
 					const data = {
 						file_id: storageResult.file.id,
@@ -290,7 +301,7 @@
 						AddingBoardStorageServices.clearAll();
 						this.$emit('finishPopupAllStep')
 						this.$emit('reloadCardsListParent')
-					});
+					}); */
 				}
 			}
 		},

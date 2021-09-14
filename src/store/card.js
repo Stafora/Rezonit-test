@@ -31,7 +31,7 @@ export default {
 				data: param                
             })
             .then((resp) => {
-				
+                return resp
             })
             .catch((error) => {
 				console.log(error);
