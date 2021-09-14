@@ -30,7 +30,7 @@
                                     Обязательно к заполнению<br>
                                 </template>
                                 <template v-else-if="!$v.form.name.minLength || !$v.form.name.maxLength">
-                                    {{ $v.form.name.$params.minLength.min }} - {{ $v.form.name.$params.maxLength.max }} символов
+                                    от {{ $v.form.name.$params.minLength.min }} - {{ $v.form.name.$params.maxLength.max }} символов
                                 </template>
                             </div>
                         </label>
@@ -133,6 +133,9 @@
                                         <template v-else-if="!$v.form.panelX.betweenCustom">
                                             от 1 до 10 шт
                                         </template>
+                                        <template v-else-if="!$v.form.panelX.isInt">
+                                            Целое число
+                                        </template>
                                     </div>
                                 </label>
                             </div>
@@ -161,6 +164,9 @@
                                         </template>
                                         <template v-else-if="!$v.form.panelY.betweenCustom">
                                             от 1 до 10 шт
+                                        </template>
+                                        <template v-else-if="!$v.form.panelY.isInt">
+                                            Целое число
                                         </template>
                                     </div>
                                 </label>
@@ -617,7 +623,7 @@
                 }
             },
             'form.panelX': function limitPanelX (value) {
-                const result = parseFloat(value).toFixed(2);
+                const result = Number(value);
                 if(isNaN(result)){
                     this.form.panelX = '';
                 } else {
@@ -625,7 +631,7 @@
                 }
             },
             'form.panelY': function limitPanelY (value) {
-                const result = parseFloat(value).toFixed(2);
+                const result = Number(value);
                 if(isNaN(result)){
                     this.form.panelY = '';
                 } else {
@@ -760,9 +766,15 @@
                         } else {
                             return true;
                         }
+                    },
+                    isInt() {
+                        if(this.form.isPanel) {
+                            return this.form.panelX % 1 === 0;
+                        } else {
+                            return true;
+                        }
                     }
                 },
-                
                 panelY: {
                     requiredCustom() {
                         if(this.form.isPanel) {
@@ -780,6 +792,13 @@
                                 return true
                             }
                             return false
+                        } else {
+                            return true;
+                        }
+                    },
+                    isInt() {
+                        if(this.form.isPanel) {
+                            return this.form.panelY % 1 === 0;
                         } else {
                             return true;
                         }
@@ -1020,9 +1039,23 @@
 
                 &__block{
                     width: 100%;
-                    border: 1px solid #2AA396;
+                    padding: 1px;
                     position: relative;
                     height: 100%;
+                    background: linear-gradient(90deg, #14B775 0%, #3D8FB4 100%);
+                    background-blend-mode: soft-light, normal;
+                    position: relative;
+
+                    &::before{
+                        content: '';
+                        width: 100%;
+                        height: 100%;
+                        background: #f9fcfc;
+                        position: relative;
+                        left: 0px;
+                        top: 0px;
+                        display: block;
+                    }
 
                     &:last-child{
                         margin-right: 0 !important;

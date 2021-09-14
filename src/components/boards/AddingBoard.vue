@@ -479,7 +479,7 @@
 
 					&::before{
 						background: #fff;
-						left: 12px;
+						left: 11px;
 					}
 				}
 				&:disabled + #{$parent}-toggle{

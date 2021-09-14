@@ -30,7 +30,7 @@
 							{{ CURRENT_LANGUAGE === LANG_RU ? 'Поле обязательно к заполнению' : 'The field must be filled in' }}
 						</template>
 						<template v-if="!$v.registrationName.minLength">
-							{{ CURRENT_LANGUAGE === LANG_RU ? `Имя должно содержать минимум ${$v.registrationName.$params.minLength.min} символов` : `The password must contain at least ${$v.registrationName.$params.minLength.min} characters` }}
+							{{ CURRENT_LANGUAGE === LANG_RU ? `Имя должно содержать минимум ${$v.registrationName.$params.minLength.min} символов` : `The name must contain at least ${$v.registrationName.$params.minLength.min} characters` }}
 						</template>
 					</template>
 				</div>
@@ -90,6 +90,9 @@
 					<template v-if="$v.registrationPassword.$error">
 						<template v-if="!$v.registrationPassword.required">
 							{{ CURRENT_LANGUAGE === LANG_RU ? 'Поле обязательно к заполнению' : 'The field must be filled in' }}
+						</template>
+                        <template v-else-if="!$v.registrationPassword.minLength">
+							{{ CURRENT_LANGUAGE === LANG_RU ? `Пароль должен содержать минимум ${$v.registrationName.$params.minLength.min} символа` : `The password must contain at least ${$v.registrationName.$params.minLength.min} characters` }}
 						</template>
 					</template>
 				</div>
@@ -226,7 +229,8 @@
 				email
 			},
 			registrationPassword: {
-				required
+				required,
+                minLength: minLength(3)
 			},
 			registrationPasswordRepeat: {
 				required,

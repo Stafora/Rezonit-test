@@ -1,7 +1,7 @@
 <template>
     <div class="inner-card" v-if="GET_CARD">
 		<div class="document-top">
-			<Header v-bind:title="getName" />
+			<Header v-bind:title="getName" v-on:backPage="backPage" v-bind:isBack="true" />
 		</div>
 		<div class="main-aside">
 			<aside class="main-aside__aside inner-card__aside">
@@ -52,6 +52,7 @@
 <script>
 	import Header from '@/components/common/Header'
     import { mapActions, mapGetters } from 'vuex'
+    import route from '@/router'
 
 	export default {
 		name: 'DefaultLayout',
@@ -79,7 +80,10 @@
         methods: {
             ...mapActions([
                 'CARD'
-            ])
+            ]),
+            backPage() {
+                route.push('/')
+            }
         }
 	}
 </script>
