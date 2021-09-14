@@ -45,6 +45,13 @@
 		created: function (){
 			this.CARD_MPP_LAYERS(this.layerId)
 			this.CARD_MATERIALS()
+
+            setTimeout(function(){
+                const scrollBlock = document.querySelector('.adding-board-building-layers')
+                if(scrollBlock.scrollHeight > scrollBlock.offsetHeight) {
+                    scrollBlock.scrollTo(0, 1)
+                }
+            }, 400)
 		},
 		watch: {
 			layerId: function layerIdwatch(value) {

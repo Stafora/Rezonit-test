@@ -31,7 +31,7 @@
 				</div>
 				<div class="boards-list-item-setting-menu" v-click-outside="closeSettingMenu" :class="{active: isOpenSettingMenu}">
                     <div class="boards-list-item-setting-menu__item">
-                        <a href="#" class="boards-list-item-setting-menu__link"  v-on:click="changeRecord">Изменить</a>
+                        <router-link :to="`/cards/${card.id}`" class="boards-list-item-setting-menu__link">Изменить</router-link>
                     </div>
                     <div class="boards-list-item-setting-menu__item">
                         <a href="#" class="boards-list-item-setting-menu__link" v-on:click="deleteItem">Удалить</a>
@@ -138,7 +138,7 @@
 				background: #FFFFFF;
 				box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 				border-radius: 4px;
-				padding: 8px 4px;
+				padding: 0px;
 				width: 85px;
 				display: flex;
 				flex-direction: column;
@@ -159,10 +159,20 @@
 				&__item{
 					font-size: 10px;
 					line-height: 1.3;
-					border-bottom: 1px solid rgba(166, 176, 175, 0.25);
-					padding: 8px 2px;
 					text-align: center;
 					width: 100%;
+                    position: relative;
+
+                    &::before{
+                        content: '';
+                        width: calc(100% - 8px);
+                        left: 4px;
+                        position: absolute;
+                        bottom: 0px;
+                        height: 1px;
+                        background: rgba(166, 176, 175, 0.25);
+                        border-radius: 1px;
+                    }
 
 					&:last-child{
 						border-bottom: none;
@@ -172,11 +182,12 @@
                 &__link{
                     border-radius: 4px;
                     color: #A6B0AF;
-                    padding: 3px 10px;
+                    padding: 8px 10px;
                     transition: 0.3s;
+                    display: block;
 
                     &:hover{
-                        background: rgba(196, 196, 196, 0.1);
+                        background: #FAFAFA;
                         text-decoration: none;
                     }
                 }
