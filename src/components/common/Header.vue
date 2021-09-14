@@ -8,9 +8,9 @@
 			</svg>
 		</div>
 
-		<div class="header__logo">
+		<router-link :to="'/'" class="header__logo">
 			<img :src="logo" alt="">
-		</div>
+		</router-link>
 		<div class="header__page-name">{{ getMetaTitle }}</div>
 
 		<div v-if="!isBack" class="header-profile" v-click-outside="closeUserInfo">

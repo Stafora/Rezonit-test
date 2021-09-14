@@ -30,7 +30,7 @@
                                     Обязательно к заполнению<br>
                                 </template>
                                 <template v-else-if="!$v.form.name.minLength || !$v.form.name.maxLength">
-                                    от {{ $v.form.name.$params.minLength.min }} - {{ $v.form.name.$params.maxLength.max }} символов
+                                    от {{ $v.form.name.$params.minLength.min }} до {{ $v.form.name.$params.maxLength.max }} символов
                                 </template>
                             </div>
                         </label>

@@ -143,7 +143,7 @@
 				display: flex;
 				flex-direction: column;
 				position: absolute;
-				right: -10px;
+				right: 0px;
 				top: 80px;
 				opacity: 0;
 				visibility: hidden;

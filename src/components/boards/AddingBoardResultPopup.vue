@@ -1,7 +1,7 @@
 <template>
-  <div class="adding-board-result-popup" v-bind:class="{active: isActive}">
+  <div class="adding-board-result-popup">
 		<div class="adding-board-result-popup-content">
-			<div class="adding-board-result-popup-content__close">
+			<div class="adding-board-result-popup-content__close" v-on:click="closePopup" :class="{disabled: !allSuccess}">
 				<svg width="15" height="16" viewBox="0 0 15 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M1.29183 1.29208C1.38473 1.19895 1.49508 1.12507 1.61657 1.07465C1.73806 1.02424 1.8683 0.998291 1.99983 0.998291C2.13137 0.998291 2.26161 1.02424 2.3831 1.07465C2.50459 1.12507 2.61494 1.19895 2.70783 1.29208L7.99983 6.58608L13.2918 1.29208C13.3848 1.1991 13.4952 1.12535 13.6167 1.07503C13.7381 1.02471 13.8683 0.998815 13.9998 0.998815C14.1313 0.998815 14.2615 1.02471 14.383 1.07503C14.5045 1.12535 14.6149 1.1991 14.7078 1.29208C14.8008 1.38505 14.8746 1.49543 14.9249 1.61691C14.9752 1.73839 15.0011 1.86859 15.0011 2.00008C15.0011 2.13157 14.9752 2.26177 14.9249 2.38325C14.8746 2.50472 14.8008 2.6151 14.7078 2.70808L9.41383 8.00008L14.7078 13.2921C14.8008 13.3851 14.8746 13.4954 14.9249 13.6169C14.9752 13.7384 15.0011 13.8686 15.0011 14.0001C15.0011 14.1316 14.9752 14.2618 14.9249 14.3832C14.8746 14.5047 14.8008 14.6151 14.7078 14.7081C14.6149 14.8011 14.5045 14.8748 14.383 14.9251C14.2615 14.9754 14.1313 15.0013 13.9998 15.0013C13.8683 15.0013 13.7381 14.9754 13.6167 14.9251C13.4952 14.8748 13.3848 14.8011 13.2918 14.7081L7.99983 9.41408L2.70783 14.7081C2.61486 14.8011 2.50448 14.8748 2.383 14.9251C2.26152 14.9754 2.13132 15.0013 1.99983 15.0013C1.86835 15.0013 1.73815 14.9754 1.61667 14.9251C1.49519 14.8748 1.38481 14.8011 1.29183 14.7081C1.19886 14.6151 1.12511 14.5047 1.07479 14.3832C1.02447 14.2618 0.99857 14.1316 0.99857 14.0001C0.99857 13.8686 1.02447 13.7384 1.07479 13.6169C1.12511 13.4954 1.19886 13.3851 1.29183 13.2921L6.58583 8.00008L1.29183 2.70808C1.19871 2.61519 1.12482 2.50484 1.07441 2.38335C1.024 2.26186 0.998047 2.13161 0.998047 2.00008C0.998047 1.86854 1.024 1.7383 1.07441 1.61681C1.12482 1.49532 1.19871 1.38497 1.29183 1.29208Z" fill="#E3EBE7"/>
 				</svg>
@@ -12,25 +12,127 @@
 
 			<div class="adding-board-result-popup-content-left">
 				<ul class="adding-board-result-popup-content-process">
-					<li class="adding-board-result-popup-content-process-item success">Определение слоев</li>
-					<li class="adding-board-result-popup-content-process-item success">Импорт файлов</li>
-					<li class="adding-board-result-popup-content-process-item processing">Генерация стека</li>
-					<li class="adding-board-result-popup-content-process-item processing">Создание контура</li>
+					<li class="adding-board-result-popup-content-process-item" :class="{'processing': !item.status, 'success': item.status}" v-for="item of stepLoad" :key="item.id">{{ item.title }}</li>
 				</ul>
 			</div>
-			<div class="adding-board-result-popup-content-right">
+			<div class="adding-board-result-popup-content-right" v-if="!allSuccess">
 				<img src="../../assets/img/loader.png" alt="">
 			</div>
+
+            <div class="adding-board-result-popup-buttons">
+                <div v-if="!allSuccess" class="btn btn-border adding-board-result-popup__btn" v-on:click="closePopup" :class="{disabled: !allSuccess}">
+                    <div class="btn-border__bg"><div class="btn-border__gradient-text">Отменить</div></div>
+                </div>
+                <div v-if="allSuccess" class="btn btn-border adding-board-result-popup__btn" v-on:click="closePopup">
+                    <div class="btn-border__bg"><div class="btn-border__gradient-text">Завершить</div></div>
+                </div>
+            </div>
+
 		</div>
+        
   </div>
 </template>
 
 <script>
+    import { mapActions } from 'vuex'
+    import { AddingBoardStorageServices } from '@/services/AddingBoardStorageServices'
+    import router from '@/router'
+
 	export default {
 		name: 'AddingBoardResultPopup',
-		data: () => ({
-			isActive: false
-		})
+        data: () => ({
+            stepLoad: [
+                {
+                    id: 1,
+                    status: false,
+                    title: 'Определение слоев'
+                },
+                {
+                    id: 2,
+                    status: false,
+                    title: 'Импорт файлов'
+                },
+                {
+                    id: 3,
+                    status: false,
+                    title: 'Генерация стека'
+                },
+                {
+                    id: 4,
+                    status: false,
+                    title: 'Создание контура'
+                }
+            ],
+            allSuccess: false,
+            saveCardId: null
+        }),
+        created: function (){
+            setTimeout(function() {
+                this.processingNext(0);
+            }.bind(this), 600)
+        },
+        methods: {
+            ...mapActions([
+				'CARD_ADD',
+                'CARD_REMOVE'
+            ]),
+            closePopup() {
+                if(this.allSuccess){
+                    router.push({ 
+                        name: 'InnerCard', 
+                        params: { 
+                                id: this.saveCardId 
+                            }
+                    })
+                }
+            },
+            processingNext(id) {
+                if(id !== 4){
+                    setTimeout(function() {
+                        this.stepLoad[id].status = true
+                        this.processingNext(id + 1)
+                    }.bind(this), 600)
+                } else {
+                    this.allSuccess = true
+                    this.saveAllData()
+                }
+            },
+            saveAllData() {
+                const storageResult = AddingBoardStorageServices.getAll();
+					
+                const data = {
+                    file_id: storageResult.file.id,
+                    name: storageResult.param.name,
+                    x: storageResult.param.widthX,
+                    y: storageResult.param.heightY,
+                    is_panel: storageResult.param.isPanel ? 1 : 0,
+                    milling: storageResult.param.milling ? 1 : 0,
+                    scribing: storageResult.param.scribing ? 1 : 0,
+                    panel_x: storageResult.param.isPanel ? storageResult.param.panelX : null,
+                    panel_y: storageResult.param.isPanel ? storageResult.param.panelY : null,
+                    layers: storageResult.building.layers,
+                    card_mpp_set_id: storageResult.building.card_mpp_set_id,
+                    card_material_mark_id: storageResult.building.card_material_mark_id,
+                    card_thickness: storageResult.building.card_thickness,
+                    base_foil: storageResult.building.base_foil
+                }
+
+                const result = this.CARD_ADD(data)
+
+                result.then((resp) => {
+                    this.saveCardId = resp.data.id
+                    AddingBoardStorageServices.clearAll();
+                });
+            }
+        },
+        width: {
+            allSuccess: function checkAllSuccess (value) {
+                if(value === true) {
+                    console.log(value);
+                    this.saveAllData();
+                }
+            }
+        }
 	}
 </script>
 
@@ -44,11 +146,17 @@
 		top: 0px;
 		@include flex-center;
 		z-index: 3;
-		display: none;
+		display: flex;
 
-		&.active{
-			display: flex;
-		}
+        &-buttons{
+            width: 100%;
+        }
+
+        &__btn{
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 15px;
+        }
 
 		&-content{
 			background: #FFFFFF;
@@ -65,6 +173,10 @@
 				right: 17px;
 				top: 17px;
 				cursor: pointer;
+
+                &.disabled{
+                    cursor: default;
+                }
 			}
 			&__title{
 				font-weight: 500;

@@ -31,10 +31,15 @@
 					v-on:closePopup="closePopup"
 					v-on:reloadCardsListParent="reloadCardsListParent"
 					v-on:finishPopupAllStep="finishPopupAllStep"
+                    v-on:openResultPopup="openResultPopup"
 				/>
 			</div>
 
-			<AddingBoardResultPopup />
+			<AddingBoardResultPopup
+                v-if="isActiveResultPopup"
+                v-on:closePopup="closePopup"
+                v-on:closeResultPopup="closeResultPopup"
+            />
 
 		</div>
 	</div>
@@ -52,7 +57,8 @@
 			currentStep: 1,
 			STEP_IMAGE: 1,
 			STEP_PARAMS: 2,
-			STEP_BUILDING: 3
+			STEP_BUILDING: 3,
+            isActiveResultPopup: false
 		}),
 		props: {
 			isOpenPopup: {
@@ -76,6 +82,12 @@
 			AddingBoardResultPopup
 		},
 		methods: {
+            openResultPopup() {
+                this.isActiveResultPopup = true
+            },
+            closeResultPopup() {
+                this.isActiveResultPopup = false
+            },
 			closePopup() {
 				this.$emit('openAddPopup')
 				this.$emit('changeIssetDraft')
